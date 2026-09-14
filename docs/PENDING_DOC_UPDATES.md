@@ -46,3 +46,11 @@
   - Initialized `MASTERPLAN.md` with complete Phase 0 readiness tasks (`[P0.1]` through `[P0.DOC]`) and placeholders for Phase 1-3.
   - Synchronized all 8 Phase 0 tasks as real GitHub issues (#1 to #8) into GitHub Project #13 under `Backlog`.
 - **Affected Documentation to Update:** `docs/handover/phase-0-setup-handover.md`, `MASTERPLAN.md`.
+
+## [Husky & Installer] Fix BSD Sed Range Bug in Pre-Push Hook & Ensure Hook Permissions
+
+- **Files changed:** `.husky/pre-push`, `install.sh`
+- **Description:**
+  - Fixed BSD `sed` single-line comment deletion bug in `.husky/pre-push` where single-line comments wiped out the pending documentation check on macOS.
+  - Added explicit `chmod +x` for husky hooks in `install.sh` after `npm install` to ensure hooks remain executable across clean installs.
+- **Affected Documentation to Update:** `docs/dannflow_docs/workflows/branching-and-sync.md`.
