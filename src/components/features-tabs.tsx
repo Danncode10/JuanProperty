@@ -24,7 +24,7 @@ const FEATURES = [
       "Auth, database, and real-time built in. Type-safe queries powered by auto-generated TypeScript definitions.",
     span: "lg:col-span-2 lg:row-span-2",
     // Paint-only radial corner glow — no filter:blur cost on scroll
-    glow: "radial-gradient(circle at 80% 20%, rgba(124,92,255,0.18), transparent 50%)",
+    glow: "radial-gradient(circle at 80% 20%, rgba(13,122,95,0.22), transparent 50%)",
   },
   {
     icon: Zap,
@@ -59,8 +59,7 @@ const FEATURES = [
   {
     icon: Layers,
     title: "Clean architecture",
-    description:
-      "UI, services, types, prompts — each in its own lane.",
+    description: "UI, services, types, prompts — each in its own lane.",
     span: "lg:col-span-2",
     glow: "radial-gradient(circle at 80% 20%, rgba(236,72,153,0.15), transparent 50%)",
   },
@@ -114,7 +113,7 @@ function BentoCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         style={{
           background:
-            "radial-gradient(360px circle at var(--x) var(--y), rgba(124,92,255,0.15), transparent 70%)",
+            "radial-gradient(360px circle at var(--x) var(--y), rgba(16,185,129,0.18), transparent 70%)",
         }}
       />
 
@@ -164,7 +163,10 @@ interface Repo {
 function GithubRepoPaginated({ repos }: { repos: Repo[] }) {
   const [page, setPage] = useState(0);
   const totalPages = Math.ceil(repos.length / GITHUB_PER_PAGE);
-  const pageRepos = repos.slice(page * GITHUB_PER_PAGE, (page + 1) * GITHUB_PER_PAGE);
+  const pageRepos = repos.slice(
+    page * GITHUB_PER_PAGE,
+    (page + 1) * GITHUB_PER_PAGE,
+  );
 
   return (
     <div className="space-y-6">
@@ -172,21 +174,39 @@ function GithubRepoPaginated({ repos }: { repos: Repo[] }) {
       <div className="flex items-start gap-3 px-4 py-3 rounded-2xl bg-secondary border border-border">
         <GitBranch className="w-4 h-4 text-primary shrink-0 mt-0.5" />
         <p className="text-[11px] font-mono text-muted-foreground leading-relaxed">
-          Repositories of <span className="text-foreground font-semibold">Danncode10</span>, the creator of DannFlow.
-          To show <span className="text-foreground font-semibold">your own repos</span>, edit{" "}
-          <code className="bg-border px-1.5 py-0.5 rounded text-[10px]">src/lib/config.ts</code> → <code className="bg-border px-1.5 py-0.5 rounded text-[10px]">creatorRepos</code>.
+          Repositories of{" "}
+          <span className="text-foreground font-semibold">Danncode10</span>, the
+          creator of DannFlow. To show{" "}
+          <span className="text-foreground font-semibold">your own repos</span>,
+          edit{" "}
+          <code className="bg-border px-1.5 py-0.5 rounded text-[10px]">
+            src/lib/config.ts
+          </code>{" "}
+          →{" "}
+          <code className="bg-border px-1.5 py-0.5 rounded text-[10px]">
+            creatorRepos
+          </code>
+          .
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {pageRepos.map((repo, i) => (
-          <a key={i} href={repo.url} target="_blank" rel="noreferrer" className="block group">
+          <a
+            key={i}
+            href={repo.url}
+            target="_blank"
+            rel="noreferrer"
+            className="block group"
+          >
             <div className="group p-6 md:p-8 rounded-3xl md:rounded-5xl border border-border bg-card hover:border-primary/20 transition-all duration-300 flex flex-col h-full relative overflow-hidden hover:shadow-2xl hover:shadow-primary/5">
               <div className="flex items-center justify-between mb-5 md:mb-6">
                 <div className="h-10 w-10 md:h-12 md:w-12 rounded-lg md:rounded-xl bg-secondary border border-border flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-inner">
                   <GitBranch className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
-                <span className="text-[10px] font-medium uppercase text-muted-foreground tracking-wider opacity-50">Repo</span>
+                <span className="text-[10px] font-medium uppercase text-muted-foreground tracking-wider opacity-50">
+                  Repo
+                </span>
               </div>
               <h4 className="text-base md:text-lg font-semibold text-foreground mb-2 tracking-tight group-hover:text-primary transition-colors truncate">
                 {repo.name}
@@ -208,7 +228,7 @@ function GithubRepoPaginated({ repos }: { repos: Repo[] }) {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 pt-2">
           <button
-            onClick={() => setPage(p => Math.max(0, p - 1))}
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
             disabled={page === 0}
             className="w-9 h-9 flex items-center justify-center rounded-xl border border-border text-muted-foreground hover:border-primary/50 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all text-base font-black"
           >
@@ -228,7 +248,7 @@ function GithubRepoPaginated({ repos }: { repos: Repo[] }) {
             </button>
           ))}
           <button
-            onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={page === totalPages - 1}
             className="w-9 h-9 flex items-center justify-center rounded-xl border border-border text-muted-foreground hover:border-primary/50 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed transition-all text-base font-black"
           >
@@ -251,8 +271,6 @@ export function FeaturesTabs({
   repos: Repo[];
   currentRole?: string;
 }) {
-
-
   const [active, setActive] = useState("features");
   const [hovered, setHovered] = useState<string | null>(null);
 
@@ -271,8 +289,6 @@ export function FeaturesTabs({
       count: repos?.length || 0,
     },
   ];
-
-
 
   return (
     <div className="w-full">
@@ -310,10 +326,7 @@ export function FeaturesTabs({
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-2">
-                  <TabIcon
-                    className="w-3.5 h-3.5"
-                    strokeWidth={1.5}
-                  />
+                  <TabIcon className="w-3.5 h-3.5" strokeWidth={1.5} />
                   {tab.label}
                   <span
                     className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-mono tracking-wide transition-colors duration-500 ${
@@ -363,7 +376,9 @@ export function FeaturesTabs({
                     <Database className="w-6 h-6 md:w-8 md:h-8" />
                   </div>
                   <div>
-                    <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">Supabase</h3>
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
+                      Supabase
+                    </h3>
                     <div className="flex items-center gap-2 mt-2">
                       <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-medium border border-emerald-500/20">
                         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -375,15 +390,21 @@ export function FeaturesTabs({
 
                 <div className="flex flex-wrap items-center gap-3 md:gap-4 w-full lg:w-auto">
                   <div className="bg-secondary border border-border rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 flex flex-col flex-1 lg:min-w-[140px]">
-                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide mb-1">Role</span>
+                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                      Role
+                    </span>
                     <span className="text-lg md:text-xl font-bold text-primary tracking-tight flex items-center gap-2 capitalize">
                       <Lock className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       {currentRole || "User"}
                     </span>
                   </div>
                   <div className="bg-foreground border border-foreground rounded-xl md:rounded-2xl px-4 md:px-6 py-3 md:py-4 flex flex-col flex-1 lg:min-w-[140px] text-background">
-                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide mb-1">Members</span>
-                    <span className="text-xl md:text-2xl font-black tracking-tight">{profiles?.length || 0}</span>
+                    <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                      Members
+                    </span>
+                    <span className="text-xl md:text-2xl font-black tracking-tight">
+                      {profiles?.length || 0}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -391,35 +412,55 @@ export function FeaturesTabs({
               <div className="bg-primary/5 border border-primary/10 rounded-2xl md:rounded-3xl p-6 md:p-8 mb-8 md:mb-10 flex gap-4 md:gap-6 items-start">
                 <Shield className="w-5 h-5 md:w-6 md:h-6 text-primary shrink-0 mt-1" />
                 <div>
-                  <h4 className="text-base md:text-lg font-semibold text-foreground mb-1 md:mb-2 tracking-tight">Row-level security</h4>
+                  <h4 className="text-base md:text-lg font-semibold text-foreground mb-1 md:mb-2 tracking-tight">
+                    Row-level security
+                  </h4>
                   <p className="text-muted-foreground text-[14px] md:text-[15px] leading-relaxed font-medium">
-                    Your identity is encrypted by Supabase Auth and governed by strict RLS policies.
-                    Only <strong className="text-primary">ADMIN</strong> role can edit data in this cluster.
+                    Your identity is encrypted by Supabase Auth and governed by
+                    strict RLS policies. Only{" "}
+                    <strong className="text-primary">ADMIN</strong> role can
+                    edit data in this cluster.
                   </p>
                 </div>
               </div>
 
               <div className="border border-border rounded-3xl overflow-hidden bg-secondary/30">
                 <div className="bg-secondary px-8 py-4 border-b border-border flex items-center justify-between">
-                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Profile</span>
-                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">Role</span>
+                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                    Profile
+                  </span>
+                  <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+                    Role
+                  </span>
                 </div>
 
                 {profiles && profiles.length > 0 ? (
                   <div className="divide-y divide-border bg-card">
                     {profiles.map((p, i) => (
-                      <div key={i} className="px-4 md:px-8 py-4 md:py-6 flex items-center justify-between hover:bg-secondary transition-colors group gap-4">
+                      <div
+                        key={i}
+                        className="px-4 md:px-8 py-4 md:py-6 flex items-center justify-between hover:bg-secondary transition-colors group gap-4"
+                      >
                         <div className="flex items-center gap-3 md:gap-6 min-w-0">
                           <div className="h-10 w-10 md:h-12 md:w-12 rounded-lg md:rounded-xl bg-secondary text-primary flex items-center justify-center font-black text-base md:text-lg border border-border shrink-0">
                             {(p.full_name || "U")[0].toUpperCase()}
                           </div>
                           <div className="flex flex-col min-w-0">
-                            <span className="text-sm md:text-base font-bold text-foreground mb-0.5 md:mb-1 tracking-tight truncate">{p.full_name || "Anonymous identity"}</span>
-                            <span className="text-[9px] md:text-[10px] font-bold text-muted-foreground font-mono tracking-tight opacity-70 italic truncate">{p.email || p.id?.slice(0, 24)}</span>
+                            <span className="text-sm md:text-base font-bold text-foreground mb-0.5 md:mb-1 tracking-tight truncate">
+                              {p.full_name || "Anonymous identity"}
+                            </span>
+                            <span className="text-[9px] md:text-[10px] font-bold text-muted-foreground font-mono tracking-tight opacity-70 italic truncate">
+                              {p.email || p.id?.slice(0, 24)}
+                            </span>
                           </div>
                         </div>
-                        <span className={`px-2 md:px-3 py-1 rounded-md text-[10px] font-medium uppercase tracking-wide border transition-all shrink-0 ${p.role === 'admin' ? 'bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20' : 'bg-secondary text-muted-foreground border-border'
-                          }`}>
+                        <span
+                          className={`px-2 md:px-3 py-1 rounded-md text-[10px] font-medium uppercase tracking-wide border transition-all shrink-0 ${
+                            p.role === "admin"
+                              ? "bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20"
+                              : "bg-secondary text-muted-foreground border-border"
+                          }`}
+                        >
                           {p.role || "user"}
                         </span>
                       </div>
@@ -428,7 +469,9 @@ export function FeaturesTabs({
                 ) : (
                   <div className="p-20 text-center flex flex-col items-center justify-center grayscale opacity-40 bg-card">
                     <Database className="w-10 h-10 text-muted-foreground mb-4" />
-                    <p className="text-lg font-bold text-muted-foreground italic">No nodes detected in cluster.</p>
+                    <p className="text-lg font-bold text-muted-foreground italic">
+                      No nodes detected in cluster.
+                    </p>
                   </div>
                 )}
               </div>
@@ -450,12 +493,22 @@ export function FeaturesTabs({
                     <GitHubIcon className="w-6 h-6 md:w-8 md:h-8" />
                   </div>
                   <div>
-                    <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">GitHub</h3>
-                    <span className="text-[10px] font-medium text-muted-foreground tracking-wide mt-1.5 block">MCP integration</span>
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground tracking-tight">
+                      GitHub
+                    </h3>
+                    <span className="text-[10px] font-medium text-muted-foreground tracking-wide mt-1.5 block">
+                      MCP integration
+                    </span>
                   </div>
                 </div>
-                <a href="https://github.com/settings/tokens" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl bg-secondary border border-border hover:bg-card transition-all text-xs font-medium text-foreground hover:shadow-md w-full md:w-auto justify-center">
-                  Connect GitHub <ExternalLink className="w-3 h-3 text-muted-foreground" />
+                <a
+                  href="https://github.com/settings/tokens"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl bg-secondary border border-border hover:bg-card transition-all text-xs font-medium text-foreground hover:shadow-md w-full md:w-auto justify-center"
+                >
+                  Connect GitHub{" "}
+                  <ExternalLink className="w-3 h-3 text-muted-foreground" />
                 </a>
               </div>
 
@@ -464,7 +517,9 @@ export function FeaturesTabs({
               ) : (
                 <div className="p-32 text-center flex flex-col items-center border border-dashed border-border rounded-5xl bg-secondary/30 grayscale opacity-40">
                   <Code className="w-12 h-12 mb-6 text-muted-foreground" />
-                  <p className="text-base font-bold text-muted-foreground italic">Initializing Manifests...</p>
+                  <p className="text-base font-bold text-muted-foreground italic">
+                    Initializing Manifests...
+                  </p>
                 </div>
               )}
             </motion.div>
@@ -474,4 +529,3 @@ export function FeaturesTabs({
     </div>
   );
 }
-

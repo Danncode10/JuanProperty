@@ -6,45 +6,45 @@ import { Typewriter } from "./typewriter";
 
 const PLANS = [
   {
-    name: "Starter",
-    price: "$0",
+    name: "Solo Broker",
+    price: "₱0",
     suffix: "/mo",
-    description: "For solo builders getting started.",
+    description: "For individual brokers and independent landowners.",
     features: [
-      "Full starter template",
-      "Supabase auth & database",
-      "Checkpoint system",
-      "Community support",
+      "Up to 5 land parcels & projects",
+      "Title document vault (TCT/OCT)",
+      "GPS coordinate mapping",
+      "Basic owner contact registry",
     ],
-    cta: "Get started",
+    cta: "Get started free",
     highlight: false,
   },
   {
-    name: "Pro",
-    price: "$29",
+    name: "Pro Brokerage",
+    price: "₱1,999",
     suffix: "/mo",
-    description: "For serious builders shipping products.",
+    description: "For active brokerages and property managers.",
     features: [
-      "Everything in Starter",
-      "Priority AI support",
-      "Advanced MCP integrations",
-      "Premium templates",
-      "Team collaboration",
+      "Unlimited parcels & projects",
+      "Agent directory & assignment links",
+      "Philippine BIR tax tracking",
+      "Multi-page deed & plan previewer",
+      "Team collaboration & notes",
     ],
-    cta: "Start free trial",
+    cta: "Start 14-day trial",
     highlight: true,
   },
   {
-    name: "Enterprise",
+    name: "Developer",
     price: "Custom",
     suffix: "",
-    description: "For teams and organizations.",
+    description: "For real estate developers and land asset firms.",
     features: [
-      "Everything in Pro",
-      "Dedicated support",
-      "Custom integrations",
-      "SLA guarantee",
-      "White-label options",
+      "Everything in Pro Brokerage",
+      "Consolidated lot boundary mapping",
+      "Custom surveyor layer support",
+      "Dedicated account manager",
+      "Enterprise SLA & security",
     ],
     cta: "Contact sales",
     highlight: false,
@@ -126,7 +126,7 @@ export function Pricing({ isAuthed }: PricingProps) {
                 {/* "Most popular" badge */}
                 {plan.highlight && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                    <div className="flex items-center gap-1.5 rounded-full bg-foreground text-background px-3 py-1 text-[10px] font-semibold tracking-wide shadow-[0_4px_16px_rgba(124,92,255,0.4)]">
+                    <div className="flex items-center gap-1.5 rounded-full bg-foreground text-background px-3 py-1 text-[10px] font-semibold tracking-wide shadow-[0_4px_16px_rgba(16,185,129,0.35)]">
                       <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                       Most popular
                     </div>
@@ -187,15 +187,15 @@ export function Pricing({ isAuthed }: PricingProps) {
                   {/* CTA */}
                   <a
                     href={
-                      plan.name === "Enterprise"
-                        ? "#"
+                      plan.name === "Developer"
+                        ? "mailto:sales@juanproperty.ph"
                         : isAuthed
-                        ? "/dashboard"
-                        : "/login"
+                          ? "/dashboard"
+                          : "/login"
                     }
                     className={`group/cta flex items-center justify-center gap-2 w-full py-3 rounded-full text-[13px] font-medium transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] ${
                       plan.highlight
-                        ? "bg-foreground text-background hover:opacity-90 shadow-[0_4px_20px_rgba(124,92,255,0.25),inset_0_1px_0_rgba(255,255,255,0.2)]"
+                        ? "bg-foreground text-background hover:opacity-90 shadow-[0_4px_20px_rgba(16,185,129,0.25),inset_0_1px_0_rgba(255,255,255,0.2)]"
                         : "bg-white/[0.04] border border-white/[0.06] text-foreground hover:bg-white/[0.08]"
                     }`}
                   >

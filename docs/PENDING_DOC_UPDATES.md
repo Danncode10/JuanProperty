@@ -54,3 +54,25 @@
   - Fixed BSD `sed` single-line comment deletion bug in `.husky/pre-push` where single-line comments wiped out the pending documentation check on macOS.
   - Added explicit `chmod +x` for husky hooks in `install.sh` after `npm install` to ensure hooks remain executable across clean installs.
 - **Affected Documentation to Update:** `docs/dannflow_docs/workflows/branching-and-sync.md`.
+
+## [P0.2] JuanProperty Branding, Emerald Forest & Earth Gold Color System, Real Estate Copy
+
+- **Files changed:**
+  - `src/app/globals.css`
+  - `src/app/layout.tsx`
+  - `src/app/page.tsx`
+  - `src/app/login/page.tsx`
+  - `src/components/navbar.tsx`
+  - `src/components/footer.tsx`
+  - `src/components/landing/hero.tsx`
+  - `src/components/landing/how-it-works.tsx`
+  - `src/components/landing/pricing.tsx`
+  - `src/components/landing/cta-banner.tsx`
+  - `src/components/features-tabs.tsx`
+- **Description:**
+  - Replaced template purple accent with the Philippine real estate "Emerald Forest & Earth Gold" color system (`--color-primary: #0D7A5F;`, `--color-background: #050806;`, `--color-card: #0A120E;`, `--color-ring: #10B981;`, `--color-border: #183325;`).
+  - Rewrote landing page copy across hero headline, badges, typewriter, subtext, how-it-works steps (GPS coordinates, title vault, agent roster), pricing tiers (Solo Broker, Pro Brokerage, Developer), and CTA banners for JuanProperty real estate & land management value proposition.
+  - Replaced placeholder logos and letter badges with JuanProperty 'J' and emerald gradients across navbar, login page, and footer.
+  - Aligned `/login` auth page styling and metadata with real estate messaging while strictly preserving all Supabase auth logic and responsive behavior.
+  - Respected Hero-Media Freeze: preserved all poster and video sources/playback mechanisms in `src/components/landing/hero.tsx`.
+- **Affected Documentation to Update:** `docs/`, `PROJECT_CONTEXT.md`, design system docs.

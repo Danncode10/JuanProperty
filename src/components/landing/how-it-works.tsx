@@ -1,37 +1,37 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GitBranch, Sparkles, Rocket } from "lucide-react";
+import { MapPin, ShieldCheck, Users } from "lucide-react";
 import { Typewriter } from "./typewriter";
 
 const STEPS = [
   {
     step: "01",
-    icon: GitBranch,
-    title: "Clone & configure",
+    icon: MapPin,
+    title: "Map parcels & coordinates",
     description:
-      "Fork the repo, drop your Supabase credentials into .env.local, and you're live in under two minutes.",
-    snippet: "git clone dannflow && npm i",
+      "Pinpoint GPS coordinates, boundary polygons, and land lot areas for commercial, agricultural, and residential projects.",
+    snippet: "GPS: 14.5995° N, 120.9842° E",
     // Paint-only radial gradient (no filter:blur cost during scroll)
-    glow: "radial-gradient(ellipse at 70% 50%, rgba(124,92,255,0.25), transparent 60%)",
+    glow: "radial-gradient(ellipse at 70% 50%, rgba(16,185,129,0.25), transparent 60%)",
   },
   {
     step: "02",
-    icon: Sparkles,
-    title: "Describe your vision",
+    icon: ShieldCheck,
+    title: "Vault legal title documents",
     description:
-      "Use feature prompts in src/prompts/features/. Your AI reads schema, types, and services automatically.",
-    snippet: "/new-feature lead-capture",
-    glow: "radial-gradient(ellipse at 70% 50%, rgba(245,158,11,0.22), transparent 60%)",
+      "Store and verify TCT, OCT, Tax Declarations, and Lot Plans in a secure, tamper-evident digital repository.",
+    snippet: "TCT No. 042-2024001928",
+    glow: "radial-gradient(ellipse at 70% 50%, rgba(217,119,6,0.22), transparent 60%)",
   },
   {
     step: "03",
-    icon: Rocket,
-    title: "Ship & scale",
+    icon: Users,
+    title: "Assign agents & track deals",
     description:
-      "Deploy to Vercel with one click. Checkpoint system means you can always roll back safely.",
-    snippet: "vercel deploy --prod",
-    glow: "radial-gradient(ellipse at 70% 50%, rgba(16,185,129,0.22), transparent 60%)",
+      "Equip licensed brokers with direct contact registries, assign projects, and monitor Philippine BIR tax deadlines.",
+    snippet: "PRC Lic. #0019842 · DHSUD",
+    glow: "radial-gradient(ellipse at 70% 50%, rgba(5,150,105,0.22), transparent 60%)",
   },
 ];
 
@@ -60,7 +60,10 @@ export function HowItWorks() {
             How it works
           </span>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold text-foreground tracking-[-0.02em]">
-            <Typewriter text="Three steps to your next project" speed={40} />
+            <Typewriter
+              text="Three steps to total property control"
+              speed={40}
+            />
           </h2>
         </motion.div>
 
@@ -140,13 +143,14 @@ export function HowItWorks() {
                       <div className="p-6 font-mono text-[13px] space-y-2">
                         <div className="flex items-center gap-2">
                           <span className="text-primary">→</span>
-                          <span className="text-foreground/90">{step.snippet}</span>
-                          <span
-                            className="inline-block h-3.5 w-[6px] bg-primary"
-                          />
+                          <span className="text-foreground/90">
+                            {step.snippet}
+                          </span>
+                          <span className="inline-block h-3.5 w-[6px] bg-primary" />
                         </div>
                         <div className="text-muted-foreground/60 text-[11px] pl-4">
-                          <span className="text-emerald-400">✓</span> ready in 1.4s
+                          <span className="text-emerald-400">✓</span> ready in
+                          1.4s
                         </div>
                       </div>
                     </div>

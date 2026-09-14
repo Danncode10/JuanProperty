@@ -10,12 +10,11 @@ import { Typewriter } from "@/components/landing/typewriter";
 import { BlogPreview } from "@/components/landing/blog-preview";
 import { creatorRepos, siteConfig } from "@/lib/config";
 
-
 export default async function Home() {
   const session = await getUserProfile();
   const user = session?.user || null;
   const profile = session?.profile;
-  const profiles = await getVibeCheckData() || [];
+  const profiles = (await getVibeCheckData()) || [];
   const repos = creatorRepos;
   const jsonLd = {
     "@context": "https://schema.org",
@@ -38,7 +37,10 @@ export default async function Home() {
       {/* =============================
           FEATURES SECTION (BENTO + TABS)
           ============================= */}
-      <section id="features" className="relative bg-background isolate overflow-hidden">
+      <section
+        id="features"
+        className="relative bg-background isolate overflow-hidden"
+      >
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 bg-grid-sm opacity-50"
@@ -54,11 +56,15 @@ export default async function Home() {
               Features
             </span>
             <h2 className="mt-6 text-4xl sm:text-5xl font-semibold text-foreground tracking-[-0.02em]">
-              <Typewriter text="Everything you need to launch" speed={40} />
+              <Typewriter
+                text="Everything to manage your land & estates"
+                speed={40}
+              />
             </h2>
 
             <p className="mt-5 text-[15px] text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              One template. Every essential built in.
+              One platform. Every parcel, title deed, coordinate, and agent in
+              sync.
             </p>
           </div>
 

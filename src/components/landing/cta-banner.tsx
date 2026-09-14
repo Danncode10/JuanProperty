@@ -16,7 +16,7 @@ export function CtaBanner({ isAuthed }: CtaBannerProps) {
       style={{
         // Paint-only radial gradient — no filter:blur compositing cost
         background:
-          "radial-gradient(ellipse 900px 500px at 50% 50%, rgba(124,92,255,0.14), transparent 65%), var(--color-background)",
+          "radial-gradient(ellipse 900px 500px at 50% 50%, rgba(13,122,95,0.20), transparent 65%), var(--color-background)",
       }}
     >
       {/* Grid overlay */}
@@ -41,17 +41,20 @@ export function CtaBanner({ isAuthed }: CtaBannerProps) {
           </span>
 
           <h2 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold text-foreground tracking-[-0.03em] leading-[1]">
-            <Typewriter text="Ready to build something great?" speed={45} />
+            <Typewriter
+              text="Ready to organize your land portfolio?"
+              speed={45}
+            />
           </h2>
           <p className="mt-6 text-[15px] text-muted-foreground max-w-md mx-auto leading-relaxed">
-            Join builders using {siteConfig.name} to ship websites, apps, and
-            startup MVPs faster.
+            Join developers, brokers, and landlords using {siteConfig.name} to
+            manage land parcels, title deeds, coordinates, and agents.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href={isAuthed ? "/dashboard" : "/login"}
-              className="group flex items-center gap-2 pl-6 pr-2 py-2 text-sm font-medium rounded-full bg-foreground text-background active:scale-[0.97] transition-transform duration-200 shadow-[0_4px_20px_rgba(124,92,255,0.35),inset_0_1px_0_rgba(255,255,255,0.2)]"
+              className="group flex items-center gap-2 pl-6 pr-2 py-2 text-sm font-medium rounded-full bg-foreground text-background active:scale-[0.97] transition-transform duration-200 shadow-[0_4px_20px_rgba(16,185,129,0.35),inset_0_1px_0_rgba(255,255,255,0.2)]"
             >
               Start building
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-background/10 group-hover:bg-background/20 group-hover:translate-x-0.5 group-hover:-translate-y-[1px] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">

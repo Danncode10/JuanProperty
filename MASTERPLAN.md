@@ -16,7 +16,7 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** `.env.local` contains non-placeholder credentials, Supabase connection responds successfully, baseline migration verified.
   - **Run:** `/setup-supabase`
 
-- [ ] **`[P0.2]` Project overview applied to template UI: design direction, color system, landing-page copy, and template visual cleanup**
+- [x] **`[P0.2]` Project overview applied to template UI: design direction, color system, landing-page copy, and template visual cleanup**
   - **Goal:** Apply JuanProperty branding, Philippine real estate color palette, landing page copy, and clean up template placeholders.
   - **Dependencies:** `[P0.1]`
   - **Acceptance Criteria:** Hero and marketing sections reflect JuanProperty's real estate/land management value proposition with clean semantic tokens.

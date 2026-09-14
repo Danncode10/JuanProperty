@@ -1,42 +1,42 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand — refined purple with a touch more vibrance */
-  --color-primary: #7C5CFF;
+  /* Brand — refined Emerald Green for real estate & land */
+  --color-primary: #0d7a5f;
   --color-primary-foreground: #ffffff;
 
-  /* Page — deeper OLED-black for Linear/Vercel feel */
-  --color-background: #050507;
-  --color-foreground: #EEEAFF;
+  /* Page — deep forest obsidian */
+  --color-background: #050806;
+  --color-foreground: #edf7f2;
 
-  /* Cards / panels — slightly lifted from background */
-  --color-card: #0C0C14;
-  --color-card-foreground: #EEEAFF;
+  /* Cards / panels — lifted obsidian tone */
+  --color-card: #0a120e;
+  --color-card-foreground: #edf7f2;
 
   /* Muted (subtle backgrounds + secondary text) */
-  --color-muted: #14141F;
-  --color-muted-foreground: #8983A8;
+  --color-muted: #111f17;
+  --color-muted-foreground: #7d9b8b;
 
   /* Accent (hover / highlight states) */
-  --color-accent: #1A1330;
-  --color-accent-foreground: #EEEAFF;
+  --color-accent: #162e22;
+  --color-accent-foreground: #edf7f2;
 
   /* Secondary chips / badges */
-  --color-secondary: #14141F;
-  --color-secondary-foreground: #EEEAFF;
+  --color-secondary: #111f17;
+  --color-secondary-foreground: #edf7f2;
 
   /* Destructive / error */
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
 
   /* Popover / dropdown */
-  --color-popover: #0C0C14;
-  --color-popover-foreground: #EEEAFF;
+  --color-popover: #0a120e;
+  --color-popover-foreground: #edf7f2;
 
   /* Form elements — hairline borders */
-  --color-input: #25223D;
-  --color-ring: #7C5CFF;
-  --color-border: #1F1C33;
+  --color-input: #1c3b2c;
+  --color-ring: #10b981;
+  --color-border: #183325;
 
   /* Radius */
   --radius-5xl: 3rem;
@@ -49,8 +49,10 @@
   /* Font families — wire Geist (loaded via next/font in layout.tsx)
      into Tailwind's font-sans / font-mono utilities. Without this,
      Safari falls back to SF Pro and Chrome falls back to system. */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @layer base {
@@ -61,7 +63,10 @@
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
   }
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     text-wrap: balance;
   }
 }
@@ -77,20 +82,26 @@
 
   /* Static dot grid background — no animation */
   .bg-grid {
-    background-image:
-      radial-gradient(circle at center, rgba(124, 92, 255, 0.18) 1px, transparent 1px);
+    background-image: radial-gradient(
+      circle at center,
+      rgba(124, 92, 255, 0.18) 1px,
+      transparent 1px
+    );
     background-size: 32px 32px;
     background-position: 0 0;
   }
   .bg-grid-sm {
-    background-image:
-      radial-gradient(circle at center, rgba(238, 234, 255, 0.06) 1px, transparent 1px);
+    background-image: radial-gradient(
+      circle at center,
+      rgba(238, 234, 255, 0.06) 1px,
+      transparent 1px
+    );
     background-size: 24px 24px;
   }
 
   /* Static gradient text — no infinite animation (perf) */
   .gradient-text-primary {
-    background: linear-gradient(135deg, #B4A6FF 0%, #7C5CFF 60%, #B4A6FF 100%);
+    background: linear-gradient(135deg, #a7f3d0 0%, #10b981 60%, #34d399 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -107,11 +118,27 @@
   /* Radial fade mask — for grid edges (small elements only) */
   .mask-radial-fade {
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(
+      ellipse at center,
+      black 30%,
+      transparent 75%
+    );
   }
   .mask-vertical-fade {
-    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-    -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent
+    );
   }
 
   /* Paint-only radial fade overlay — cheaper than mask-image on large sections.
@@ -139,8 +166,14 @@
    When typing completes the component swaps to .typewriter-cursor-done
    which has no animation, so the keyframe stops consuming CPU. */
 @keyframes blink-cursor {
-  0%, 50% { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
 }
 .typewriter-cursor,
 .typewriter-cursor-done {
@@ -222,7 +255,11 @@ img {
 }
 
 /* Ensure proper line heights on Safari */
-h2, h3, h4, h5, h6 {
+h2,
+h3,
+h4,
+h5,
+h6 {
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -webkit-text-stroke-color: transparent;
@@ -235,16 +272,50 @@ h2, h3, h4, h5, h6 {
   max-width: 68ch;
   line-height: 1.75;
 }
-.prose h1 { font-size: 2rem; font-weight: 700; margin: 1.5rem 0 1rem; line-height: 1.2; }
-.prose h2 { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 0.75rem; line-height: 1.3; }
-.prose h3 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; line-height: 1.4; }
-.prose p  { margin: 0.875rem 0; }
-.prose ul { list-style-type: disc; padding-left: 1.5rem; margin: 0.875rem 0; }
-.prose ol { list-style-type: decimal; padding-left: 1.5rem; margin: 0.875rem 0; }
-.prose li { margin: 0.25rem 0; }
-.prose a  { color: var(--color-primary); text-decoration: underline; }
-.prose strong { font-weight: 700; }
-.prose em { font-style: italic; }
+.prose h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem;
+  line-height: 1.2;
+}
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem;
+  line-height: 1.3;
+}
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  line-height: 1.4;
+}
+.prose p {
+  margin: 0.875rem 0;
+}
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 0.875rem 0;
+}
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin: 0.875rem 0;
+}
+.prose li {
+  margin: 0.25rem 0;
+}
+.prose a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+.prose strong {
+  font-weight: 700;
+}
+.prose em {
+  font-style: italic;
+}
 .prose blockquote {
   border-left: 3px solid var(--color-primary);
   padding-left: 1rem;
@@ -268,14 +339,50 @@ h2, h3, h4, h5, h6 {
   overflow-x: auto;
   margin: 1.25rem 0;
 }
-.prose pre code { background: none; border: none; padding: 0; font-size: 0.875em; }
-.prose img { max-width: 100%; border-radius: 0.75rem; margin: 1.25rem 0; }
-.prose iframe { border-radius: 0.75rem; width: 100%; aspect-ratio: 16/9; margin: 1.25rem 0; }
-.prose hr { border-color: var(--color-border); margin: 2rem 0; }
-.prose table { width: 100%; border-collapse: collapse; margin: 1.25rem 0; font-size: 0.9em; }
-.prose th { background: var(--color-muted); border: 1px solid var(--color-border); padding: 0.6rem 0.875rem; text-align: left; font-weight: 600; color: var(--color-foreground); }
-.prose td { border: 1px solid var(--color-border); padding: 0.6rem 0.875rem; color: var(--color-foreground); vertical-align: top; }
-.prose tr:nth-child(even) td { background: var(--color-card); }
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.875em;
+}
+.prose img {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  margin: 1.25rem 0;
+}
+.prose iframe {
+  border-radius: 0.75rem;
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin: 1.25rem 0;
+}
+.prose hr {
+  border-color: var(--color-border);
+  margin: 2rem 0;
+}
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.9em;
+}
+.prose th {
+  background: var(--color-muted);
+  border: 1px solid var(--color-border);
+  padding: 0.6rem 0.875rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+.prose td {
+  border: 1px solid var(--color-border);
+  padding: 0.6rem 0.875rem;
+  color: var(--color-foreground);
+  vertical-align: top;
+}
+.prose tr:nth-child(even) td {
+  background: var(--color-card);
+}
 
 /* ─── TipTap Editor — base + content styles ─────────────────────────────── */
 .ProseMirror {
@@ -288,7 +395,9 @@ h2, h3, h4, h5, h6 {
 }
 
 /* Remove top margin from the very first block so it sits flush */
-.ProseMirror > *:first-child { margin-top: 0 !important; }
+.ProseMirror > *:first-child {
+  margin-top: 0 !important;
+}
 
 /* Block guides — each top-level block gets a faint divider + hover highlight   */
 /* so it's clear where each editable section is (editor only, not published).   */
@@ -301,17 +410,55 @@ h2, h3, h4, h5, h6 {
   border-bottom: 1px solid var(--color-border);
   transition: background 0.12s ease;
 }
-.ProseMirror > *:last-child { border-bottom: none; }
-.ProseMirror > *:hover { background: var(--color-card); }
+.ProseMirror > *:last-child {
+  border-bottom: none;
+}
+.ProseMirror > *:hover {
+  background: var(--color-card);
+}
 
-.ProseMirror h1 { font-size: 1.875rem; font-weight: 700; color: var(--color-foreground); margin: 1.75rem 0 0.75rem; line-height: 1.2; }
-.ProseMirror h2 { font-size: 1.5rem;   font-weight: 700; color: var(--color-foreground); margin: 1.5rem  0 0.625rem; line-height: 1.3; }
-.ProseMirror h3 { font-size: 1.25rem;  font-weight: 600; color: var(--color-foreground); margin: 1.25rem 0 0.5rem;   line-height: 1.4; }
-.ProseMirror p  { color: var(--color-foreground); margin-bottom: 1rem; line-height: 1.8; }
+.ProseMirror h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  margin: 1.75rem 0 0.75rem;
+  line-height: 1.2;
+}
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-foreground);
+  margin: 1.5rem 0 0.625rem;
+  line-height: 1.3;
+}
+.ProseMirror h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-foreground);
+  margin: 1.25rem 0 0.5rem;
+  line-height: 1.4;
+}
+.ProseMirror p {
+  color: var(--color-foreground);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
 
-.ProseMirror ul { list-style-type: disc;    padding-left: 1.5rem; margin-bottom: 1rem; color: var(--color-foreground); }
-.ProseMirror ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; color: var(--color-foreground); }
-.ProseMirror li { margin-bottom: 0.375rem; }
+.ProseMirror ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-foreground);
+}
+.ProseMirror ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-foreground);
+}
+.ProseMirror li {
+  margin-bottom: 0.375rem;
+}
 
 .ProseMirror blockquote {
   border-left: 3px solid var(--color-primary);
@@ -337,10 +484,25 @@ h2, h3, h4, h5, h6 {
   margin-bottom: 1rem;
   overflow-x: auto;
 }
-.ProseMirror pre code { background: none; padding: 0; border-radius: 0; }
+.ProseMirror pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
 
-.ProseMirror img    { border-radius: 0.75rem; max-width: 100%; margin-bottom: 1rem; display: block; }
-.ProseMirror iframe { border-radius: 0.75rem; width: 100%; aspect-ratio: 16/9; margin-bottom: 1rem; display: block; }
+.ProseMirror img {
+  border-radius: 0.75rem;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  display: block;
+}
+.ProseMirror iframe {
+  border-radius: 0.75rem;
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin-bottom: 1rem;
+  display: block;
+}
 
 /* Placeholder — works for paragraphs AND headings */
 .ProseMirror p.is-empty::before,

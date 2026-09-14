@@ -19,8 +19,8 @@ interface HeroProps {
   isAuthed: boolean;
 }
 
-const HERO_HEADLINE = "The AI-native starter for shipping faster.";
-const HERO_TYPING_SPEED = 70; // ~3s total for 42-char headline
+const HERO_HEADLINE = "Manage Land, Projects, and Titles with ease.";
+const HERO_TYPING_SPEED = 65;
 
 export function Hero({ isAuthed }: HeroProps) {
   const [typingDone, setTypingDone] = useState(false);
@@ -73,178 +73,178 @@ export function Hero({ isAuthed }: HeroProps) {
 
   return (
     <>
-    <section
-      id="home"
-      className="relative isolate min-h-[100dvh] overflow-hidden bg-background pt-16 pb-32 md:pt-24 md:pb-44"
-    >
-      {/* The poster is immediate and remains the visual fallback. The video
+      <section
+        id="home"
+        className="relative isolate min-h-[100dvh] overflow-hidden bg-background pt-16 pb-32 md:pt-24 md:pb-44"
+      >
+        {/* The poster is immediate and remains the visual fallback. The video
           starts only after the headline has completed typing. */}
-      <div aria-hidden className="absolute inset-0 -z-20">
-        <Image
-          src="/hero-poster.avif"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[85%_center] brightness-110 contrast-[1.03] sm:object-[62%_center]"
-        />
-      </div>
-      <HeroVideoBackground enabled={videoEnabled} />
-
-      {/* A light, consistent treatment preserves text legibility without
-          burying the poster or video beneath two heavy overlays. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-background/80 via-background/45 to-background/10 sm:from-background/85 sm:via-background/55 sm:to-background/15"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background/30 via-transparent to-background/55 sm:from-background/35 sm:to-background/60"
-      />
-
-      {/* Static dot grid */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 bg-grid opacity-25"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 grid-fade-overlay opacity-40 sm:opacity-100"
-      />
-
-      {/* Ambient particles set the intro apart, then recede for the video. */}
-      <WaterParticles active={!typingDone} count={140} />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Microcopy link — blurred while typing, clears after */}
-        <motion.a
-          href="/#features"
-          initial={{ opacity: 0.35, filter: "blur(8px)" }}
-          animate={
-            typingDone
-              ? { opacity: 1, filter: "blur(0px)" }
-              : { opacity: 0.35, filter: "blur(8px)" }
-          }
-          transition={{
-            duration: 0.7,
-            delay: typingDone ? 0 : 0,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="group inline-flex items-center gap-2 text-[13px] text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <span className="flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-2 py-0.5 text-[10px] font-semibold text-primary uppercase tracking-[0.15em]">
-            New
-          </span>
-          <span>Secure Supabase templates for focused projects</span>
-          <ArrowRight className="h-3 w-3 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1" />
-        </motion.a>
-
-        {/* Headline — typewriter reveal (~3s total) */}
-        <h1 className="mt-8 max-w-[18ch] text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5rem] font-semibold tracking-[-0.035em] leading-[0.98] text-foreground">
-          <Typewriter
-            text={HERO_HEADLINE}
-            speed={HERO_TYPING_SPEED}
-            delay={200}
-            onComplete={handleTypingComplete}
-            skipAnimation={typingDone}
-            highlight={{ start: 4, end: 21 }}
+        <div aria-hidden className="absolute inset-0 -z-20">
+          <Image
+            src="/hero-poster.avif"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[85%_center] brightness-110 contrast-[1.03] sm:object-[62%_center]"
           />
-        </h1>
+        </div>
+        <HeroVideoBackground enabled={videoEnabled} />
 
-        {/* Subtitle — visible but blurred during typing, clears after */}
-        <motion.p
-          initial={{ opacity: 0.35, filter: "blur(10px)" }}
-          animate={
-            typingDone
-              ? { opacity: 1, filter: "blur(0px)" }
-              : { opacity: 0.35, filter: "blur(10px)" }
-          }
-          transition={{
-            duration: 0.8,
-            delay: typingDone ? 0.05 : 0,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="mt-8 max-w-xl text-[17px] text-muted-foreground leading-relaxed"
-        >
-          A production-grade Next.js + Supabase template with project-scoped
-          RLS, type-safe services, and an AI-driven workflow that turns
-          natural language into shipped features.
-        </motion.p>
+        {/* A light, consistent treatment preserves text legibility without
+          burying the poster or video beneath two heavy overlays. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-background/80 via-background/45 to-background/10 sm:from-background/85 sm:via-background/55 sm:to-background/15"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-background/30 via-transparent to-background/55 sm:from-background/35 sm:to-background/60"
+        />
 
-        {/* CTAs — visible but blurred during typing, pops in after */}
-        <motion.div
-          initial={{ opacity: 0.35, filter: "blur(10px)" }}
-          animate={
-            typingDone
-              ? { opacity: 1, filter: "blur(0px)" }
-              : { opacity: 0.35, filter: "blur(10px)" }
-          }
-          transition={{
-            duration: 0.8,
-            delay: typingDone ? 0.18 : 0,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7"
-        >
-          <MagneticCTA href={isAuthed ? "/dashboard" : "/login"}>
-            Get started free
-          </MagneticCTA>
+        {/* Static dot grid */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-grid opacity-25"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 grid-fade-overlay opacity-40 sm:opacity-100"
+        />
 
-          <a
-            href={siteConfig.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-[14px] font-medium text-foreground/90 hover:text-foreground transition-colors"
+        {/* Ambient particles set the intro apart, then recede for the video. */}
+        <WaterParticles active={!typingDone} count={140} />
+
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Microcopy link — blurred while typing, clears after */}
+          <motion.a
+            href="/#features"
+            initial={{ opacity: 0.35, filter: "blur(8px)" }}
+            animate={
+              typingDone
+                ? { opacity: 1, filter: "blur(0px)" }
+                : { opacity: 0.35, filter: "blur(8px)" }
+            }
+            transition={{
+              duration: 0.7,
+              delay: typingDone ? 0 : 0,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="group inline-flex items-center gap-2 text-[13px] text-muted-foreground hover:text-foreground transition-colors"
           >
-            <GitHubIcon className="h-3.5 w-3.5" />
-            <span className="border-b border-white/[0.15] group-hover:border-white/[0.4] transition-colors pb-0.5">
-              View on GitHub
+            <span className="flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-[10px] font-semibold text-primary uppercase tracking-[0.15em]">
+              JuanProperty
             </span>
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </a>
-        </motion.div>
+            <span>Unified Philippine Real Estate & Land Management</span>
+            <ArrowRight className="h-3 w-3 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1" />
+          </motion.a>
 
-        {/* Customer logo strip — blurred during typing, clears after */}
-        <motion.div
-          initial={{ opacity: 0.3, filter: "blur(10px)" }}
-          animate={
-            typingDone
-              ? { opacity: 1, filter: "blur(0px)" }
-              : { opacity: 0.3, filter: "blur(10px)" }
-          }
-          transition={{
-            duration: 0.8,
-            delay: typingDone ? 0.32 : 0,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          className="mt-16 flex flex-col gap-5"
-        >
-          <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground/60">
-            Built for teams shipping production software
-          </p>
-          {/* Grid (not flex) for universal gap support across browsers */}
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-8 gap-y-4 max-w-2xl">
-            {[
-              "Vercel",
-              "Supabase",
-              "Tailwind",
-              "Shadcn",
-              "TanStack",
-              "Upstash",
-            ].map((logo) => (
-              <span
-                key={logo}
-                className="text-[15px] font-semibold tracking-tight text-foreground/40 hover:text-foreground/70 transition-colors duration-300 cursor-default text-center sm:text-left"
-              >
-                {logo}
+          {/* Headline — typewriter reveal (~3s total) */}
+          <h1 className="mt-8 max-w-[18ch] text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5rem] font-semibold tracking-[-0.035em] leading-[0.98] text-foreground">
+            <Typewriter
+              text={HERO_HEADLINE}
+              speed={HERO_TYPING_SPEED}
+              delay={200}
+              onComplete={handleTypingComplete}
+              skipAnimation={typingDone}
+              highlight={{ start: 7, end: 31 }}
+            />
+          </h1>
+
+          {/* Subtitle — visible but blurred during typing, clears after */}
+          <motion.p
+            initial={{ opacity: 0.35, filter: "blur(10px)" }}
+            animate={
+              typingDone
+                ? { opacity: 1, filter: "blur(0px)" }
+                : { opacity: 0.35, filter: "blur(10px)" }
+            }
+            transition={{
+              duration: 0.8,
+              delay: typingDone ? 0.05 : 0,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="mt-8 max-w-xl text-[17px] text-muted-foreground leading-relaxed"
+          >
+            Centralized portfolio management for Philippine real estate
+            developers, brokers, and landlords. Secure land title vaults, GPS
+            coordinate mapping, agent contact registries, and BIR tax
+            compliance.
+          </motion.p>
+
+          {/* CTAs — visible but blurred during typing, pops in after */}
+          <motion.div
+            initial={{ opacity: 0.35, filter: "blur(10px)" }}
+            animate={
+              typingDone
+                ? { opacity: 1, filter: "blur(0px)" }
+                : { opacity: 0.35, filter: "blur(10px)" }
+            }
+            transition={{
+              duration: 0.8,
+              delay: typingDone ? 0.18 : 0,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7"
+          >
+            <MagneticCTA href={isAuthed ? "/dashboard" : "/login"}>
+              Get started free
+            </MagneticCTA>
+
+            <a
+              href={siteConfig.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 text-[14px] font-medium text-foreground/90 hover:text-foreground transition-colors"
+            >
+              <GitHubIcon className="h-3.5 w-3.5" />
+              <span className="border-b border-white/[0.15] group-hover:border-white/[0.4] transition-colors pb-0.5">
+                View on GitHub
               </span>
-            ))}
-          </div>
-        </motion.div>
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </motion.div>
 
-      </div>
-    </section>
-    <ProductPreview typingDone={typingDone} />
+          {/* Customer logo strip — blurred during typing, clears after */}
+          <motion.div
+            initial={{ opacity: 0.3, filter: "blur(10px)" }}
+            animate={
+              typingDone
+                ? { opacity: 1, filter: "blur(0px)" }
+                : { opacity: 0.3, filter: "blur(10px)" }
+            }
+            transition={{
+              duration: 0.8,
+              delay: typingDone ? 0.32 : 0,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="mt-16 flex flex-col gap-5"
+          >
+            <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground/60">
+              Built for Philippine Real Estate & Land Teams
+            </p>
+            {/* Grid (not flex) for universal gap support across browsers */}
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-8 gap-y-4 max-w-2xl">
+              {[
+                "Land Parcels",
+                "Title Deeds",
+                "GPS Coordinates",
+                "Agent Directory",
+                "Owner Registry",
+                "BIR Tax Tools",
+              ].map((logo) => (
+                <span
+                  key={logo}
+                  className="text-[14px] font-semibold tracking-tight text-foreground/50 hover:text-foreground/80 transition-colors duration-300 cursor-default text-center sm:text-left"
+                >
+                  {logo}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+      <ProductPreview typingDone={typingDone} />
     </>
   );
 }
@@ -290,7 +290,7 @@ function HeroVideoBackground({ enabled }: HeroVideoBackgroundProps) {
     // becomes ready. It is revealed only after the typewriter completes.
     playVideo();
     const retryTimers = [100, 400, 1_000].map((delay) =>
-      window.setTimeout(playVideo, delay)
+      window.setTimeout(playVideo, delay),
     );
     document.addEventListener("visibilitychange", playVideo);
     return () => {
@@ -306,7 +306,10 @@ function HeroVideoBackground({ enabled }: HeroVideoBackgroundProps) {
     if (!document.hidden) {
       video.muted = true;
       video.setAttribute("muted", "");
-      void video.play().then(() => setIsReady(true)).catch(() => undefined);
+      void video
+        .play()
+        .then(() => setIsReady(true))
+        .catch(() => undefined);
     }
   };
 
@@ -355,7 +358,7 @@ function canUseHeroVideo() {
   if (typeof window === "undefined") return false;
 
   const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
+    "(prefers-reduced-motion: reduce)",
   ).matches;
   const connection = (
     navigator as Navigator & {
@@ -373,11 +376,22 @@ function canUseHeroVideo() {
 
 function ProductPreview({ typingDone }: { typingDone: boolean }) {
   return (
-    <section className="relative bg-background px-4 py-20 sm:px-6 md:py-28 lg:px-8" aria-label="Product preview">
+    <section
+      className="relative bg-background px-4 py-20 sm:px-6 md:py-28 lg:px-8"
+      aria-label="Product preview"
+    >
       <motion.div
         initial={{ opacity: 0.2, filter: "blur(14px)" }}
-        animate={typingDone ? { opacity: 1, filter: "blur(0px)" } : { opacity: 0.2, filter: "blur(14px)" }}
-        transition={{ duration: 1, delay: typingDone ? 0.5 : 0, ease: [0.34, 1.3, 0.64, 1] }}
+        animate={
+          typingDone
+            ? { opacity: 1, filter: "blur(0px)" }
+            : { opacity: 0.2, filter: "blur(14px)" }
+        }
+        transition={{
+          duration: 1,
+          delay: typingDone ? 0.5 : 0,
+          ease: [0.34, 1.3, 0.64, 1],
+        }}
         className="mx-auto max-w-7xl"
         style={{ perspective: "1500px" }}
       >
@@ -391,7 +405,9 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
               </div>
               <div className="flex items-center gap-2 rounded-md border border-white/[0.04] bg-white/[0.03] px-2 py-1 sm:px-3">
                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                <span className="text-[9px] font-mono text-muted-foreground sm:text-[10px]">{siteConfig.name}.app/dashboard</span>
+                <span className="text-[9px] font-mono text-muted-foreground sm:text-[10px]">
+                  {siteConfig.name}.app/dashboard
+                </span>
               </div>
               <div className="w-6 sm:w-12" />
             </div>
@@ -400,9 +416,14 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
               <div className="grid min-w-[42rem] grid-cols-12 gap-3 p-4 sm:p-5">
                 <div className="col-span-3 space-y-2">
                   {[Terminal, Database, Shield, Zap].map((Icon, index) => (
-                    <div key={index} className={`flex items-center gap-2 rounded-lg px-3 py-2 text-[11px] ${index === 0 ? "border border-primary/20 bg-primary/10 text-primary" : "text-muted-foreground"}`}>
+                    <div
+                      key={index}
+                      className={`flex items-center gap-2 rounded-lg px-3 py-2 text-[11px] ${index === 0 ? "border border-primary/20 bg-primary/10 text-primary" : "text-muted-foreground"}`}
+                    >
                       <Icon className="h-3 w-3" strokeWidth={1.5} />
-                      <span className="font-medium">{["Overview", "Database", "Auth", "API"][index]}</span>
+                      <span className="font-medium">
+                        {["Overview", "Database", "Auth", "API"][index]}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -414,38 +435,75 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
                       { label: "Active orgs", val: "1,247", delta: "+8.2%" },
                       { label: "Uptime", val: "99.99%", delta: "30d" },
                     ].map((stat) => (
-                      <div key={stat.label} className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-                        <p className="text-[9px] uppercase tracking-[0.15em] text-muted-foreground">{stat.label}</p>
-                        <p className="mt-1.5 text-base font-semibold tabular-nums text-foreground">{stat.val}</p>
-                        <p className="mt-0.5 font-mono text-[9px] text-emerald-400">{stat.delta}</p>
+                      <div
+                        key={stat.label}
+                        className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-3"
+                      >
+                        <p className="text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
+                          {stat.label}
+                        </p>
+                        <p className="mt-1.5 text-base font-semibold tabular-nums text-foreground">
+                          {stat.val}
+                        </p>
+                        <p className="mt-0.5 font-mono text-[9px] text-emerald-400">
+                          {stat.delta}
+                        </p>
                       </div>
                     ))}
                   </div>
 
                   <div className="relative h-32 overflow-hidden rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
-                    <p className="mb-2 text-[9px] uppercase tracking-[0.15em] text-muted-foreground">Revenue · last 12 weeks</p>
+                    <p className="mb-2 text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
+                      Revenue · last 12 weeks
+                    </p>
                     <div className="flex h-16 items-end justify-between gap-1">
-                      {[40, 60, 35, 75, 55, 85, 70, 90, 65, 80, 50, 95].map((height, index) => (
-                        <div key={index} style={{ height: `${height}%` }} className="flex-1 rounded-sm bg-gradient-to-t from-primary/40 to-primary/80" />
-                      ))}
+                      {[40, 60, 35, 75, 55, 85, 70, 90, 65, 80, 50, 95].map(
+                        (height, index) => (
+                          <div
+                            key={index}
+                            style={{ height: `${height}%` }}
+                            className="flex-1 rounded-sm bg-gradient-to-t from-primary/40 to-primary/80"
+                          />
+                        ),
+                      )}
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
                     {[
-                      { user: "stripe-checkout", action: "POST /api/webhooks · 200 OK" },
-                      { user: "auth.signIn", action: "INSERT auth.sessions · RLS pass" },
-                      { user: "pages.update", action: "UPDATE pages · org_id matched" },
+                      {
+                        user: "stripe-checkout",
+                        action: "POST /api/webhooks · 200 OK",
+                      },
+                      {
+                        user: "auth.signIn",
+                        action: "INSERT auth.sessions · RLS pass",
+                      },
+                      {
+                        user: "pages.update",
+                        action: "UPDATE pages · org_id matched",
+                      },
                     ].map((row, index) => (
-                      <div key={index} className="flex items-center justify-between rounded-lg border border-white/[0.03] bg-white/[0.015] p-2.5">
+                      <div
+                        key={index}
+                        className="flex items-center justify-between rounded-lg border border-white/[0.03] bg-white/[0.015] p-2.5"
+                      >
                         <div className="flex items-center gap-2.5">
-                          <span className="rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-emerald-400">ok</span>
+                          <span className="rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-emerald-400">
+                            ok
+                          </span>
                           <div>
-                            <p className="font-mono text-[10px] text-foreground">{row.user}</p>
-                            <p className="text-[9px] text-muted-foreground">{row.action}</p>
+                            <p className="font-mono text-[10px] text-foreground">
+                              {row.user}
+                            </p>
+                            <p className="text-[9px] text-muted-foreground">
+                              {row.action}
+                            </p>
                           </div>
                         </div>
-                        <span className="font-mono text-[9px] text-muted-foreground">{12 + index}ms</span>
+                        <span className="font-mono text-[9px] text-muted-foreground">
+                          {12 + index}ms
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -463,7 +521,13 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
    Magnetic CTA — button gently follows the cursor
    GPU-only (transform), rAF-throttled, no shadow animation.
    ───────────────────────────────────────────── */
-function MagneticCTA({ href, children }: { href: string; children: React.ReactNode }) {
+function MagneticCTA({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   const ref = useRef<HTMLAnchorElement>(null);
   const frame = useRef<number | null>(null);
 
@@ -498,7 +562,7 @@ function MagneticCTA({ href, children }: { href: string; children: React.ReactNo
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ willChange: "transform" }}
-      className="group inline-flex items-center gap-2 pl-6 pr-2 py-2 text-sm font-medium rounded-full bg-foreground text-background active:scale-[0.97] transition-transform duration-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_4px_20px_rgba(124,92,255,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]"
+      className="group inline-flex items-center gap-2 pl-6 pr-2 py-2 text-sm font-medium rounded-full bg-foreground text-background active:scale-[0.97] transition-transform duration-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] shadow-[0_4px_20px_rgba(16,185,129,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]"
     >
       {children}
       <span className="flex h-8 w-8 items-center justify-center rounded-full bg-background/10 group-hover:bg-background/20 transition-colors duration-200">
@@ -538,7 +602,8 @@ function TiltCard({ children }: { children: React.ReactNode }) {
       cancelAnimationFrame(frame.current);
       frame.current = null;
     }
-    if (ref.current) ref.current.style.transform = "rotateX(0deg) rotateY(0deg)";
+    if (ref.current)
+      ref.current.style.transform = "rotateX(0deg) rotateY(0deg)";
   };
 
   return (

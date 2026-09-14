@@ -7,14 +7,20 @@ import { siteConfig } from "@/lib/config";
 import { isFeatureEnabled } from "@/lib/dashboard-features";
 import { signOut } from "@/services/auth";
 import { useRouter } from "next/navigation";
-import { LogOut, LayoutDashboard, Settings, ChevronDown, ArrowUpRight } from "lucide-react";
+import {
+  LogOut,
+  LayoutDashboard,
+  Settings,
+  ChevronDown,
+  ArrowUpRight,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import type { User } from "@supabase/supabase-js";
@@ -65,7 +71,7 @@ export function Navbar({ user }: { user: User | null }) {
           style={{ transform: "translateZ(0)" }}
           className={`pointer-events-auto mt-4 flex items-center gap-1 rounded-full border border-white/[0.08] bg-[#0A0A12]/95 px-1.5 py-1.5 transition-shadow duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] inner-highlight ${
             scrolled
-              ? "shadow-[0_8px_32px_-8px_rgba(0,0,0,0.7),0_0_0_1px_rgba(124,92,255,0.1)]"
+              ? "shadow-[0_8px_32px_-8px_rgba(0,0,0,0.7),0_0_0_1px_rgba(16,185,129,0.15)]"
               : "shadow-[0_4px_16px_-4px_rgba(0,0,0,0.5)]"
           }`}
         >
@@ -74,8 +80,10 @@ export function Navbar({ user }: { user: User | null }) {
             href="/#home"
             className="group flex items-center gap-2 pl-3 pr-4 py-1.5 rounded-full hover:bg-white/[0.03] transition-colors"
           >
-            <div className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-[#5B3FE0] shadow-[0_2px_8px_rgba(124,92,255,0.4),inset_0_1px_0_rgba(255,255,255,0.2)]">
-              <span className="text-[11px] font-black text-primary-foreground">D</span>
+            <div className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-emerald-600 shadow-[0_2px_8px_rgba(13,122,95,0.4),inset_0_1px_0_rgba(255,255,255,0.2)]">
+              <span className="text-[11px] font-black text-primary-foreground">
+                J
+              </span>
             </div>
             <span className="text-sm font-semibold tracking-tight text-foreground">
               {siteConfig.name}
@@ -106,7 +114,7 @@ export function Navbar({ user }: { user: User | null }) {
               <DropdownMenu>
                 <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] active:scale-[0.97] transition-all duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] pl-1 pr-3 py-1 border border-white/[0.06]">
                   <Avatar className="h-6 w-6 ring-1 ring-white/10">
-                    <AvatarFallback className="bg-gradient-to-br from-primary to-[#5B3FE0] text-primary-foreground font-black text-[9px]">
+                    <AvatarFallback className="bg-gradient-to-br from-primary to-emerald-600 text-primary-foreground font-black text-[9px]">
                       {user.email?.[0].toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -122,7 +130,9 @@ export function Navbar({ user }: { user: User | null }) {
                       <p className="text-[10px] font-bold text-foreground uppercase tracking-[0.15em] truncate">
                         {user.email?.split("@")[0]}
                       </p>
-                      <p className="text-[10px] text-muted-foreground font-mono truncate">{user.email}</p>
+                      <p className="text-[10px] text-muted-foreground font-mono truncate">
+                        {user.email}
+                      </p>
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -227,7 +237,11 @@ export function Navbar({ user }: { user: User | null }) {
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: 0.35,
+                  delay: 0.2,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className="mt-6 flex flex-col gap-3"
               >
                 {user ? (
