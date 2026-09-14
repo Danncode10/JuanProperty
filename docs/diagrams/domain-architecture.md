@@ -33,6 +33,22 @@ classDiagram
         +deleteUserChat(chatId)
     }
 
+    class PropertyService {
+        +listProjects(orgId)
+        +getParcelDetails(parcelId)
+        +updateParcelCoordinates(parcelId, lat, lng, polygon)
+    }
+
+    class TitleVaultService {
+        +uploadDocument(parcelId, file, docType)
+        +verifyDocument(documentId, status)
+    }
+
+    class BirTaxService {
+        +calculateCWT(amount, rate)
+        +logTaxFiling(transactionId, formType, amount)
+    }
+
     class ServiceLayerBoundary {
         <<Interface>>
         +All DB queries isolated here
@@ -54,19 +70,59 @@ classDiagram
         +timestamptz created_at
     }
 
-    class AiChatsTable {
-        +text id PK
+    class ProjectsTable {
+        +uuid id PK
         +uuid organization_id FK
-        +uuid user_id FK
-        +text title
-        +timestamptz updated_at
+        +text name
+        +text location
+        +text status
     }
 
-    class AiMessagesTable {
-        +text id PK
-        +text chat_id FK
-        +text role
-        +jsonb parts
+    class ParcelsTable {
+        +uuid id PK
+        +uuid project_id FK
+        +uuid organization_id FK
+        +text lot_number
+        +numeric area_sqm
+        +numeric latitude
+        +numeric longitude
+        +jsonb boundary_coordinates
+        +text status
+    }
+
+    class TitleDocumentsTable {
+        +uuid id PK
+        +uuid parcel_id FK
+        +text document_type
+        +text document_number
+        +text storage_path
+        +text verification_status
+    }
+
+    class OwnersTable {
+        +uuid id PK
+        +uuid organization_id FK
+        +text full_name
+        +text contact_number
+        +text tin
+    }
+
+    class AgentsTable {
+        +uuid id PK
+        +uuid organization_id FK
+        +text full_name
+        +text prc_license_number
+        +text dhsud_number
+        +text phone
+    }
+
+    class BirTaxRecordsTable {
+        +uuid id PK
+        +uuid organization_id FK
+        +uuid parcel_id FK
+        +text form_type
+        +numeric tax_due
+        +date deadline
     }
 
     class ProfilesTable {
@@ -84,26 +140,37 @@ classDiagram
 
     %% Relationships
     NextJS_AppPage --> AuthService : invokes
-    NextJS_AppPage --> ProfileService : invokes
-    NextJS_AppPage --> AiChatService : invokes
-    AuthService ..|> ServiceLayerBoundary
-    ProfileService ..|> ServiceLayerBoundary
-    AiChatService ..|> ServiceLayerBoundary
+    NextJS_AppPage --> PropertyService : invokes
+    NextJS_AppPage --> TitleVaultService : invokes
+    NextJS_AppPage --> BirTaxService : invokes
 
-    ProfileService --> SupabaseTypes : uses strict types
-    AuthService --> SupabaseTypes : uses strict types
-    AiChatService --> SupabaseTypes : uses strict types
+    AuthService ..|> ServiceLayerBoundary
+    PropertyService ..|> ServiceLayerBoundary
+    TitleVaultService ..|> ServiceLayerBoundary
+    BirTaxService ..|> ServiceLayerBoundary
+
+    PropertyService --> SupabaseTypes : uses strict types
+    TitleVaultService --> SupabaseTypes : uses strict types
+    BirTaxService --> SupabaseTypes : uses strict types
 
     SupabaseTypes --> OrganizationsTable : maps schema
-    SupabaseTypes --> AiChatsTable : maps schema
-    SupabaseTypes --> AiMessagesTable : maps schema
+    SupabaseTypes --> ProjectsTable : maps schema
+    SupabaseTypes --> ParcelsTable : maps schema
+    SupabaseTypes --> TitleDocumentsTable : maps schema
+    SupabaseTypes --> OwnersTable : maps schema
+    SupabaseTypes --> AgentsTable : maps schema
+    SupabaseTypes --> BirTaxRecordsTable : maps schema
     SupabaseTypes --> ProfilesTable : maps schema
     SupabaseTypes --> AuthUsersTable : maps schema
 
     AuthUsersTable "1" -- "1" ProfilesTable : triggers on insert
     AuthUsersTable "1" -- "1" OrganizationsTable : triggers on insert
-    OrganizationsTable "1" -- "*" AiChatsTable : tenant boundary
-    AiChatsTable "1" -- "*" AiMessagesTable : cascade delete
+    OrganizationsTable "1" -- "*" ProjectsTable : tenant boundary
+    OrganizationsTable "1" -- "*" OwnersTable : tenant boundary
+    OrganizationsTable "1" -- "*" AgentsTable : tenant boundary
+    ProjectsTable "1" -- "*" ParcelsTable : contains
+    ParcelsTable "1" -- "*" TitleDocumentsTable : document vault
+    ParcelsTable "1" -- "*" BirTaxRecordsTable : tax tracking
 ```
 
 ---

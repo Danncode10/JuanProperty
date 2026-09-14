@@ -1,29 +1,69 @@
-# Design Document
+# Design Document — JuanProperty
 
-**Project Name:** [Your Project Name] (Built on DannFlow)
-**Date:** [YYYY-MM-DD]
-
-> **⚠️ REPOSITORY MODE RULE:**
->
-> - If you are in the `DannFlow` template repository, **DO NOT** add specific product diagrams or custom architectural plans here. Keep this file as the generic baseline linking to the standard DannFlow diagrams.
-> - If you are in a **Project Mode** repository (built from DannFlow), you **MUST** update this file to reflect your specific application's UML diagrams and structural plans.
+**Project Name:** JuanProperty (Built on DannFlow)  
+**Vertical:** Philippine Real Estate & Land Management (`vertical_id: property`)  
+**Design System:** Emerald Forest & Earth Gold  
+**Date:** 2026-09-14  
+**Status:** Approved Baseline
 
 ---
 
-## 1. System Architecture Diagrams
+## 1. Design Philosophy & Aesthetic Direction
 
-This document archives the primary structural plans and UML diagrams for the system.
+JuanProperty is designed specifically for high-value Philippine real estate and land transactions. The aesthetic fuses **prestige corporate security** with **field-ready utility**:
 
-### DannFlow Baseline Diagrams
+- **Emerald Forest Theme:** Deep natural greens (`#0D7A5F`, `#10B981`) symbolize fertile land, property development, and sustained asset growth.
+- **Earth Gold Accents:** Warm golden tones (`#D97706`, `#F59E0B`) indicate legal authenticity, title certificates, and high-value capital assets.
+- **Obsidian Forest Void:** Ultra-dark background (`#050806`) provides zero glare for outdoor daylight inspections while maintaining battery efficiency on OLED mobile devices.
+- **High-Density Typography:** Crisp Geist Sans and Geist Mono pairing for tabular land data, coordinates, and survey numbers.
 
-The following baseline architectural diagrams apply to the core DannFlow infrastructure:
+---
 
-- **[Use Case Diagram](../diagrams/use-case-diagram.md):** Maps out actors and their interactions with the system.
-- **[Activity & Workflow Diagrams](../diagrams/activity-workflows.md):** Details sequence and activity flows (e.g., Auth, Task Lifecycle).
-- **[Domain & Service Architecture](../diagrams/domain-architecture.md):** Visualizes the service layer and entity models.
+## 2. Semantic Color Palette (`src/app/globals.css`)
 
-## 2. Project-Specific Diagrams
+All components utilize semantic design tokens. Hardcoded hex values in component markup are strictly prohibited.
 
-_(Add or embed your custom system flowcharts, UML diagrams, state machines, or sequence diagrams below.)_
+| Token                      | Value               | Purpose                                                        |
+| :------------------------- | :------------------ | :------------------------------------------------------------- |
+| `--color-primary`          | `#0D7A5F`           | Primary interactive buttons, active indicators, and highlights |
+| `--color-ring`             | `#10B981`           | Focus states, glowing outlines, active tab borders             |
+| `--color-background`       | `#050806`           | Root body background (deep obsidian forest)                    |
+| `--color-card`             | `#0A120E`           | Bento boxes, form wrappers, modal backgrounds                  |
+| `--color-border`           | `#183325`           | Structural dividers and input borders                          |
+| `--color-muted-foreground` | `#8E9E94`           | Secondary text, survey metadata, timestamps                    |
+| `.gradient-text-primary`   | Emerald &rarr; Gold | Headings, badge shimmers, brand highlights                     |
 
-- [Insert Mermaid diagram or link to new diagram file]
+---
+
+## 3. Landing Page Component Breakdown
+
+```mermaid
+graph TD
+    Navbar["Navbar (Fixed Glassmorphic Header)"]
+    Hero["Hero Section (Typing Headline, Protected Video Background, CTAs)"]
+    LogoStrip["Capability Strip (Parcels, Titles, GPS, Agents, BIR)"]
+    Features["Features Bento Grid (Interactive Glows, Type-Safe Services)"]
+    HowItWorks["How It Works (3-Step Pipeline: Map &rarr; Vault &rarr; Deal)"]
+    Pricing["Pricing Matrix (Solo Broker, Pro Brokerage, Developer)"]
+    CTA["CTA Banner (Pre-registration / Contact Conversion)"]
+    Footer["Footer (Legal, Links, Copyright)"]
+
+    Navbar --> Hero
+    Hero --> LogoStrip
+    LogoStrip --> Features
+    Features --> HowItWorks
+    HowItWorks --> Pricing
+    Pricing --> CTA
+    CTA --> Footer
+```
+
+### 3.1 Hero Preservation Contract
+
+- **Protected Assets:** `public/hero-poster.avif`, `public/hero-background.mp4`, and `public/hero-background.webm`.
+- **Playback Guarantee:** Video background logic, loop parameters, and fallbacks are strictly frozen against destructive refactoring.
+
+### 3.2 Mobile-First Site Inspection Standards
+
+- Touch targets for all buttons, select menus, and map controls are minimum $48\text{px} \times 48\text{px}$.
+- No horizontal viewport overflow at 375px mobile screen width.
+- High-contrast visual hierarchy prevents element wash-out when viewing listings under direct tropical sunlight.
