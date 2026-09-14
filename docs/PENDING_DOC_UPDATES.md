@@ -37,3 +37,12 @@
   - Updated `PROJECT_CONTEXT.md` with full specifications for land parcels, development projects, title documents (TCT/OCT/Tax Decs), owner directory, agent contacts with PRC/DHSUD licenses, and GPS coordinates.
   - Created namespace directories `src/bir/property/` and `src/analytics/property/`.
 - **Affected Documentation to Update:** `docs/` architecture documents, Phase 0 readiness, and Masterplan.
+
+## [Masterplan Init] Phase 0 Readiness Initialization & GitHub Project Board Sync
+
+- **Files changed:** `MASTERPLAN.md`, `.env.local`, `src/lib/config.ts`
+- **Description:**
+  - Configured Supabase project ID (`jmgodwuniwlesgzplduh`) and canonical GitHub Project URL (`https://github.com/users/Danncode10/projects/13`) in `.env.local`.
+  - Initialized `MASTERPLAN.md` with complete Phase 0 readiness tasks (`[P0.1]` through `[P0.DOC]`) and placeholders for Phase 1-3.
+  - Synchronized all 8 Phase 0 tasks as real GitHub issues (#1 to #8) into GitHub Project #13 under `Backlog`.
+- **Affected Documentation to Update:** `docs/handover/phase-0-setup-handover.md`, `MASTERPLAN.md`.
