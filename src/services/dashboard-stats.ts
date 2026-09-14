@@ -1,0 +1,46 @@
+"use server";
+
+import { createClient } from "@/utils/supabase/server";
+
+export async function getDashboardStats() {
+  const supabase = await createClient();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayIso = today.toISOString();
+
+  const [
+    publishedServicesRes,
+    todayLeadsRes,
+    totalBookingsRes,
+    pendingBookingsRes,
+    newLeadsRes,
+    galleryPublishedRes,
+  ] = await Promise.all([
+    supabase.from("services").select("*", { count: "exact", head: true }).eq("is_published", true),
+    supabase.from("leads").select("*", { count: "exact", head: true }).gte("created_at", todayIso),
+    supabase.from("bookings").select("*", { count: "exact", head: true }),
+    supabase.from("bookings").select("*", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("leads").select("*", { count: "exact", head: true }).eq("status", "new"),
+    supabase.from("gallery_items").select("*", { count: "exact", head: true }).eq("is_published", true),
+  ]);
+
+  return {
+    publishedServices: publishedServicesRes.count ?? 0,
+    todayLeads: todayLeadsRes.count ?? 0,
+    totalBookings: totalBookingsRes.count ?? 0,
+    pendingBookings: pendingBookingsRes.count ?? 0,
+    newLeads: newLeadsRes.count ?? 0,
+    galleryPublished: galleryPublishedRes.count ?? 0,
+  };
+}
+
+export async function getRecentActivity(limit = 10) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("audit_logs")
+    .select("id, action, resource_type, resource_id, actor_email, diff, created_at")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) return [];
+  return data ?? [];
+}

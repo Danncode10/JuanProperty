@@ -1,0 +1,309 @@
+# CLAUDE.md — DannFlow
+
+> **Start here.** This file is Claude Code's authoritative config for this project. Read it before doing anything.
+
+## What is DannFlow?
+
+A Next.js 15 + Supabase starter optimized for **Vibe Coding** — an AI-native dev workflow where schema is authored in TypeScript, applied through reviewed SQL migrations, and mirrored back into generated app types:
+
+## Repository mode guard (mandatory)
+
+Before editing, identify the repository root, folder name, and remotes:
+
+```bash
+REPO_ROOT=$(git rev-parse --show-toplevel)
+printf '%s\n' "$(basename "$REPO_ROOT")"
+git remote -v
+```
+
+Select one mode and follow its rules:
+
+- **Template Mode:** the root folder is `Dannflow`/`DannFlow` and this is the actual DannFlow template repository. Keep all changes generic and reusable. Do not create or commit client-specific context, screenshots, discovery reports, product requirements, Supabase project data, or application work here. Do not run `/new-project`, `/masterplan-init`, or project-specific setup in this checkout. Never push a project change to the template.
+- **Project Mode:** the root folder is not `Dannflow`/`DannFlow`. This is a project using DannFlow. Require `origin` to point to the project repository and `upstream` to point to `Danncode10/DannFlow`. Project-specific work belongs here; use `/sync-upstream` to pull generic template improvements and `/sync-to-upstream` to contribute selected generic improvements back.
+
+If folder name and remotes disagree, stop before editing and explain the mismatch. A non-`Dannflow` checkout with only `upstream → DannFlow` is not ready for project work; configure `origin` and make `upstream` fetch-only first. Never infer mode from the files being viewed—use the repository root folder and remote configuration.
+
+```
+`npm run db:migrate` → run against remote cloud database directly (Do NOT use `npm run db:setup` or local Docker)
+npm run db:generate <name>      → capture SQL via `supabase db diff`
+npm run db:migrate              → apply to Supabase
+npm run db:types                → refresh src/types/supabase.ts
+npm run checkpoint    → snapshot live schema (RLS, triggers, enums) to supabase/backups/
+```
+
+The agent reads `supabase/migrations/` and `src/types/supabase.ts` before touching database-backed code, so it never guesses schema shape.
+
+For the full marketing/setup story, see [README.md](README.md). For deeper docs, see [docs/dannflow_docs/](docs/dannflow_docs/).
+
+## Tech stack
+
+- **Framework**: Next.js 16 (App Router), React 19
+- **DB / Auth**: Supabase (`@supabase/ssr`, `@supabase/supabase-js`)
+- **Schema / Migrations**: Supabase CLI (`supabase/migrations/`)
+- **Styling**: Tailwind CSS v4 + Shadcn/UI primitives
+- **State / Data**: TanStack Query, React Server Components by default
+- **Rate limiting**: Upstash Redis helper for production-sensitive paths
+- **Animation**: Framer Motion
+- **Toasts**: Sonner
+- **Icons**: lucide-react
+- **Git Hooks**: Husky + lint-staged (Fast commits, strict-lite pushes to prevent Vercel errors)
+
+## Project structure
+
+```
+src/
+├── app/                # Next.js App Router pages (Server Components by default)
+├── components/         # UI components (Shadcn-based)
+├── services/           # ⚡ ALL business logic + Supabase queries live here
+├── lib/
+│   └── config.ts       # siteConfig + creatorRepos (central config)
+├── types/
+│   └── supabase.ts     # 👁️ AUTO-GENERATED — never edit manually
+└── utils/
+    └── supabase/       # Supabase client helpers (server, client, middleware)
+
+supabase/
+├── migrations/         # ✍️ Generated SQL from npm run db:generate (Supabase CLI source of truth)
+└── backups/            # 📋 Timestamped DDL snapshots from npm run checkpoint
+```
+
+## Architectural guardrails (non-negotiable)
+
+1. **Separation of concerns** — UI components MUST NOT contain DB logic or direct API calls.
+2. **Service layer** — All business logic + Supabase queries live in `src/services/`.
+3. **Type safety** — Use `src/types/supabase.ts` for all data shapes. **Never** use `any`.
+4. **Server-first** — Default to Server Components. Only use `'use client'` when you need state, events, or browser APIs.
+5. **Feature blueprints** — Before scaffolding a new feature, check `src/prompts/features/` for an existing blueprint.
+
+## RLS security constraint
+
+Assume **Row Level Security is active on every table.** Services must match the table's ownership or admin policy; add an explicit user ownership filter when the table has a user-owner column. Public endpoints require an intentional public policy.
+
+## UI quality standards
+
+- **Mobile-first**: every component responsive from 375px up. No horizontal scroll.
+- **Touch targets**: interactive elements ≥48px tall.
+- **Forms**: labels ABOVE inputs (never placeholder-only). Visible focus rings via `ring-ring`. Error states use `text-destructive`.
+- **Cards**: wrap form pages in Shadcn `<Card>` / `<CardHeader>` / `<CardContent>` / `<CardFooter>`.
+- **Spacing**: stick to the scale — `p-4`, `p-6`, `gap-4`, `gap-6`. Don't cram.
+- **Empty states**: never blank — centered icon + message.
+- **Buttons**: always Shadcn `<Button variant="...">`, never raw `<button>`.
+
+## Semantic tokens — CRITICAL
+
+Use ONLY Tailwind/Shadcn semantic tokens. **Stating hex codes, `rgba()`, or hardcoded `white`/`black`/`gray-*` in className is a CRITICAL FAILURE.**
+
+- Backgrounds: `bg-background`, `bg-card`, `bg-muted`
+- Text: `text-foreground`, `text-muted-foreground`, `text-primary`
+- Borders: `border`, `border-border`, `border-input`
+- Brand: `bg-primary`, `text-primary-foreground`
+
+Theme variables live in `src/app/globals.css` under `@theme`.
+
+## Database workflow (Supabase CLI)
+
+1. **Schema source of truth** — Database schema and migrations are managed natively via Supabase CLI in `supabase/migrations/`.
+2. **Generate SQL** — Write `.sql` files directly in `supabase/migrations/` (Do NOT use `npm run db:setup` or local Docker, the user develops strictly on cloud).
+3. **Supabase platform SQL** — You can also manually add RLS policies, auth triggers, and functions directly to the generated SQL migration when needed.
+4. **Apply and sync** — Run `npm run db:migrate` to push to your remote database, and `npm run db:types` to refresh `src/types/supabase.ts`.
+5. **Checkpoint live state** — Before risky/destructive changes, run `npm run checkpoint` to snapshot the live project into `supabase/backups/`.
+
+Do **not** use Supabase MCP `apply_migration` for normal schema changes. Supabase MCP is for reading, verifying, advisors, provisioning, and checkpointing. If an emergency live SQL change is explicitly requested, generate a migration and run `npm run db:migrate`.
+
+Use `.claude/commands/schema-change.md` only when the user explicitly wants to manipulate the live Supabase schema through MCP or needs an emergency live SQL change captured in git. That command checkpoints the live schema, writes the approved SQL to `supabase/migrations/YYYYMMDDHHMMSS_<name>.sql`, applies it through Supabase MCP `apply_migration`, regenerates `src/types/supabase.ts`, and verifies the live database.
+
+### Checkpoint protocol
+
+When the user runs `npm run checkpoint` and provides the generated prompt:
+
+1. Verify Supabase MCP connection.
+2. Read live schema (tables, enums, RLS policies, triggers, functions) for the specified project ID.
+3. Generate full DDL and save it to the timestamped `.sql` file in `supabase/backups/`.
+
+### Project provisioning
+
+When asked to create a new Supabase project + apply schema:
+
+1. `list_organizations` → let user choose.
+2. Ask for Project Name and Organization ID.
+3. `get_cost` → `confirm_cost` BEFORE `create_project`.
+4. After init, set `SUPABASE_PROJECT_ID` and `DATABASE_URL`, then run `npm run db:migrate`.
+5. **Mandatory verification**: list tables and functions in `public` schema. Confirm `profiles` table and `handle_new_user` function exist. Do not report success until verified.
+
+## Required MCP tools
+
+Before specialized work, verify these MCPs are connected:
+
+- **Supabase MCP** — schema reads, RLS/policy verification, advisors, checkpoints, and project provisioning
+- **GitHub MCP** — branch diffs, commit history, PR management
+- **Terminal MCP** — local commands like `npm run db:generate`, `npm run db:migrate`, and `npm run checkpoint`
+
+If a required MCP is missing, stop and tell the user:
+
+> ⚠️ [Tool Name] MCP Not Detected: I need this to [task]. Open Settings → MCP Store → install "[Tool Name]" using credentials from `.env.local`.
+
+### Connection reporting rule
+
+Keep three states separate: **connected**, **capability unavailable**, and **authorization denied**. The presence of any callable tool from an MCP, or a successful read-only call, means that MCP is connected. A missing task-specific tool or an API/CLI permission error must be reported as its exact capability or scope issue—not as a disconnected MCP. Use the missing-MCP message only when no tools from that MCP are available or a connection attempt fails. This applies equally to GitHub and Supabase.
+
+For GitHub Projects, if the authenticated `gh` CLI reports a missing `read:project` or `project` scope, report **GitHub connected; GitHub Projects authorization needs refresh** and instruct the user to run `gh auth refresh -s project`. After confirmation, retry the operation. Never turn this scope error into an MCP installation or reconnection request.
+
+## Code conventions
+
+- Functional components + hooks. No classes.
+- `async`/`await` for all async ops.
+- Place new components in `src/components/`, logic in `src/lib/` or `src/hooks/`.
+- DRY + SOLID. Extract repeated logic into hooks or components.
+- **Inspiration Folder Protocol**: We have a dedicated `inspirations/` folder at the root (which is gitignored). Whenever you start a major UI task or a complex feature, FIRST ask the user if they want to clone/download a reference GitHub repo into `inspirations/` to serve as a design/code reference and save tokens. If the user agrees, fetch the reference repo there before coding.
+  - **CRITICAL RULE**: If an inspiration repo is present, you MUST copy its UI components, styling, and logic as exactly as possible into the project. Do not write your own simplified version from scratch. Your job is to extract the existing complex components from the inspiration folder and modify them only as necessary to wire them into the DannFlow repo.- **Don't restructure** existing folder hierarchy or UI patterns unless explicitly asked.
+- After making code changes, end your response with a one-line conventional commit message for easy copy-paste (e.g. `feat: add password re-auth gate`).
+
+## Claude environment in this repo
+
+| File / Folder                  | Purpose                                                                            |
+| ------------------------------ | ---------------------------------------------------------------------------------- |
+| `CLAUDE.md` (this file)        | Authoritative Claude Code config                                                   |
+| [SKILLS.md](SKILLS.md)         | Which Claude Code skills are relevant + when to invoke them                        |
+| [MASTERPLAN.md](MASTERPLAN.md) | Ordered build plan — check before starting any feature or task                     |
+| `.claude/commands/`            | Custom slash commands (see its README for the list)                                |
+| `AGENTS.md`                    | Cross-tool agent standard (Cursor/Antigravity/etc.) — kept for compatibility       |
+| `.codex/`                      | Codex compatibility layer that loads `.claude/commands/` through `/claude-command` |
+
+If you don't know which custom command fits a task, run `/ask-command <your intent>`.
+
+## Core DannFlow Agent Skills
+
+DannFlow ships with three core native agent skills to orchestrate massive project workflows. Unlike simple commands, these skills give the AI autonomy to manage complex, multi-step processes:
+
+- **`dannflow-masterplan`**: Run this to start a new project, generate a Masterplan, sync a GitHub Project board, or initialize infrastructure.
+- **`dannflow-task`**: Run this to execute a specific task from `MASTERPLAN.md` end-to-end (includes automated quality gates and human verification steps).
+- **`dannflow-update`**: Run this to safely and surgically update an old DannFlow repository from upstream without destroying custom business logic.
+
+## JuanStack Vertical Namespace Rules
+
+> These rules apply to ALL AI coding assistants (Claude, Codex, Gemini) working on any `dannflow`-based JuanStack vertical project. They exist to prevent cross-vertical code contamination and AI hallucination about file ownership.
+
+### Architecture Decisions (Locked — Do Not Override)
+
+| Decision                       | Resolution                                                     |
+| ------------------------------ | -------------------------------------------------------------- |
+| `business.json` load strategy  | **Build-time** — read from filesystem during `next build`      |
+| Multi-tenancy model            | **Separate Supabase projects** per vertical                    |
+| AI Secretary runtime           | **Supabase Edge Function with pg_cron**                        |
+| `sync-to-upstream` enforcement | **Hard block** — stops push if files are outside `owned_paths` |
+| Registry location              | **Separate `juanstack-portal` repo** — not in `dannflow`       |
+
+### The Golden Rule: Respect the Namespace
+
+When editing code **in a vertical repo** (e.g., `attyjuan`, `vetstack`, `restostack`), you may ONLY modify:
+
+1. Files within `src/bir/{this_vertical_id}/`
+2. Files within `src/analytics/{this_vertical_id}/`
+3. The file `src/ai/personas/{this_vertical_id}.ai-manifest.json`
+4. All non-namespaced project files (pages, components, services, etc.)
+
+You MUST NEVER modify:
+
+- `src/bir/core/` — requires a direct `dannflow` PR
+- `src/analytics/core/` — requires a direct `dannflow` PR
+- `src/ai/core.ai-manifest.json` — requires a direct `dannflow` PR
+- Any other vertical's namespace folder (e.g., do NOT touch `src/bir/veterinary/` when working in `attyjuan`)
+
+When editing code **directly in `dannflow`** (Template Mode), you may ONLY modify `core/` folders and generic template files. Never add vertical-specific logic directly here.
+
+### Namespace Convention Table
+
+| Module           | Path Pattern                                     | Owner                |
+| ---------------- | ------------------------------------------------ | -------------------- |
+| BIR Tax Logic    | `src/bir/{vertical_id}/`                         | That vertical's repo |
+| Analytics        | `src/analytics/{vertical_id}/`                   | That vertical's repo |
+| AI Persona       | `src/ai/personas/{vertical_id}.ai-manifest.json` | That vertical's repo |
+| BIR Core Engine  | `src/bir/core/`                                  | `dannflow` only      |
+| Analytics Core   | `src/analytics/core/`                            | `dannflow` only      |
+| AI Core Manifest | `src/ai/core.ai-manifest.json`                   | `dannflow` only      |
+
+### Before Starting Any BIR, Analytics, or AI Task
+
+1. **Read `business.json`** at the repo root.
+2. **Confirm `vertical_id`** — this tells you which namespace folder you own.
+3. **Check `dannflow_features`** — only implement features where the flag is `true`.
+4. **Read the AI persona** at `business.json → ai_rules.persona_manifest`.
+
+### Before Running `sync-to-upstream`
+
+1. **Read `business.json → owned_paths`**.
+2. **Verify every staged file** is within a declared `owned_paths` entry.
+3. If ANY staged file is outside `owned_paths` → **STOP**. Report the conflict and do not create a PR. This is a hard block, not a warning.
+
+### Domain Terminology Rule (Non-Negotiable)
+
+NEVER hardcode the words `Client`, `Patient`, `Customer`, `Case`, `Appointment`, `Lawyer`, `Vet`, or any domain noun in a `.tsx` or `.ts` file.
+
+Always resolve terminology from:
+
+```typescript
+const clientLabel = getTerm("consumer"); // from business.json → domain_nomenclature
+const caseLabel = getTerm("transaction"); // from business.json → domain_nomenclature
+```
+
+Use the `useTerm()` hook in client components and `getTerm()` in server components/utilities.
+
+### `business.json` Loading (Build-Time Pattern)
+
+`business.json` is read **at build time** via `src/lib/vertical-config.ts`. It is NOT fetched at runtime. Consequence: changing `business.json` requires a redeploy of the vertical. This is intentional — each vertical is its own independent deployment with its own Supabase project.
+
+## Memory & docs
+
+- **`PROJECT_CONTEXT.md`** (root) — project-specific decisions that override or extend this file: audience, stack choices, design rules, tone, anti-decisions. Read this before any feature work, UI rewrite, or marketing command. Fill it in once after running `/init-claude`.
+- **`MASTERPLAN.md`** (root) — current phase status and what's being built. Run `/new-project`, create a Kanban-style GitHub Project, then run `/masterplan-init` to create detailed Phase 0. Use `/make-masterplan Phase 1` to expand later phases and `/update-masterplan` after edits.
+- Project methodology in `docs/dannflow_docs/` (methodology, trinity model, MCP setup, backups, UI system)
+- Central config: `src/lib/config.ts`
+- Auto-generated types: `src/types/supabase.ts` (read-only)
+
+## Masterplan + GitHub Project protocol
+
+`MASTERPLAN.md` is the local source of truth and the linked GitHub Project is the execution board. `/masterplan-init` links an existing Kanban-style Project and stores its non-secret binding in `.env.local`; it never creates a Project or draft board. Prefer `GITHUB_PROJECT_URL` in the canonical form `https://github.com/users/<owner>/projects/<number>` or `https://github.com/orgs/<owner>/projects/<number>`, without `/views/...` or query-string suffixes. Derive legacy owner, number, and API ID values automatically when an API needs them.
+
+1. **Before starting work**, find the matching task in `MASTERPLAN.md` and the GitHub Project. Ask the user which card to use if the request could map to multiple cards.
+2. **If no matching task exists**, warn the user: "This task is not in `MASTERPLAN.md`. Add it to `MASTERPLAN.md` and the GitHub Project first?" Do not begin feature work until the user confirms or explicitly says to proceed without tracking.
+3. **When starting a tracked task**, ask or confirm: "This maps to `[P2.1] ...`; move it to `In progress` in GitHub Project?" Move it once confirmed.
+4. **When finishing a tracked task**, check the task in `MASTERPLAN.md`, move the GitHub Project item to `Done`, and mention the task ID in the final response.
+5. **If `MASTERPLAN.md` is edited**, warn: "`MASTERPLAN.md` changed. Run `/update-masterplan` to sync GitHub Project cards." If the edit was part of the current task and GitHub tooling is available, run the sync immediately.
+6. **Task IDs are ordered and stable**: use `[P2.1]`, `[P2.2]`, `[P3A.1]`, etc. Never create bare `[P2]` cards.
+
+### Task lifecycle commands
+
+- Use `/what-task` when organizing the task board or choosing what to work on next. It reports current `In progress`, `Ready`, and pending `Backlog` tasks; moves one or more tasks to `Ready` when that lane is empty; recommends one task; and asks before moving exactly one task to `In progress`. It must stop after task selection and must not implement or edit application code.
+- Use `/close-task` when a tracked task is complete. It commits completed work first, then marks the task checked in `MASTERPLAN.md` and moves the linked Project item to `Done`.
+- Do not leave completed work sitting in `In progress`. If the current task appears finished, proactively tell the user to run `/close-task` even when they did not explicitly ask.
+- Do not use `In review` unless the active repository explicitly requires a review step for that task.
+
+### Documentation Governance Protocol
+
+1. **As You Code**: If you change code that affects architecture, services (`src/services/`), types (`src/types/`), database schemas (`supabase/migrations/`), or APIs, you MUST append a detailed note to `docs/PENDING_DOC_UPDATES.md` tracking what needs to be documented.
+2. **Revisions & Pruning (CRITICAL)**: If code is modified, refactored, or discarded during conversation, IMMEDIATELY edit or delete the corresponding note in `docs/PENDING_DOC_UPDATES.md` so the ledger remains accurate and never contains stale entries.
+3. **Commit-Time Enforcement**: Committing changes to `src/services/`, `src/types/`, `supabase/migrations/`, or APIs requires staging `docs/PENDING_DOC_UPDATES.md`, unless the commit explicitly includes `No docs needed` or `[no-docs]`.
+4. **Masterplan Phase Requirement**: Every phase defined in `MASTERPLAN.md` must end with a mandatory documentation milestone task: `[PX.DOC] Finalize Phase X Documentation & Diagrams`.
+5. **Pre-Merge / Post-Task Rules**: Before closing out tasks (`/close-task`) or merging pull requests into `main`:
+   - Process all notes in `docs/PENDING_DOC_UPDATES.md`, update matching markdown files in `docs/` and visual diagrams in `docs/diagrams/`, commit the documentation with `docs(<task-id>): update docs and verification for <slug>`, and remove the logged entries from `docs/PENDING_DOC_UPDATES.md` to unblock pushes to `main`.
+   - Ensure `docs/README.md` navigation links remain in sync with any newly added documentation files or templates.
+
+---
+
+## Ruflo memory protocol
+
+Before starting any DannFlow command or multi-file task, search ruflo memory (`mcp__ruflo__memory_search`) for relevant prior decisions — use the feature name, table name, or technology as the search term.
+
+After any non-trivial decision is made, store it in ruflo memory (`mcp__ruflo__memory_store`) **without being asked**. Good candidates:
+
+- **Tech choices**: "We use Resend for email, not SendGrid"
+- **Schema decisions**: "posts table uses soft deletes via deleted_at, not hard deletes"
+- **Design decisions**: "Cards use rounded-xl, never rounded-md"
+- **Anti-decisions**: "We're NOT using Zustand — TanStack Query handles all server state"
+- **"Why" context**: "billing is behind a feature flag until Stripe goes live"
+
+Auto-memory (`~/.claude/projects/.../memory/`) stores human-readable facts for future conversations. Ruflo memory enables semantic recall as the project grows past ~50 decisions. Use both.
+
+---
+
+**Be concise. Be proactive. Respect the guardrails. Default to Server Components. Never skip RLS.**
