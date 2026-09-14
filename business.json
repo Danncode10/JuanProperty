@@ -1,18 +1,55 @@
 {
-  "vertical_id": "dannflow-default",
-  "name": "DannFlow Generic Template",
-  "owned_paths": [],
+  "vertical_id": "property",
+  "name": "JuanProperty",
+  "description": "Real estate and land management platform for tracking land parcels, projects, title documents, owners, agents with contacts, and GPS coordinates.",
+  "owned_paths": [
+    "src/bir/property/",
+    "src/analytics/property/",
+    "src/ai/personas/property.ai-manifest.json"
+  ],
   "domain_nomenclature": {
-    "provider": "Provider",
-    "consumer": "User",
-    "transaction": "Record"
+    "provider": "Property Manager / Broker",
+    "consumer": "Property Owner / Buyer",
+    "transaction": "Real Estate Project",
+    "inventory_item": "Land Parcel / Unit"
   },
   "dannflow_features": {
-    "auth_module": false,
-    "billing_module": false,
-    "bir_module": false,
-    "analytics_module": false,
-    "ai_secretary": false,
-    "scheduling_module": false
+    "auth_module": true,
+    "billing_module": true,
+    "inventory_management": true,
+    "pos_terminal": false,
+    "bir_module": true,
+    "analytics_module": true,
+    "ai_secretary": true,
+    "scheduling_module": true
+  },
+  "scheduling_rules": {
+    "default_meeting_duration_minutes": 45,
+    "requires_owner_approval": true,
+    "enable_gcal_sync": false
+  },
+  "bir_rules": {
+    "module_path": "src/bir/property/",
+    "applicable_laws": [
+      "RA 11976 (Ease of Paying Taxes Act)",
+      "BIR Revenue Regulations No. 2-98",
+      "NIRC Title IV & VI (Capital Gains & Documentary Stamp Tax on Real Property)"
+    ],
+    "default_withholding_tax_percentage": 5.0,
+    "industry_default_atcs": {
+      "percentage_tax": "PT 010",
+      "income_tax": "IT 010",
+      "withholding_tax": "WI 100"
+    }
+  },
+  "ai_rules": {
+    "persona_manifest": "src/ai/personas/property.ai-manifest.json",
+    "system_prompt_persona": "You are the JuanProperty AI Real Estate & Land Operations Secretary. You proactively monitor land parcels, title deeds (TCT/OCT), owner registry records, agent contact assignments, GPS mapping coordinates, and Philippine BIR property tax compliance deadlines.",
+    "tone": "professional_warm",
+    "hard_limits": [
+      "Never alter, delete, or disclose original land title deeds or legal ownership records without authenticated human authorization.",
+      "Never provide legally binding guarantees regarding disputed land boundaries or disputed title claims.",
+      "Always safeguard confidential owner contact information and property financial valuations."
+    ]
   }
 }

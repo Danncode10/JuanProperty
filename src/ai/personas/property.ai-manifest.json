@@ -1,0 +1,52 @@
+{
+  "manifest_version": "1.0.0",
+  "vertical_id": "property",
+  "extends": "src/ai/core.ai-manifest.json",
+  "description": "AI Secretary observable states for JuanProperty real estate, land portfolio, ownership, and agent tracking.",
+  "observable_states": [
+    {
+      "id": "land_document_missing",
+      "table": "land_documents",
+      "trigger_field": "verification_status",
+      "trigger_condition": "equals: missing",
+      "semantic_meaning": "A land parcel or property project is missing critical title deeds (TCT/OCT), tax declarations, or lot plans.",
+      "suggested_task": "Prompt property manager to upload and verify land title documents for [property_name].",
+      "priority": "high",
+      "cooldown_hours": 24,
+      "requires_confirmation": true
+    },
+    {
+      "id": "land_coordinates_unmapped",
+      "table": "properties",
+      "trigger_field": "coordinates_status",
+      "trigger_condition": "equals: unmapped",
+      "semantic_meaning": "A registered land parcel has no GPS coordinates or boundary polygon defined for mapping.",
+      "suggested_task": "Add GPS coordinates (latitude/longitude) or boundary points for land parcel [property_name].",
+      "priority": "medium",
+      "cooldown_hours": 48,
+      "requires_confirmation": true
+    },
+    {
+      "id": "unassigned_agent_contact",
+      "table": "properties",
+      "trigger_field": "assigned_agent_id",
+      "trigger_condition": "is_null",
+      "semantic_meaning": "A property listing or land project has no designated agent or broker assigned for client inquiries.",
+      "suggested_task": "Assign a licensed agent with phone and email contact details to [property_name].",
+      "priority": "medium",
+      "cooldown_hours": 24,
+      "requires_confirmation": true
+    },
+    {
+      "id": "bir_real_property_tax_due",
+      "table": "bir_filings",
+      "trigger_field": "due_date",
+      "trigger_condition": "within_7_days",
+      "semantic_meaning": "Philippine BIR withholding tax (Form 1601-EQ) or local Real Property Tax (RPT) due date approaching.",
+      "suggested_task": "Review tax computations and file BIR Form 1601-EQ / RPT payment for [property_name].",
+      "priority": "critical",
+      "cooldown_hours": 12,
+      "requires_confirmation": true
+    }
+  ]
+}
