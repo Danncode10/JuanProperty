@@ -10,7 +10,7 @@
 
 Phase 0 is **template readiness**, establishing verified cloud infrastructure, authentication, design direction, and production deployment before building domain-specific features.
 
-- [ ] **`[P0.1]` Supabase template connection and environment values**
+- [x] **`[P0.1]` Supabase template connection and environment values**
   - **Goal:** Connect the Supabase cloud project (`jmgodwuniwlesgzplduh`), verify environment credentials in `.env.local`, and verify public database connectivity.
   - **Dependencies:** None
   - **Acceptance Criteria:** `.env.local` contains non-placeholder credentials, Supabase connection responds successfully, baseline migration verified.
