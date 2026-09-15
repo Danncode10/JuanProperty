@@ -1,69 +1,97 @@
 # Design Document — JuanProperty
 
 **Project Name:** JuanProperty (Built on DannFlow)  
-**Vertical:** Philippine Real Estate & Land Management (`vertical_id: property`)  
-**Design System:** Emerald Forest & Earth Gold  
-**Date:** 2026-09-14  
-**Status:** Approved Baseline
+**Configured Vertical:** `property`
+**Active Product Direction:** Core Real Estate Property Management
+**Design System:** Preserve the existing approved JuanProperty visual system
+**Date:** 2026-09-14
+**Status:** Phase 1 Planning Baseline
 
 ---
 
-## 1. Design Philosophy & Aesthetic Direction
+## 1. Phase 1 Experience
 
-JuanProperty is designed specifically for high-value Philippine real estate and land transactions. The aesthetic fuses **prestige corporate security** with **field-ready utility**:
+JuanProperty's Phase 1 interface is an operational workspace for Property Managers and administrative staff. It favors quick record lookup, dependable forms, clear status presentation, and compact portfolio visibility across mobile field use and desktop office workflows.
 
-- **Emerald Forest Theme:** Deep natural greens (`#0D7A5F`, `#10B981`) symbolize fertile land, property development, and sustained asset growth.
-- **Earth Gold Accents:** Warm golden tones (`#D97706`, `#F59E0B`) indicate legal authenticity, title certificates, and high-value capital assets.
-- **Obsidian Forest Void:** Ultra-dark background (`#050806`) provides zero glare for outdoor daylight inspections while maintaining battery efficiency on OLED mobile devices.
-- **High-Density Typography:** Crisp Geist Sans and Geist Mono pairing for tabular land data, coordinates, and survey numbers.
+Primary navigation should prioritize:
 
----
+- Property Owners
+- Properties
+- Units
+- Tenants
+- Leases
+- Rent Obligations
+- Payments
+- Maintenance
+- Dashboard
 
-## 2. Semantic Color Palette (`src/app/globals.css`)
-
-All components utilize semantic design tokens. Hardcoded hex values in component markup are strictly prohibited.
-
-| Token                      | Value               | Purpose                                                        |
-| :------------------------- | :------------------ | :------------------------------------------------------------- |
-| `--color-primary`          | `#0D7A5F`           | Primary interactive buttons, active indicators, and highlights |
-| `--color-ring`             | `#10B981`           | Focus states, glowing outlines, active tab borders             |
-| `--color-background`       | `#050806`           | Root body background (deep obsidian forest)                    |
-| `--color-card`             | `#0A120E`           | Bento boxes, form wrappers, modal backgrounds                  |
-| `--color-border`           | `#183325`           | Structural dividers and input borders                          |
-| `--color-muted-foreground` | `#8E9E94`           | Secondary text, survey metadata, timestamps                    |
-| `.gradient-text-primary`   | Emerald &rarr; Gold | Headings, badge shimmers, brand highlights                     |
+AI Secretary, Scheduling, and BIR remain visible only through team-leader-owned product areas. Phase 1 Real Estate work must not redesign their interfaces or behavior.
 
 ---
 
-## 3. Landing Page Component Breakdown
+## 2. Planned Domain Model
 
 ```mermaid
-graph TD
-    Navbar["Navbar (Fixed Glassmorphic Header)"]
-    Hero["Hero Section (Typing Headline, Protected Video Background, CTAs)"]
-    LogoStrip["Capability Strip (Parcels, Titles, GPS, Agents, BIR)"]
-    Features["Features Bento Grid (Interactive Glows, Type-Safe Services)"]
-    HowItWorks["How It Works (3-Step Pipeline: Map &rarr; Vault &rarr; Deal)"]
-    Pricing["Pricing Matrix (Solo Broker, Pro Brokerage, Developer)"]
-    CTA["CTA Banner (Pre-registration / Contact Conversion)"]
-    Footer["Footer (Legal, Links, Copyright)"]
-
-    Navbar --> Hero
-    Hero --> LogoStrip
-    LogoStrip --> Features
-    Features --> HowItWorks
-    HowItWorks --> Pricing
-    Pricing --> CTA
-    CTA --> Footer
+erDiagram
+    ORGANIZATION ||--o{ PROPERTY_OWNER : manages
+    ORGANIZATION ||--o{ PROPERTY : contains
+    ORGANIZATION ||--o{ TENANT : manages
+    PROPERTY_OWNER ||--o{ PROPERTY : primarily_owns
+    PROPERTY ||--o{ PROPERTY_UNIT : contains
+    TENANT ||--o{ LEASE : signs
+    PROPERTY_UNIT ||--o{ LEASE : leased_through
+    LEASE ||--o{ RENT_OBLIGATION : creates
+    RENT_OBLIGATION ||--o{ PAYMENT : receives
+    PROPERTY ||--o{ MAINTENANCE_REQUEST : may_have
+    PROPERTY_UNIT ||--o{ MAINTENANCE_REQUEST : may_have
 ```
 
-### 3.1 Hero Preservation Contract
+This is a planning model. Exact table definitions and constraints belong to their approved implementation tasks.
 
-- **Protected Assets:** `public/hero-poster.avif`, `public/hero-background.mp4`, and `public/hero-background.webm`.
-- **Playback Guarantee:** Video background logic, loop parameters, and fallbacks are strictly frozen against destructive refactoring.
+---
 
-### 3.2 Mobile-First Site Inspection Standards
+## 3. Core Interaction Principles
 
-- Touch targets for all buttons, select menus, and map controls are minimum $48\text{px} \times 48\text{px}$.
-- No horizontal viewport overflow at 375px mobile screen width.
-- High-contrast visual hierarchy prevents element wash-out when viewing listings under direct tropical sunlight.
+- A Tenant is associated with a Unit through a Lease, never through a permanent unit assignment.
+- Historical leases, obligations, and payments remain discoverable.
+- Archive actions are visually distinct from destructive deletion.
+- Financial corrections explain the void/reversal and replacement chain.
+- Lease conflict messages identify the conflicting period without exposing another organization's data.
+- Statuses and monetary balances are presented consistently across details, lists, and dashboard summaries.
+- Forms use labels above fields, visible focus/error states, and minimum 48px application controls.
+
+---
+
+## 4. Dashboard Information Design
+
+The Phase 1 dashboard groups operational information into four areas:
+
+1. **Portfolio:** properties, units, occupied units, available units, occupancy rate.
+2. **Leasing:** active tenants, active leases, approaching expirations.
+3. **Rent:** current-month due, current-month collected, outstanding rent, overdue obligations.
+4. **Maintenance:** open requests and priority visibility.
+
+This dashboard is an operational summary, not an advanced analytics implementation. It must consume organization-scoped service/read-model data and must not modify `src/analytics/core/`.
+
+---
+
+## 5. Visual and Accessibility Guardrails
+
+- Preserve the current approved JuanProperty theme and protected hero-media behavior.
+- Use Shadcn/UI primitives and Tailwind semantic tokens in application components.
+- Support 375px mobile layouts without horizontal scrolling.
+- Maintain at least 48px application control targets.
+- Use high contrast for field conditions and efficient hierarchy for desktop administration.
+- Provide loading, error, empty, archived, and permission-denied states.
+
+---
+
+## 6. Protected Product Areas
+
+The Phase 1 design must not change AI Secretary, Scheduling, BIR, generic authentication, or generic DannFlow/JuanStack screens and conventions. Safe future integration is limited to presenting or exposing stable Real Estate facts through approved contracts.
+
+---
+
+## 7. Deferred Experience Direction
+
+The previous land-focused experience—title vaults, parcel records, GPS/boundary maps, broker and buyer workflows, sales pipelines, transactions, and marketplace discovery—is preserved for future phases. It is not part of the active Phase 1 navigation or workflow design.

@@ -1,8 +1,7 @@
 # Project Context — JuanProperty
 
-> This file is read by Claude, skills, and commands before they act on your project.
-> Updated via `/juanstack-init` for the JuanProperty real estate & land management vertical.
-> Do NOT edit `.claude/skills/` files directly — put project-specific context here instead.
+> This file is read by agents, skills, and commands before they act on JuanProperty.
+> Project-specific direction here supplements `AGENTS.md` and `CLAUDE.md` without replacing protected DannFlow/JuanStack conventions.
 
 ---
 
@@ -10,125 +9,172 @@
 
 **App name:** JuanProperty
 
-**One-liner:** Comprehensive real estate and land management platform for Philippine property developers, brokers, and landlords to manage land parcels, real estate projects, legal land title documents, ownership records, assigned agents with contact registries, and precise GPS mapping coordinates.
+**One-liner:** JuanProperty is a Real Estate Property Management SaaS designed to help landlords, Property Managers, and small real estate businesses manage properties, property units, Property Owners, tenants, leases, rent obligations, payments, maintenance operations, and portfolio visibility in one centralized platform.
 
-**The problem it solves:**
-In the Philippines, real estate developers, brokers, and land asset managers struggle with fragmented, paper-based records: land titles (TCT/OCT) and tax declarations are scattered across physical folders or personal chats, land ownership and heir histories are ambiguous, field agents lack immediate contact access or clear project assignments, and land boundaries lack verifiable GPS coordinates on ground oculars. JuanProperty unifies land parcels, development projects, title document vaults, owner/agent registries, interactive GPS boundary mapping, and Philippine BIR property tax compliance into a single secure system.
-
----
-
-## Core Domain Features & Capabilities
-
-1. **Land Parcel & Project Management:**
-   - Organize individual lots, consolidated land parcels, and multi-phase real estate development projects.
-   - Track zoning classification (residential, commercial, agricultural, industrial), lot area (sqm / hectares), topography, and utilities.
-
-2. **Land Document Vault:**
-   - Dedicated repository for land documents:
-     - Transfer Certificate of Title (TCT) / Original Certificate of Title (OCT) / Condominium Certificate of Title (CCT)
-     - Real Property Tax Declaration (TD) & Tax Clearance certificates
-     - Approved Survey Plans (Lot Plan, Vicinity Map)
-     - Deed of Absolute Sale (DOAS) / Contract to Sell (CTS)
-     - Special Power of Attorney (SPA) / Extrajudicial Settlement (EJS)
-   - Verification status tracking (Verified, Pending Verification, Missing, Disputed).
-
-3. **Landowner & Ownership Registry:**
-   - Full landowner profiles: Registered owner(s), co-owners, heirs, corporate entities.
-   - Contact records: Verified phone numbers, email addresses, government IDs, and representative authorization (SPA).
-   - Ownership history and acquisition details.
-
-4. **Agent & Broker Directory:**
-   - Roster of licensed real estate brokers (PRC registered) and accredited sales agents (DHSUD).
-   - Direct contact links: Mobile phone, WhatsApp, Viber, and email.
-   - Assignment matrix: Easily map agents to specific land parcels, projects, or client ocular viewings.
-   - Commission agreements and performance tracking.
-
-5. **Geographic Coordinates & Mapping:**
-   - Precise GPS latitude and longitude pinpoints for every land parcel and project entrance.
-   - Boundary polygon coordinates (tie points / cadastral survey lot coordinates) for visual mapping.
-   - Interactive map view (Leaflet / OpenStreetMap) with satellite layer toggle for on-site navigation during ocular visits.
-
-6. **Philippine BIR & Local Tax Readiness:**
-   - Capital Gains Tax (6%), Documentary Stamp Tax (1.5%), Creditable Withholding Tax (5%), and Local Real Property Tax (RPT / Amilyar) tracking.
-   - Automated deadline reminders for quarterly and annual tax filings (Form 1601-EQ, Form 1706).
+**The problem it solves:** Property-management records are commonly fragmented across spreadsheets, messages, paper files, and disconnected payment tracking. JuanProperty centralizes operational history and recurring work while preserving reliable lease and financial records.
 
 ---
 
 ## Target audience
 
-**Primary user:**
-Licensed Philippine Real Estate Brokers, Real Estate Developers, Land Asset Managers, and Property Management Firms.
+**Primary users:**
 
-**Secondary user:**
-Field Sales Agents conducting client ocular inspections, and Landowners checking portfolio status.
+- Property Managers
+- administrative and office staff
+- landlords managing rental portfolios
 
-**What they care most about:**
+Secondary users may be introduced in later phases. Tenant and Property Owner portals are not active Phase 1 functionality.
 
-- Immediate mobile access to verifiable land title documents (TCT/OCT scans) when meeting clients or city assessors.
-- Rapid lookup of who owns what land parcel and which agent is actively handling inquiries.
-- Accurate GPS coordinates to navigate directly to unimproved rural or suburban land parcels.
-- Never missing Real Property Tax (Amilyar) or BIR withholding deadlines.
+**What they care most about:** Clear portfolio status, dependable leasing and rent records, fast access to operational work, and accurate historical information.
 
-**What they don't care about:**
+**Primary operating environments:** Responsive, field-friendly mobile use and efficient desktop workflows for administrative work.
 
-- Full in-browser CAD or BIM rendering (simple PDF blueprints, survey plan scans, and polygon maps are sufficient).
-- Cryptocurrency or fractionalized blockchain deeds.
-- Over-engineered international tax compliance outside the Philippines.
+**Domain roles:**
+
+- Property Manager is the JuanStack provider.
+- Tenant is the consumer.
+- Lease is the transaction.
+- Property Unit is the inventory item.
+- Property Owner is a separate ownership entity and must not replace Property Manager as the provider.
 
 ---
 
-## Stack decisions (supplement CLAUDE.md)
+## Active product phase
 
-- **Framework:** Next.js 16 (App Router), React 19, TypeScript
-- **Database & Auth:** Supabase (PostgreSQL with Row Level Security)
-- **Document Storage:** Supabase Storage (secured buckets for high-resolution land deeds, survey plans, and IDs)
-- **Mapping & Geo:** Leaflet / OpenStreetMap or Mapbox for GPS pin dropping and parcel polygon overlays
-- **State & Data Fetching:** TanStack Query + Server Components
-- **UI Components:** Shadcn/UI primitives with Tailwind CSS
-- **Domain Nomenclature Engine:** `useTerm()` and `getTerm()` strictly backed by `business.json`
+### Phase 1 — Core Property Management, Leasing & Rent Operations
+
+Phase 1 establishes:
+
+1. Property Owner Registry
+2. Property Management
+3. Property Unit Management
+4. Tenant Registry
+5. Lease Lifecycle
+6. Rent Obligations
+7. Payment Recording
+8. Maintenance Requests
+9. Real Estate Operational Dashboard
+
+The core relationship model is:
+
+```text
+Organization
+→ Property Owner
+→ Property
+→ Property Unit
+
+Tenant
+→ Lease
+→ Property Unit
+
+Lease
+→ Rent Obligation
+→ Payment
+
+Property / Property Unit
+→ Maintenance Request
+```
+
+A Tenant is never permanently assigned directly to a Property Unit. Occupancy is represented through the Lease domain.
+
+---
+
+## Phase 1 business decisions
+
+- One primary owner per property is sufficient for MVP; one owner may own multiple properties.
+- Owners may represent individuals or companies.
+- Co-ownership percentages are deferred.
+- Important business records are archived instead of destructively deleted.
+- Upcoming and Active leases cannot overlap for the same unit.
+- Draft leases cannot activate when they conflict with an Upcoming or Active lease.
+- Lease statuses are Draft, Upcoming, Active, Expired, and Terminated.
+- Early termination requires an effective termination date.
+- Historical leases and payments remain preserved.
+- Active leases normally determine unit occupancy.
+- Rent Obligations belong to Leases and preserve their original PHP amount.
+- Phase 1 supports monthly rent only, with due days limited to 1–28.
+- Automatic proration is outside Phase 1.
+- Multiple partial payments may be recorded against one obligation.
+- Overpayments, payment credits, and online payment gateways are outside Phase 1.
+- Payment corrections preserve the original record through a void/reversal and replacement approach.
+- Maintenance Requests may relate to a Property or Property Unit.
+- Phase 1 dashboard reporting is operational only; advanced analytics is deferred.
+
+---
+
+## Platform capabilities and protected ownership boundaries
+
+AI Secretary, Scheduling, and BIR compliance remain part of the final JuanProperty product.
+
+The team leader owns AI Secretary, Scheduling, and BIR. Phase 1 Real Estate work must not modify their code, migrations, personas, tools, configuration logic, or behavior.
+
+Real Estate modules may expose stable, organization-scoped, read-only domain data for later consumption by those systems, including lease start/end/status, rent-obligation due dates and outstanding balances, payment information, maintenance priority/status, and property-unit vacancy information.
+
+Real Estate services must not:
+
+- create AI Secretary tasks
+- create scheduling or calendar events
+- calculate BIR taxes
+- send tenant communications
+- perform autonomous actions
+
+Generic DannFlow/JuanStack infrastructure, generic authentication, agents, skills, hooks, and framework conventions are also protected.
+
+---
+
+## Open vertical identity decision
+
+The repository currently uses `vertical_id: property` and protected namespace paths under `src/bir/property/`, `src/analytics/property/`, and `src/ai/personas/property.ai-manifest.json`.
+
+The revised product model uses the conceptual label `real_estate`. This discrepancy is intentionally unresolved. Do not change `vertical_id`, `business.json`, or protected namespace paths without explicit architectural approval. Until resolved, implementation must respect the current configured namespace while treating this Phase 1 product model as the roadmap authority.
 
 ---
 
 ## Design decisions
 
-- **Strict Semantic Compliance:** Use only Shadcn/Tailwind semantic tokens (`bg-background`, `bg-card`, `text-foreground`, `border-border`, etc.). Never hardcode hex codes or raw color values.
-- **Site-Inspection Ready (Mobile-First):**
-  - All interactive touch targets (buttons, inputs, map controls) $\ge 48\text{px}$ tall.
-  - High contrast for outdoor daylight viewing on mobile phones and tablets during land ocular inspections.
-  - Camera integration hook for instant mobile photo/document uploads during site visits.
-- **Form Layouts:**
-  - Standardized `<Card>` wrapper with `<CardHeader>`, `<CardContent>`, `<CardFooter>`.
-  - Labels always above inputs with visible focus rings (`ring-ring`).
-- **Document Previewer:** Clean modal / drawer preview for multi-page land deeds, PDFs, and lot plans.
+- Mobile-first from 375px with no horizontal scrolling.
+- Minimum 48px interactive application controls.
+- High contrast for field use and efficient information density for desktop office work.
+- Shadcn/UI primitives and Tailwind semantic tokens only.
+- Labels appear above inputs with visible focus and error states.
+- Prioritize access to properties, units, tenants, leases, payments, maintenance, operational alerts, and compliance information.
+- Preserve the existing approved JuanProperty visual system unless a separately tracked design task changes it.
 
 ---
 
-## Tone & voice
+## Deferred product direction
 
-**Brand tone:**
-Professional, authoritative, trustworthy, and clear. Built with deep respect for Philippine real estate legal realities and surveyor terminology.
+The previous land-registry direction remains valid future work but is not active Phase 1 scope:
 
-**What to avoid:**
-Avoid generic tech jargon ("revolutionary decentralized real estate"). Avoid consumer hype. Keep communication grounded in pragmatic property and land administration.
+- land title management
+- parcel management
+- GPS/geospatial coordinates and boundary mapping
+- advanced property documents
+- brokers and buyers
+- property marketplace
+- sales pipeline and sales transactions
 
----
-
-## Anti-decisions (things we're NOT doing)
-
-- NOT building an in-browser CAD drawing engine — use image/PDF survey plan attachments.
-- NOT implementing Web3/NFT title deeds in v1 — strictly adhere to Philippine Land Registration Authority (LRA) and Registry of Deeds (RD) paradigms.
-- NOT building international multi-currency tax engines — focus purely on Philippine BIR regulations and Local Government Unit (LGU) Real Property Tax.
+These capabilities are preserved as future placeholder phases in `MASTERPLAN.md` and must not be implemented or fully expanded during Phase 1.
 
 ---
 
-## Current focus / what's being built right now
+## Other V1 exclusions
 
-- **Phase 0 & 1:**
-  - Setup core database schema for `lands`, `projects`, `land_documents`, `land_owners`, `agents`, and `coordinates`.
-  - Implement Land Parcel & Project CRUD with GPS coordinate pin-dropping and boundary logging.
-  - Implement Document Vault for uploading and previewing TCTs, Tax Declarations, and Lot Plans.
-  - Implement Owner & Agent Contact Directory with direct calling/messaging actions.
+- No short-term rental or channel manager.
+- No native mobile app.
+- No autonomous tenant notices.
+- No online payment gateway.
+- No full accounting suite.
+- No tenant portal or owner portal.
+- No advanced CRM.
+- No predictive AI beyond team-leader-approved operational monitoring.
 
 ---
 
-_Last updated: 2026-09-14 (JuanProperty Vertical Initialization)_
+## Current focus
+
+Obtain human approval for the realigned Phase 1 plan, reconcile GitHub Project tracking, resolve the vertical identity and organization-membership decisions, then begin `[P1.1] Property Owner Registry` through the tracked DannFlow task workflow.
+
+---
+
+_Last updated: 2026-09-14 — Phase 1 property-management realignment_
