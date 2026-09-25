@@ -6,6 +6,13 @@
 
 A Next.js 15 + Supabase starter optimized for **Vibe Coding** — an AI-native dev workflow where schema is authored in TypeScript, applied through reviewed SQL migrations, and mirrored back into generated app types:
 
+## The AI Intelligence Layer (New)
+Following the ECC Migration, this repository is now an autonomous Vibe Coding environment.
+*   **The Brain (Dynamic Routing):** We have configured `.claude.json` and `.mcp.json` to act as the central nervous system. When you prompt the AI, it will dynamically intercept the prompt and route it to the best expert agent in `.agents/skills/`.
+*   **158+ Commands:** Type `/claude-command` followed by commands like `plan-canvas` or `auto-doc` to trigger massive automated workflows.
+*   **Documentation Ledger:** Add quick notes to `docs/PENDING_DOC_UPDATES.md` while coding. When ready, run `/claude-command auto-doc` to have the AI formalize them into `CHANGELOG.md` and clear the ledger.
+*   **Extended Guides:** Check `docs/ecc-guides/` for the longform, shortform, and security guides on how to maximize this architecture.
+
 ## Repository mode guard (mandatory)
 
 Before editing, identify the repository root, folder name, and remotes:

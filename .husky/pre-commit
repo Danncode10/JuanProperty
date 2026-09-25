@@ -1,1 +1,9 @@
 npx lint-staged
+
+if git diff --cached --name-only | grep -qE "^(src/|supabase/|\.agents/|\.claude/|scripts/|docs/ecc/)"; then
+  if ! git diff --cached --name-only | grep -q "^docs/PENDING_DOC_UPDATES.md$"; then
+    echo "🚨 ERROR: You modified project structure, agents, or core logic but did not log it in docs/PENDING_DOC_UPDATES.md."
+    echo "👉 Please update docs/PENDING_DOC_UPDATES.md and stage it, or bypass with --no-verify."
+    exit 1
+  fi
+fi

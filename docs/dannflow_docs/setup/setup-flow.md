@@ -10,10 +10,11 @@ This document covers every path from "fresh start" to "fully Claude-configured p
 
 What `install.sh` does automatically:
 
-1. Clones DannFlow → installs npm deps → copies `.env.example` → `.env.local`
-2. Installs Ruflo globally; run `npx ruflo@latest init wizard` separately if you choose to use Ruflo
-3. Downloads all 8 skill packs (design taste, quality, SEO/marketing)
-4. Runs `./guide.sh init` (rebrand + Git history reset)
+1. Detects piped input to interactively prompt for app names. Clones DannFlow → installs npm deps → copies `.env.example` → `.env.local`
+2. Initializes a clean Git slate (`git init -b main`) preventing template commit history inheritance.
+3. Installs Ruflo globally (non-blocking); run `npx ruflo@latest init wizard` separately.
+4. Downloads all 8 skill packs (design taste, quality, SEO/marketing)
+5. Runs `./guide.sh init` (rebrand + Git history reset)
 
 **What you do after install (in Claude Code):**
 
@@ -38,6 +39,9 @@ Step 5 — Run /what-task
 ```
 
 After initialization, use `/what-task` to start the current Phase 0 work. `/make-masterplan` is for expanding later phases, not creating the initial plan.
+
+**For JuanStack Vertical Projects:**
+If you are onboarding a specialized JuanStack SaaS, run `/juanstack-init` directly after Phase 0. This interactive command will walk you through setting up the vertical identity, domain nomenclature (`provider`, `consumer`, `transaction`), BIR compliance rules, and AI personas.
 
 ---
 

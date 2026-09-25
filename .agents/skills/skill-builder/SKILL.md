@@ -1,17 +1,23 @@
 ---
 name: "Skill Builder"
-description: "Create new Codex Skills with proper YAML frontmatter, progressive disclosure structure, and complete directory organization. Use when you need to build custom skills for specific workflows, generate skill templates, or understand the Codex Skills specification."
+description: "Create new AI Agents, Skills, and Commands with proper YAML frontmatter, progressive disclosure structure, and complete directory organization. Use when you need to build custom agents/skills for specific workflows, generate templates, or understand the skills specification."
 ---
 
 # Skill Builder
 
 ## What This Skill Does
 
-Creates production-ready Codex Skills with proper YAML frontmatter, progressive disclosure architecture, and complete file/folder structure. This skill guides you through building skills that Codex can autonomously discover and use across all surfaces (Codex.ai, Codex, SDK, API).
+Creates production-ready AI Agents, Skills, and Commands with proper YAML frontmatter, progressive disclosure architecture, and complete file/folder structure. This skill guides you through building agents that any AI coding assistant (Antigravity, Claude Code, Codex) can autonomously discover and use across all surfaces.
+
+## 🛑 STOP: The Scout Rule (MANDATORY)
+Before you write a single line of code to create a new skill, you **MUST** run the `skill-scout` agent. 
+Do not create duplicate skills from scratch! Use `skill-scout` to search `docs/dannflow_docs/SKILL_REGISTRY.md` and remote marketplaces first. 
+- If `skill-scout` finds a close match, **fork and extend** the existing skill instead of building from scratch.
+- Only if `skill-scout` confirms there is no match, proceed with `Skill Builder`.
 
 ## Prerequisites
 
-- Codex 2.0+ or Codex.ai with Skills support
+- An AI coding assistant (Antigravity, Claude Code, or Codex)
 - Basic understanding of Markdown and YAML
 - Text editor or IDE
 
@@ -39,7 +45,11 @@ description: "Brief description of what this skill does and when Codex should us
 [Basic usage]
 EOF
 
-# 3. Verify skill is detected
+# 3. Add to Registry (MANDATORY)
+# You MUST append the new skill to the registry so other agents can find it:
+echo "- **My First Skill**: Brief description of what this skill does and when Codex should use it." >> docs/dannflow_docs/SKILL_REGISTRY.md
+
+# 4. Verify skill is detected
 # Restart Codex or refresh Codex.ai
 ```
 
@@ -546,6 +556,9 @@ Before publishing a skill, verify:
 - [ ] Large resources in resources/ directory
 - [ ] Clear navigation between levels
 
+**Registry Sync (MANDATORY)**:
+- [ ] The skill's name and description MUST be appended to `docs/dannflow_docs/SKILL_REGISTRY.md` so that AI agents can discover it.
+
 **Testing**:
 - [ ] Skill appears in Codex's skill list
 - [ ] Description triggers on relevant queries
@@ -555,40 +568,51 @@ Before publishing a skill, verify:
 
 ---
 
+## 🛡️ Anti-Hallucination Design (MANDATORY)
+
+To prevent AI hallucination, **never** write skills that tell the AI to "read and verify." You must write **Actionable Agent Patterns (ReAct)**. Every skill must enforce:
+1. **Forced Tool Usage:** Explicitly mandate the use of exact, context-appropriate tools (e.g., `grep_search` for code audits, `search_web` for research, or custom API scripts) so the AI physically acts rather than assumes.
+2. **Hard Stops:** If a critical condition is not met, explicitly instruct the AI to output a strict failure alert (e.g., `❌ CRITICAL FAILURE`) and halt execution. Do not allow it to bypass checks.
+3. **Show, Don't Tell:** Provide the exact bash commands, tool names, or scripts the AI should run.
+
+---
+
 ## Skill Builder Templates
 
-### Template 1: Basic Skill (Minimal)
+### Template 1: Actionable ReAct Agent (Anti-Hallucination)
 
 ```markdown
 ---
-name: "My Basic Skill"
+name: "My Strict Agent"
 description: "One sentence what. One sentence when to use."
 ---
 
-# My Basic Skill
+# My Strict Agent
 
 ## What This Skill Does
 [2-3 sentences describing functionality]
 
 ## Quick Start
 ```bash
-# Single command to get started
+# Trigger instruction for the user
+"Run the [Agent Name] to verify X."
 ```
 
-## Step-by-Step Guide
+## Step-by-Step Guide (ReAct Pattern)
 
-### Step 1: Setup
-[Instructions]
+### Step 1: Observation (Forced Tool Use)
+You MUST use the appropriate tool (e.g., `grep_search`, `view_file`, `search_web`, or a custom script) to gather facts before acting. Do NOT assume the state of the codebase or environment.
+```bash
+# Example: Provide the exact tool command or script needed to verify the state
+[Insert exact tool command here]
+```
 
-### Step 2: Usage
-[Instructions]
+### Step 2: Verification Loop
+For every result found in Step 1, verify [Condition].
 
-### Step 3: Verify
-[Instructions]
-
-## Troubleshooting
-- **Issue**: Problem description
-  - **Solution**: Fix description
+### Step 3: Hard Execution Stop
+- **If checks pass**: Reply with `✅ Verification Passed` and proceed.
+- **If checks fail**: You MUST halt execution. Output a `❌ CRITICAL FAILURE` alert, list the exact errors, and wait for human input.
 ```
 
 ### Template 2: Intermediate Skill (With Scripts)

@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "routing": {
+    "enabled": true,
+    "strategy": "dynamic-agent-delegation"
+  },
+  "hooks": {
+    "prePrompt": "node scripts/ecc-hooks/config-protection.js",
+    "preCommit": "node scripts/ecc-hooks/pre-bash-commit-quality.js",
+    "postTask": "node scripts/ecc-hooks/desktop-notify.js"
+  },
+  "agents": {
+    "path": ".agents/skills",
+    "fallback": "general-coder"
+  },
+  "commands": {
+    "path": ".claude/commands"
+  }
+}

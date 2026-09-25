@@ -1,527 +1,155 @@
 ---
 name: seo
-description: Optimize for search engine visibility and ranking. Use when asked to "improve SEO", "optimize for search", "fix meta tags", "add structured data", "sitemap optimization", or "search engine optimization".
-license: MIT
+description: Audit, plan, and implement SEO improvements across technical SEO, on-page optimization, structured data, Core Web Vitals, and content strategy. Use when the user wants better search visibility, SEO remediation, schema markup, sitemap/robots work, or keyword mapping.
 metadata:
-  author: web-quality-skills
-  version: "1.0"
+  origin: ECC
 ---
 
-# SEO optimization
+# SEO
 
-Search engine optimization based on Lighthouse SEO audits and Google Search guidelines. Focus on technical SEO, on-page optimization, and structured data.
+Improve search visibility through technical correctness, performance, and content relevance, not gimmicks.
 
-## SEO fundamentals
+## When to Use
 
-Search ranking factors (approximate influence):
+Use this skill when:
+- auditing crawlability, indexability, canonicals, or redirects
+- improving title tags, meta descriptions, and heading structure
+- adding or validating structured data
+- improving Core Web Vitals
+- doing keyword research and mapping keywords to URLs
+- planning internal linking or sitemap / robots changes
 
-| Factor | Influence | This Skill |
-|--------|-----------|------------|
-| Content quality & relevance | ~40% | Partial (structure) |
-| Backlinks & authority | ~25% | ✗ |
-| Technical SEO | ~15% | ✓ |
-| Page experience (Core Web Vitals) | ~10% | See [Core Web Vitals](../core-web-vitals/SKILL.md) |
-| On-page SEO | ~10% | ✓ |
+## How It Works
 
----
+### Principles
 
-## Technical SEO
+1. Fix technical blockers before content optimization.
+2. One page should have one clear primary search intent.
+3. Prefer long-term quality signals over manipulative patterns.
+4. Mobile-first assumptions matter because indexing is mobile-first.
+5. Recommendations should be page-specific and implementable.
 
-### Crawlability
+### Technical SEO checklist
 
-**robots.txt:**
-```text
-# /robots.txt
-User-agent: *
-Allow: /
+#### Crawlability
 
-# Block admin/private areas
-Disallow: /admin/
-Disallow: /api/
-Disallow: /private/
+- `robots.txt` should allow important pages and block low-value surfaces
+- no important page should be unintentionally `noindex`
+- important pages should be reachable within a shallow click depth
+- avoid redirect chains longer than two hops
+- canonical tags should be self-consistent and non-looping
 
-# Don't block resources needed for rendering
-# ❌ Disallow: /static/
+#### Indexability
 
-Sitemap: https://example.com/sitemap.xml
-```
+- preferred URL format should be consistent
+- multilingual pages need correct hreflang if used
+- sitemaps should reflect the intended public surface
+- no duplicate URLs should compete without canonical control
 
-**Meta robots:**
-```html
-<!-- Default: indexable, followable -->
-<meta name="robots" content="index, follow">
+#### Performance
 
-<!-- Noindex specific pages -->
-<meta name="robots" content="noindex, nofollow">
+- LCP < 2.5s
+- INP < 200ms
+- CLS < 0.1
+- common fixes: preload hero assets, reduce render-blocking work, reserve layout space, trim heavy JS
 
-<!-- Indexable but don't follow links -->
-<meta name="robots" content="index, nofollow">
+#### Structured data
 
-<!-- Control snippets -->
-<meta name="robots" content="max-snippet:150, max-image-preview:large">
-```
+- homepage: organization or business schema where appropriate
+- editorial pages: `Article` / `BlogPosting`
+- product pages: `Product` and `Offer`
+- interior pages: `BreadcrumbList`
+- Q&A sections: `FAQPage` only when the content truly matches
 
-**Canonical URLs:**
-```html
-<!-- Prevent duplicate content issues -->
-<link rel="canonical" href="https://example.com/page">
+### On-page rules
 
-<!-- Self-referencing canonical (recommended) -->
-<link rel="canonical" href="https://example.com/current-page">
+#### Title tags
 
-<!-- For paginated content -->
-<link rel="canonical" href="https://example.com/products">
-<!-- Or use rel="prev" / rel="next" for explicit pagination -->
-```
+- aim for roughly 50-60 characters
+- put the primary keyword or concept near the front
+- make the title legible to humans, not stuffed for bots
 
-### XML sitemap
+#### Meta descriptions
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://example.com/</loc>
-    <lastmod>2024-01-15</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://example.com/products</loc>
-    <lastmod>2024-01-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-</urlset>
-```
+- aim for roughly 120-160 characters
+- describe the page honestly
+- include the main topic naturally
 
-**Sitemap best practices:**
-- Maximum 50,000 URLs or 50MB per sitemap
-- Use sitemap index for larger sites
-- Include only canonical, indexable URLs
-- Update `lastmod` when content changes
-- Submit to Google Search Console
+#### Heading structure
 
-### URL structure
+- one clear `H1`
+- `H2` and `H3` should reflect actual content hierarchy
+- do not skip structure just for visual styling
 
-```
-✅ Good URLs:
-https://example.com/products/blue-widget
-https://example.com/blog/how-to-use-widgets
+### Keyword mapping
 
-❌ Poor URLs:
-https://example.com/p?id=12345
-https://example.com/products/item/category/subcategory/blue-widget-2024-sale-discount
-```
-
-**URL guidelines:**
-- Use hyphens, not underscores
-- Lowercase only
-- Keep short (< 75 characters)
-- Include target keywords naturally
-- Avoid parameters when possible
-- Use HTTPS always
-
-### HTTPS & security
-
-```html
-<!-- Ensure all resources use HTTPS -->
-<img src="https://example.com/image.jpg">
-
-<!-- Not: -->
-<img src="http://example.com/image.jpg">
-```
-
-**Security headers for SEO trust signals:**
-```
-Strict-Transport-Security: max-age=31536000; includeSubDomains
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-```
-
----
-
-## On-page SEO
-
-### Title tags
-
-```html
-<!-- ❌ Missing or generic -->
-<title>Page</title>
-<title>Home</title>
-
-<!-- ✅ Descriptive with primary keyword -->
-<title>Blue Widgets for Sale | Premium Quality | Example Store</title>
-```
-
-**Title tag guidelines:**
-- 50-60 characters (Google truncates ~60)
-- Primary keyword near the beginning
-- Unique for every page
-- Brand name at end (unless homepage)
-- Action-oriented when appropriate
-
-### Meta descriptions
-
-```html
-<!-- ❌ Missing or duplicate -->
-<meta name="description" content="">
-
-<!-- ✅ Compelling and unique -->
-<meta name="description" content="Shop premium blue widgets with free shipping. 30-day returns. Rated 4.9/5 by 10,000+ customers. Order today and save 20%.">
-```
-
-**Meta description guidelines:**
-- 150-160 characters
-- Include primary keyword naturally
-- Compelling call-to-action
-- Unique for every page
-- Matches page content
-
-### Heading structure
-
-```html
-<!-- ❌ Poor structure -->
-<h2>Welcome to Our Store</h2>
-<h4>Products</h4>
-<h1>Contact Us</h1>
-
-<!-- ✅ Proper hierarchy -->
-<h1>Blue Widgets - Premium Quality</h1>
-  <h2>Product Features</h2>
-    <h3>Durability</h3>
-    <h3>Design</h3>
-  <h2>Customer Reviews</h2>
-  <h2>Pricing</h2>
-```
-
-**Heading guidelines:**
-- Single `<h1>` per page (the main topic)
-- Logical hierarchy (don't skip levels)
-- Include keywords naturally
-- Descriptive, not generic
-
-### Image SEO
-
-```html
-<!-- ❌ Poor image SEO -->
-<img src="IMG_12345.jpg">
-
-<!-- ✅ Optimized image -->
-<img src="blue-widget-product-photo.webp"
-     alt="Blue widget with chrome finish, side view showing control panel"
-     width="800"
-     height="600"
-     loading="lazy">
-```
-
-**Image guidelines:**
-- Descriptive filenames with keywords
-- Alt text describes the image content
-- Compressed and properly sized
-- WebP/AVIF with fallbacks
-- Lazy load below-fold images
+1. define the search intent
+2. gather realistic keyword variants
+3. prioritize by intent match, likely value, and competition
+4. map one primary keyword/theme to one URL
+5. detect and avoid cannibalization
 
 ### Internal linking
 
-```html
-<!-- ❌ Non-descriptive -->
-<a href="/products">Click here</a>
-<a href="/widgets">Read more</a>
+- link from strong pages to pages you want to rank
+- use descriptive anchor text
+- avoid generic anchors when a more specific one is possible
+- backfill links from new pages to relevant existing ones
 
-<!-- ✅ Descriptive anchor text -->
-<a href="/products/blue-widgets">Browse our blue widget collection</a>
-<a href="/guides/widget-maintenance">Learn how to maintain your widgets</a>
+## Examples
+
+### Title formula
+
+```text
+Primary Topic - Specific Modifier | Brand
 ```
 
-**Linking guidelines:**
-- Descriptive anchor text with keywords
-- Link to relevant internal pages
-- Reasonable number of links per page
-- Fix broken links promptly
-- Use breadcrumbs for hierarchy
+### Meta description formula
 
----
-
-## Structured data (JSON-LD)
-
-### Organization
-
-```html
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Example Company",
-  "url": "https://example.com",
-  "logo": "https://example.com/logo.png",
-  "sameAs": [
-    "https://twitter.com/example",
-    "https://linkedin.com/company/example"
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+1-555-123-4567",
-    "contactType": "customer service"
-  }
-}
-</script>
+```text
+Action + topic + value proposition + one supporting detail
 ```
 
-### Article
+### JSON-LD example
 
-```html
-<script type="application/ld+json">
+```json
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "How to Choose the Right Widget",
-  "description": "Complete guide to selecting widgets for your needs.",
-  "image": "https://example.com/article-image.jpg",
+  "headline": "Page Title Here",
   "author": {
     "@type": "Person",
-    "name": "Jane Smith",
-    "url": "https://example.com/authors/jane-smith"
+    "name": "Author Name"
   },
   "publisher": {
     "@type": "Organization",
-    "name": "Example Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://example.com/logo.png"
-    }
-  },
-  "datePublished": "2024-01-15",
-  "dateModified": "2024-01-20"
-}
-</script>
-```
-
-### Product
-
-```html
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "Blue Widget Pro",
-  "image": "https://example.com/blue-widget.jpg",
-  "description": "Premium blue widget with advanced features.",
-  "brand": {
-    "@type": "Brand",
-    "name": "WidgetCo"
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "49.99",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "url": "https://example.com/products/blue-widget"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "reviewCount": "1250"
+    "name": "Brand Name"
   }
 }
-</script>
 ```
 
-### FAQ
+### Audit output shape
 
-```html
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What colors are available?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Our widgets come in blue, red, and green."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the warranty?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "All widgets include a 2-year warranty."
-      }
-    }
-  ]
-}
-</script>
+```text
+[HIGH] Duplicate title tags on product pages
+Location: src/routes/products/[slug].tsx
+Issue: Dynamic titles collapse to the same default string, which weakens relevance and creates duplicate signals.
+Fix: Generate a unique title per product using the product name and primary category.
 ```
 
-### Breadcrumbs
+## Anti-Patterns
 
-```html
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://example.com"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Products",
-      "item": "https://example.com/products"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Blue Widgets",
-      "item": "https://example.com/products/blue-widgets"
-    }
-  ]
-}
-</script>
-```
+| Anti-pattern | Fix |
+| --- | --- |
+| keyword stuffing | write for users first |
+| thin near-duplicate pages | consolidate or differentiate them |
+| schema for content that is not actually present | match schema to reality |
+| content advice without checking the actual page | read the real page first |
+| generic “improve SEO” outputs | tie every recommendation to a page or asset |
 
-### Validation
+## Related Skills
 
-Test structured data at:
-- [Google Rich Results Test](https://search.google.com/test/rich-results)
-- [Schema.org Validator](https://validator.schema.org/)
-
----
-
-## AI search visibility (emerging)
-
-A class of AI search engines (ChatGPT search, Perplexity, Gemini Overviews) cite web pages from their training and retrieval pipelines, not from the classic ranked results. As of 2026 this is an unstable area — there are no confirmed ranking signals — but a few things are low-cost and won't hurt:
-
-- **Don't block AI crawlers wholesale.** `OAI-SearchBot`, `PerplexityBot`, `GoogleOther`, `Google-Extended`, `ClaudeBot`, etc. each have separate `robots.txt` user-agents. Decide per-bot rather than blanket-blocking — a `Disallow` removes you from that bot's citations.
-- **Lean on schema.org `Article`/`Product`/`FAQPage`.** AI summarizers parse structured data more reliably than they parse prose layouts. The structured-data examples above are the same ones that help here.
-- **Make first-paragraph answers self-contained.** Both featured snippets and AI summaries pull short, coherent passages. A definition or direct answer in the first 1-2 sentences is more extractable than the same content buried under marketing prose.
-
-### `llms.txt` — emerging, unproven
-
-[`llms.txt`](https://llmstxt.org/) is a proposed convention (a Markdown index of your site's important pages, served at `/llms.txt`) for LLMs to consume. As of mid-2026 adoption is ~0.015% of sites and **no major AI vendor has confirmed they read it**. Treat it as a 5-minute speculative add for content sites — not a meaningful ranking or citation factor — and don't reorganize content around it.
-
----
-
-## Mobile SEO
-
-### Responsive design
-
-```html
-<!-- ❌ Not mobile-friendly -->
-<meta name="viewport" content="width=1024">
-
-<!-- ✅ Responsive viewport -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-```
-
-### Tap targets
-
-```css
-/* ❌ Too small for mobile */
-.small-link {
-  padding: 4px;
-  font-size: 12px;
-}
-
-/* ✅ Adequate tap target */
-.mobile-friendly-link {
-  padding: 12px;
-  font-size: 16px;
-  min-height: 48px;
-  min-width: 48px;
-}
-```
-
-### Font sizes
-
-```css
-/* ❌ Too small on mobile */
-body {
-  font-size: 10px;
-}
-
-/* ✅ Readable without zooming */
-body {
-  font-size: 16px;
-  line-height: 1.5;
-}
-```
-
----
-
-## International SEO
-
-### Hreflang tags
-
-```html
-<!-- For multi-language sites -->
-<link rel="alternate" hreflang="en" href="https://example.com/page">
-<link rel="alternate" hreflang="es" href="https://example.com/es/page">
-<link rel="alternate" hreflang="fr" href="https://example.com/fr/page">
-<link rel="alternate" hreflang="x-default" href="https://example.com/page">
-```
-
-### Language declaration
-
-```html
-<html lang="en">
-<!-- or -->
-<html lang="es-MX">
-```
-
----
-
-## SEO audit checklist
-
-### Critical
-- [ ] HTTPS enabled
-- [ ] robots.txt allows crawling
-- [ ] No `noindex` on important pages
-- [ ] Title tags present and unique
-- [ ] Single `<h1>` per page
-
-### High priority
-- [ ] Meta descriptions present
-- [ ] Sitemap submitted
-- [ ] Canonical URLs set
-- [ ] Mobile-responsive
-- [ ] Core Web Vitals passing
-
-### Medium priority
-- [ ] Structured data implemented
-- [ ] Internal linking strategy
-- [ ] Image alt text
-- [ ] Descriptive URLs
-- [ ] Breadcrumb navigation
-
-### Ongoing
-- [ ] Fix crawl errors in Search Console
-- [ ] Update sitemap when content changes
-- [ ] Monitor ranking changes
-- [ ] Check for broken links
-- [ ] Review Search Console insights
-
----
-
-## Tools
-
-| Tool | Use |
-|------|-----|
-| Google Search Console | Monitor indexing, fix issues |
-| Google PageSpeed Insights | Performance + Core Web Vitals |
-| Rich Results Test | Validate structured data |
-| Lighthouse | Full SEO audit |
-| Screaming Frog | Crawl analysis |
-
-## References
-
-- [Google Search Central](https://developers.google.com/search)
-- [Schema.org](https://schema.org/)
-- [Core Web Vitals](../core-web-vitals/SKILL.md)
-- [Web Quality Audit](../web-quality-audit/SKILL.md)
+- `seo-specialist`
+- `frontend-patterns`
+- `brand-voice`
+- `market-research`
