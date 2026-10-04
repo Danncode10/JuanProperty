@@ -47,7 +47,7 @@ Keep `DATABASE_URL`, service-role keys, SMTP passwords, OAuth client secrets, an
 - The login page loads without a Supabase configuration error.
 - No secret was committed or shared in a ticket.
 
-## P0.2 — Configure email authentication
+## P0.3 — Configure email authentication
 
 **Purpose:** Let new users confirm their email and recover their account safely.
 
@@ -76,7 +76,19 @@ Keep `DATABASE_URL`, service-role keys, SMTP passwords, OAuth client secrets, an
 
 Confirmation and reset emails arrive, their links work, and the new password can sign in.
 
-## P0.3 — Preserve the approved project UI
+### JuanProperty verification — 2026-10-04
+
+- Hosted project: `JuanProperty` (`bnhylarpwbdwdrpctibn`).
+- Local Site URL and `/auth/callback` plus `/reset-password` redirects saved.
+- Email confirmation required before sign-in.
+- Gmail Custom SMTP saved without placing credentials in the repository.
+- JuanProperty confirmation and reset templates installed with
+  `{{ .ConfirmationURL }}` preserved.
+- Human smoke tests passed for confirmation delivery/link handling and password
+  recovery/new-password sign-in.
+- Production auth origins remain deferred to `[P0.7]`.
+
+## P0.2 — Preserve the approved project UI
 
 **Purpose:** Keep the product's approved visual direction intact while the project changes hands.
 
@@ -269,5 +281,5 @@ The canonical production URL is deployed, its Vercel production variables are co
 ## Helpful references
 
 - [`PROJECT_CONTEXT.md`](../../PROJECT_CONTEXT.md)
-- [`social-auth.md`](social-auth.md)
+- [`social-auth.md`](../features/social-auth.md)
 - [`setup-vercel.md`](../../.claude/commands/setup-vercel.md)
