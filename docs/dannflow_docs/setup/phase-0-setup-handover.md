@@ -159,6 +159,16 @@ Do not swap these URLs.
 
 A Google test user reaches `/dashboard` after clicking **Continue with Google**.
 
+### JuanProperty verification record
+
+- Local Google OAuth and repeat sign-in were confirmed on 2026-10-05.
+- The server initiation route persists the PKCE verifier before redirecting to
+  Google, and the callback exchanges the matching flow ID.
+- Existing Auth users missing an application profile are backfilled by a
+  tracked migration.
+- `public.profiles` has RLS enabled; reads and updates are limited to the owner
+  or an active administrator, with matching update `WITH CHECK` policies.
+
 ## P0.5 — Hand over hero media
 
 **Purpose:** Deliver approved visual assets without changing existing hero behavior by accident.

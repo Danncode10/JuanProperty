@@ -4,18 +4,18 @@ This document contains key workflow and activity diagrams illustrating core oper
 
 ---
 
-## 1. User Authentication & Profile Bootstrapping Workflow
+## 1. Google OAuth & Profile Bootstrapping Workflow
 
 ```mermaid
 flowchart TD
-    A["👤 User initiates Auth (OAuth/Email)"] --> B["⚡ Supabase Auth processes credentials"]
-    B -->|Success| C["Postgres Auth Trigger (`on_auth_user_created`)"]
-    B -->|Failure| D["❌ Return Auth Error to Client"]
-
-    C --> E["Insert into `public.profiles` table"]
-    E --> F["Generate JWT Session Cookie"]
-    F --> G["Next.js Server Middleware validates Session"]
-    G --> H["Render Protected App View"]
+    A["👤 User initiates Google OAuth"] --> B["Next.js server stores PKCE verifier"]
+    B --> C["⚡ Google and Supabase authenticate user"]
+    C -->|Failure| D["❌ Return safe auth error to login"]
+    C -->|Success| E["App callback exchanges code and flow ID"]
+    E --> F["Postgres trigger creates `public.profiles` row"]
+    F --> G["Generate authenticated session cookies"]
+    G --> H["Dashboard guard reads owner profile under RLS"]
+    H --> I["Render protected dashboard"]
 ```
 
 ---
