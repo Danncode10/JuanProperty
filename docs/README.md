@@ -59,6 +59,8 @@ Welcome to the central documentation hub for **DannFlow** — the Next.js 16 + S
 - [**Technical Document**](project/technical-document.md) — Explains source code logic and database architectures.
 - [**User Manual**](project/user-manual.md) — The operational guide for end-users interacting with the system.
 - [**P0.4 Google OAuth Setup**](project/p0.4-google-oauth-setup.md) — JuanProperty's verified local callback map, provider setup, and profile RLS outcome.
+- [**P0.5 Hero Media Brief**](project/p0.5-hero-media-brief.md) — Approved generation prompts, delivery constraints, usage-rights boundary, and responsive crop direction.
+- [**P0.5 Hero Media Verification**](tests/p0.5-hero-media.md) — Asset metadata, automated quality results, and recorded human acceptance evidence.
 
 ### 🏗️ 7. JuanStack Vertical Engine Revision (`juanstack/`)
 

@@ -187,6 +187,25 @@ Also hand over the asset source, licence/usage confirmation, intended desktop/mo
 
 The hero text remains readable, the subject survives the mobile crop, and the supplied media has approved usage rights.
 
+### JuanProperty verification record — 2026-10-05
+
+- The source image and source video are retained in `assets-source/`; the
+  optimized delivery files are in `public/`.
+- `hero-poster.avif` is 1280×720 and 37,304 bytes.
+- `hero-background.webm` is a video-only VP9 asset at 1280×720, 24 fps,
+  8 seconds, and 3,079,342 bytes.
+- `hero-background.mp4` is a video-only H.264 fallback at 1280×720, 24 fps,
+  8 seconds, and 2,399,825 bytes.
+- Desktop, 375px mobile, poster transition, WebM loop, MP4 fallback,
+  reduced-motion, and save-data behavior were approved by the project owner.
+- The generated imagery uses the approved Nano Banana/MuAPI workflow and the
+  video uses Kling 3 Standard. The project owner confirmed the applicable
+  provider terms permit commercial use. Casa Aurelia remains a mood and
+  composition reference only; none of its media or code is shipped.
+- Full generation prompts, crop constraints, and verification evidence are in
+  `docs/project/p0.5-hero-media-brief.md` and
+  `docs/tests/p0.5-hero-media.md`.
+
 ## P0.6 — Final quality review
 
 **Purpose:** Catch launch blockers after authentication and hero work are complete.
