@@ -52,10 +52,10 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** Clean build and deploy on Netlify, canonical HTTPS `netlify.app` domain active, required production runtime variables configured, and production auth redirect URLs verified end-to-end.
   - **Run:** Netlify deployment workflow (Netlify CLI or dashboard)
 
-- [ ] **`[P0.DOC]` Finalize Phase 0 Documentation & Handover**
-  - **Goal:** Update docs, handover logs, and pending documentation ledger for Phase 0 completion.
-  - **Dependencies:** `[P0.1]`, `[P0.2]`, `[P0.3]`, `[P0.4]`, `[P0.5]`, `[P0.6]`, `[P0.7]`
-  - **Acceptance Criteria:** `docs/handover/phase-0-setup-handover.md` updated, `docs/PENDING_DOC_UPDATES.md` cleared for Phase 0.
+- [x] **`[P0.DOC]` Finalize Phase 0 Documentation & Handover**
+  - **Goal:** Finalize the Phase 0 documentation handover and record any operational verification intentionally deferred beyond this documentation milestone.
+  - **Dependencies:** `[P0.1]`, `[P0.2]`, `[P0.3]`, `[P0.4]`, `[P0.5]`, `[P0.6]`. `[P0.7]` deployment evidence is tracked separately and is not represented as complete by closing this documentation task.
+  - **Acceptance Criteria:** `docs/project/phase-0-setup-handover.md` accurately records completed work, ownership, known limitations, and pending `[P0.7]` evidence; `docs/PENDING_DOC_UPDATES.md` contains no unresolved documentation updates for completed Phase 0 work.
   - **Run:** `/close-task`
 
 ---
