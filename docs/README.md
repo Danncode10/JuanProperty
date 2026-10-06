@@ -11,6 +11,7 @@ Welcome to the central documentation hub for **DannFlow** — the Next.js 16 + S
 - [**Setup Flow**](dannflow_docs/setup/setup-flow.md) — Comprehensive step-by-step setup guide.
 - [**MCP Setup & Configuration**](dannflow_docs/setup/mcp-setup.md) — Model Context Protocol configuration for Supabase, GitHub, and local tooling.
 - [**Phase 0 Setup Handover**](dannflow_docs/setup/phase-0-setup-handover.md) — Handoff checklist and validation for new projects.
+- [**JuanProperty Phase 0 Handover**](project/phase-0-setup-handover.md) — Project-specific completion status and team-lead follow-up for pending Netlify deployment evidence.
 
 ### 🏗️ 2. Architecture & Design Principles (`architecture/`)
 
