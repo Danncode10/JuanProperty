@@ -40,7 +40,7 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** High-resolution media asset integrated into the hero section with proper aspect ratio and performance optimization.
   - **Run:** `/hero-bg`
 
-- [ ] **`[P0.6]` Template-level visual and quality review**
+- [x] **`[P0.6]` Template-level visual and quality review**
   - **Goal:** Execute visual, SEO, marketing copy, and accessibility audit across the template pages.
   - **Dependencies:** `[P0.1]`, `[P0.2]`, `[P0.3]`, `[P0.4]`, `[P0.5]`
   - **Acceptance Criteria:** `/seo-check`, `/marketing-check`, and `/review` pass without errors; mobile responsiveness verified at 375px.
