@@ -322,7 +322,7 @@ export function DashboardShell({
           <NotificationsBell setTab={setTab} />
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 md:p-8">
+        <main id="main-content" className="flex-1 overflow-y-auto p-6 md:p-8">
           {pathname === "/dashboard/team" && children ? (
             children
           ) : (

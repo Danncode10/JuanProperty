@@ -14,7 +14,7 @@ export function Footer() {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-3">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
@@ -38,13 +38,17 @@ export function Footer() {
               Product
             </h4>
             <ul className="space-y-2.5">
-              {["Features", "Pricing", "Changelog", "Docs"].map((item) => (
-                <li key={item}>
+              {[
+                { label: "Features", href: "/#features" },
+                { label: "Workflow", href: "/#how-it-works" },
+                { label: "Pricing", href: "/#pricing" },
+              ].map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -57,32 +61,17 @@ export function Footer() {
               Company
             </h4>
             <ul className="space-y-2.5">
-              {["About", "Blog", "Careers", "Contact"].map((item) => (
-                <li key={item}>
+              {[
+                { label: "Blog", href: "/blog" },
+                { label: "Sign in", href: "/login" },
+                { label: "GitHub", href: siteConfig.githubUrl },
+              ].map((item) => (
+                <li key={item.label}>
                   <a
-                    href="#"
+                    href={item.href}
                     className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-[10px] font-semibold text-foreground/60 mb-4 uppercase tracking-[0.2em]">
-              Legal
-            </h4>
-            <ul className="space-y-2.5">
-              {["Privacy", "Terms", "License"].map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
-                    className="text-[13px] text-muted-foreground hover:text-foreground transition-colors duration-300"
-                  >
-                    {item}
+                    {item.label}
                   </a>
                 </li>
               ))}

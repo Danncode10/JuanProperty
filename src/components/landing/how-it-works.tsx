@@ -1,36 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, ShieldCheck, Users } from "lucide-react";
+import { Building2, FileText, Wrench } from "lucide-react";
 import { Typewriter } from "./typewriter";
 
 const STEPS = [
   {
     step: "01",
-    icon: MapPin,
-    title: "Map parcels & coordinates",
+    icon: Building2,
+    title: "Organize owners and properties",
     description:
-      "Pinpoint GPS coordinates, boundary polygons, and land lot areas for commercial, agricultural, and residential projects.",
-    snippet: "GPS: 14.5995° N, 120.9842° E",
+      "The Phase 1 roadmap starts with property owners, property details, and their units.",
+    snippet: "Owners / Properties / Units",
     // Paint-only radial gradient (no filter:blur cost during scroll)
     glow: "radial-gradient(ellipse at 70% 50%, rgba(16,185,129,0.25), transparent 60%)",
   },
   {
     step: "02",
-    icon: ShieldCheck,
-    title: "Vault legal title documents",
+    icon: FileText,
+    title: "Keep tenant and lease records",
     description:
-      "Store and verify TCT, OCT, Tax Declarations, and Lot Plans in a secure, tamper-evident digital repository.",
-    snippet: "TCT No. 042-2024001928",
+      "Planned lease records connect tenants with units and preserve key rental terms.",
+    snippet: "Tenants / Lease terms",
     glow: "radial-gradient(ellipse at 70% 50%, rgba(217,119,6,0.22), transparent 60%)",
   },
   {
     step: "03",
-    icon: Users,
-    title: "Assign agents & track deals",
+    icon: Wrench,
+    title: "Follow rent and maintenance",
     description:
-      "Equip licensed brokers with direct contact registries, assign projects, and monitor Philippine BIR tax deadlines.",
-    snippet: "PRC Lic. #0019842 · DHSUD",
+      "The roadmap includes rent obligations, payment history, and maintenance requests.",
+    snippet: "Rent / Payments / Maintenance",
     glow: "radial-gradient(ellipse at 70% 50%, rgba(5,150,105,0.22), transparent 60%)",
   },
 ];
@@ -60,10 +60,7 @@ export function HowItWorks() {
             How it works
           </span>
           <h2 className="mt-6 text-4xl sm:text-5xl font-semibold text-foreground tracking-[-0.02em]">
-            <Typewriter
-              text="Three steps to total property control"
-              speed={40}
-            />
+            <Typewriter text="The Phase 1 workflow, at a glance" speed={40} />
           </h2>
         </motion.div>
 
@@ -131,7 +128,7 @@ export function HowItWorks() {
                             />
                           </div>
                           <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-muted-foreground">
-                            terminal
+                            workflow outline
                           </span>
                         </div>
                         <span className="text-[9px] font-mono text-muted-foreground/60">
@@ -149,8 +146,8 @@ export function HowItWorks() {
                           <span className="inline-block h-3.5 w-[6px] bg-primary" />
                         </div>
                         <div className="text-muted-foreground/60 text-[11px] pl-4">
-                          <span className="text-emerald-400">✓</span> ready in
-                          1.4s
+                          <span className="text-primary">•</span> Planned for
+                          Phase 1
                         </div>
                       </div>
                     </div>

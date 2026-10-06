@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { getUserProfile } from "@/services/dashboard";
 
 export const metadata: Metadata = {
   robots: {
@@ -7,6 +9,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await getUserProfile();
+  if (!session) redirect("/login");
+
   return children;
 }

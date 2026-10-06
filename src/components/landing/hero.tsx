@@ -19,7 +19,7 @@ interface HeroProps {
   isAuthed: boolean;
 }
 
-const HERO_HEADLINE = "Manage Land, Projects, and Titles with ease.";
+const HERO_HEADLINE = "Property operations, organized in one place.";
 const HERO_TYPING_SPEED = 65;
 
 export function Hero({ isAuthed }: HeroProps) {
@@ -135,7 +135,7 @@ export function Hero({ isAuthed }: HeroProps) {
             <span className="flex items-center gap-1.5 rounded-full bg-primary/10 border border-primary/20 px-2.5 py-0.5 text-[10px] font-semibold text-primary uppercase tracking-[0.15em]">
               JuanProperty
             </span>
-            <span>Unified Philippine Real Estate & Land Management</span>
+            <span>Property management for the Philippines</span>
             <ArrowRight className="h-3 w-3 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-1" />
           </motion.a>
 
@@ -166,10 +166,10 @@ export function Hero({ isAuthed }: HeroProps) {
             }}
             className="mt-8 max-w-xl text-[17px] text-muted-foreground leading-relaxed"
           >
-            Centralized portfolio management for Philippine real estate
-            developers, brokers, and landlords. Secure land title vaults, GPS
-            coordinate mapping, agent contact registries, and BIR tax
-            compliance.
+            JuanProperty is being built for landlords and property managers.
+            Phase 1 focuses on owners, properties, units, tenants, leases, rent,
+            payments, and maintenance. Land titles, mapping, and BIR tools are
+            deferred to later phases.
           </motion.p>
 
           {/* CTAs — visible but blurred during typing, pops in after */}
@@ -188,18 +188,16 @@ export function Hero({ isAuthed }: HeroProps) {
             className="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7"
           >
             <MagneticCTA href={isAuthed ? "/dashboard" : "/login"}>
-              Get started free
+              Open the current workspace
             </MagneticCTA>
 
             <a
-              href={siteConfig.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/#features"
               className="group inline-flex items-center gap-2 text-[14px] font-medium text-foreground/90 hover:text-foreground transition-colors"
             >
-              <GitHubIcon className="h-3.5 w-3.5" />
+              <ArrowRight className="h-3.5 w-3.5" />
               <span className="border-b border-white/[0.15] group-hover:border-white/[0.4] transition-colors pb-0.5">
-                View on GitHub
+                See the Phase 1 roadmap
               </span>
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
@@ -221,17 +219,17 @@ export function Hero({ isAuthed }: HeroProps) {
             className="mt-16 flex flex-col gap-5"
           >
             <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground/60">
-              Built for Philippine Real Estate & Land Teams
+              Planned for Philippine property operations
             </p>
             {/* Grid (not flex) for universal gap support across browsers */}
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-8 gap-y-4 max-w-2xl">
               {[
-                "Land Parcels",
-                "Title Deeds",
-                "GPS Coordinates",
-                "Agent Directory",
-                "Owner Registry",
-                "BIR Tax Tools",
+                "Owners",
+                "Properties",
+                "Units",
+                "Tenants & leases",
+                "Rent & payments",
+                "Maintenance",
               ].map((logo) => (
                 <span
                   key={logo}
@@ -422,7 +420,11 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
                     >
                       <Icon className="h-3 w-3" strokeWidth={1.5} />
                       <span className="font-medium">
-                        {["Overview", "Database", "Auth", "API"][index]}
+                        {
+                          ["Overview", "Properties", "Leases", "Maintenance"][
+                            index
+                          ]
+                        }
                       </span>
                     </div>
                   ))}
@@ -431,9 +433,13 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
                 <div className="col-span-9 space-y-3">
                   <div className="grid grid-cols-3 gap-3">
                     {[
-                      { label: "MRR", val: "$48.2k", delta: "+12.4%" },
-                      { label: "Active orgs", val: "1,247", delta: "+8.2%" },
-                      { label: "Uptime", val: "99.99%", delta: "30d" },
+                      { label: "Properties", val: "Planned", delta: "Phase 1" },
+                      { label: "Leases", val: "Planned", delta: "Phase 1" },
+                      {
+                        label: "Maintenance",
+                        val: "Planned",
+                        delta: "Phase 1",
+                      },
                     ].map((stat) => (
                       <div
                         key={stat.label}
@@ -454,7 +460,7 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
 
                   <div className="relative h-32 overflow-hidden rounded-xl border border-white/[0.04] bg-white/[0.02] p-3">
                     <p className="mb-2 text-[9px] uppercase tracking-[0.15em] text-muted-foreground">
-                      Revenue · last 12 weeks
+                      Planned roadmap areas
                     </p>
                     <div className="flex h-16 items-end justify-between gap-1">
                       {[40, 60, 35, 75, 55, 85, 70, 90, 65, 80, 50, 95].map(
@@ -472,15 +478,15 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
                   <div className="space-y-1.5">
                     {[
                       {
-                        user: "stripe-checkout",
+                        user: "Property records",
                         action: "POST /api/webhooks · 200 OK",
                       },
                       {
-                        user: "auth.signIn",
+                        user: "Lease records",
                         action: "INSERT auth.sessions · RLS pass",
                       },
                       {
-                        user: "pages.update",
+                        user: "Maintenance",
                         action: "UPDATE pages · org_id matched",
                       },
                     ].map((row, index) => (
@@ -490,7 +496,7 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
                       >
                         <div className="flex items-center gap-2.5">
                           <span className="rounded border border-emerald-500/20 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-wider text-emerald-400">
-                            ok
+                            planned
                           </span>
                           <div>
                             <p className="font-mono text-[10px] text-foreground">
@@ -502,7 +508,7 @@ function ProductPreview({ typingDone }: { typingDone: boolean }) {
                           </div>
                         </div>
                         <span className="font-mono text-[9px] text-muted-foreground">
-                          {12 + index}ms
+                          example
                         </span>
                       </div>
                     ))}
@@ -620,13 +626,5 @@ function TiltCard({ children }: { children: React.ReactNode }) {
     >
       {children}
     </div>
-  );
-}
-
-function GitHubIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-    </svg>
   );
 }
