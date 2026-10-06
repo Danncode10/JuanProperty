@@ -102,3 +102,10 @@ Generic authentication, organization infrastructure, agents, skills, hooks, and 
 ## 7. Deferred Technical Direction
 
 Land titles, parcel records, advanced documents, GPS/geospatial data, parcel geometry, broker/buyer workflows, sales operations, and marketplace functionality remain deferred future work. No Phase 1 schema or service should preemptively implement those capabilities.
+
+## 8. Public Site, Dashboard Access, and Blog Boundaries
+
+- Public product copy describes the Phase 1 roadmap—owners, properties, units, tenants, leases, rent obligations, payments, maintenance, and operational visibility—as planned/in development. It must not imply that deferred land-title, parcel-mapping, or BIR functionality is available. Pricing and trial terms remain unset.
+- Public landing-page feature content must not expose profile names, email addresses, roles, or creator/repository inventory. Dashboard routes remain `noindex`; blog index and post pages use route-specific canonical URLs.
+- The `/dashboard` layout requires an authenticated user with an active profile. Blog editor pages and mutation actions require the persisted `admin` role. The generated database role enum is `admin | user`; do not configure Blog access with an unpersistable `super_admin` value. Private blog reads and writes use the session-scoped client and organization-owner RLS.
+- Blog images are stored in a flat shared bucket without organization ownership metadata. Destructive image cleanup remains disabled, and deleting a post intentionally leaves its uploaded image objects untouched until storage paths and policies support safe ownership-scoped cleanup.
