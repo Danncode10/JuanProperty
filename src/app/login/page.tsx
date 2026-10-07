@@ -94,8 +94,13 @@ export default function AuthPage() {
       if (saved === "login" || saved === "signup") setMode(saved);
       const params = new URLSearchParams(window.location.search);
       if (params.get("mode") === "recovery") setMode("recovery");
-      if (params.get("error") === "confirmation_failed") {
+      const callbackError = params.get("error");
+      if (callbackError === "confirmation_failed") {
         setError("We could not complete that auth link. Please try again.");
+      } else if (callbackError === "oauth_exchange_failed") {
+        setError("We could not finish Google sign-in. Please try again.");
+      } else if (callbackError === "oauth_provider_error") {
+        setError("Google sign-in was cancelled or rejected. Please try again.");
       }
     }, 0);
     const handleResize = () => setWindowWidth(window.innerWidth);

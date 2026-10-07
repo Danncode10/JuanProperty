@@ -9,9 +9,14 @@ DannFlow defaults to email/password plus Google OAuth because most client-facing
 
 - Login and signup live in `src/app/login/page.tsx`.
 - Password recovery is handled inline on `/login` with `mode=recovery`; `src/app/forgot-password/page.tsx` redirects there for backwards compatibility.
-- OAuth starts through `signInWithOAuthProvider` in `src/services/auth.ts`.
-- Supabase returns to `src/app/auth/callback/route.ts`, where the auth code is exchanged for a cookie-based session.
+- OAuth starts through `signInWithOAuthProvider` in `src/services/auth.ts`,
+  then uses the server route at `/auth/oauth/google` so the PKCE verifier is
+  committed before the browser leaves the app.
+- Supabase returns to `src/app/auth/callback/route.ts`, where the auth code and
+  correlated flow ID are exchanged for a cookie-based session.
 - Successful Google login redirects to `/dashboard` through `/auth/callback?next=/dashboard`.
+- Callback destinations are normalized to same-origin paths; provider failures
+  and email-link failures retain separate user-facing error states.
 
 ## Supabase Dashboard
 
