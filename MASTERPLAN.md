@@ -66,7 +66,7 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
 >
 > **Ownership boundary:** Phase 1 does not modify or implement AI Secretary, Scheduling, BIR, generic authentication, or generic DannFlow/JuanStack infrastructure. It may expose stable, read-only domain data contracts for those systems to consume later.
 
-- [ ] **`[P1.1]` Property Owner Registry**
+- [x] **`[P1.1]` Property Owner Registry**
   - **Goal:** Create an organization-scoped registry for Property Owners without conflating them with the configured Property Manager provider.
   - **Scope:** Support individual and company owners, one owner owning multiple properties, contact and descriptive information, and archival instead of destructive deletion. One primary owner per property is sufficient for MVP; co-ownership percentages are deferred.
   - **Dependencies:** Phase 0 readiness and an approved organization-access/RLS convention.
