@@ -8,17 +8,17 @@
 
 import { createClient } from "@/utils/supabase/client";
 
-const BUCKET  = "blog-images";
-const MAX_PX  = 1200;   // longest edge target
-const QUALITY = 0.82;   // JPEG quality (0–1)
+const BUCKET = "blog-images";
+const MAX_PX = 1200; // longest edge target
+const QUALITY = 0.82; // JPEG quality (0–1)
 
 // Keeping each post's images small protects this project's storage quota.
 export const MAX_POST_IMAGES_KB = 2 * 1024; // 2 MB of images per blog post
 
 export interface UploadResult {
-  url: string;       // public CDN URL
-  path: string;      // storage path for deletion
-  sizeKb: number;    // final size after compression
+  url: string; // public CDN URL
+  path: string; // storage path for deletion
+  sizeKb: number; // final size after compression
 }
 
 // ── Storage path helpers ──────────────────────────────────────────────────────
@@ -34,7 +34,7 @@ export function extractBlogImagePath(url: string): string | null {
 
 /** Pulls every <img src="..."> out of the editor's HTML content. */
 export function extractImageSrcs(html: string): string[] {
-  return Array.from(html.matchAll(/<img[^>]+src="([^"]+)"/g), m => m[1]);
+  return Array.from(html.matchAll(/<img[^>]+src="([^"]+)"/g), (m) => m[1]);
 }
 
 /**
@@ -42,17 +42,26 @@ export function extractImageSrcs(html: string): string[] {
  * much of a post's image budget is currently spent. Ignores URLs that aren't
  * in this bucket (e.g. external images).
  */
-export async function getBlogImageUsageKb(urls: (string | null | undefined)[]): Promise<number> {
-  const paths = Array.from(new Set(
-    urls.filter((u): u is string => !!u).map(extractBlogImagePath).filter((p): p is string => !!p)
-  ));
+export async function getBlogImageUsageKb(
+  urls: (string | null | undefined)[],
+): Promise<number> {
+  const paths = Array.from(
+    new Set(
+      urls
+        .filter((u): u is string => !!u)
+        .map(extractBlogImagePath)
+        .filter((p): p is string => !!p),
+    ),
+  );
   if (!paths.length) return 0;
 
   const supabase = createClient();
-  const { data } = await supabase.storage.from(BUCKET).list("", { limit: 1000 });
+  const { data } = await supabase.storage
+    .from(BUCKET)
+    .list("", { limit: 1000 });
   if (!data) return 0;
 
-  const sizeByName = new Map(data.map(f => [f.name, f.metadata?.size ?? 0]));
+  const sizeByName = new Map(data.map((f) => [f.name, f.metadata?.size ?? 0]));
   let bytes = 0;
   for (const path of paths) {
     bytes += sizeByName.get(path.split("/").pop()!) ?? 0;
@@ -79,22 +88,23 @@ async function compressImage(file: File): Promise<Blob> {
   if (width > MAX_PX || height > MAX_PX) {
     if (width >= height) {
       height = Math.round((height / width) * MAX_PX);
-      width  = MAX_PX;
+      width = MAX_PX;
     } else {
-      width  = Math.round((width / height) * MAX_PX);
+      width = Math.round((width / height) * MAX_PX);
       height = MAX_PX;
     }
   }
 
   const canvas = document.createElement("canvas");
-  canvas.width  = width;
+  canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext("2d")!;
   ctx.drawImage(img, 0, 0, width, height);
 
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob(
-      blob => blob ? resolve(blob) : reject(new Error("Canvas compression failed")),
+      (blob) =>
+        blob ? resolve(blob) : reject(new Error("Canvas compression failed")),
       "image/jpeg",
       QUALITY,
     );
@@ -109,7 +119,7 @@ async function compressImage(file: File): Promise<Blob> {
 function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload  = () => resolve(reader.result as string);
+    reader.onload = () => resolve(reader.result as string);
     reader.onerror = reject;
     reader.readAsDataURL(blob);
   });
@@ -130,7 +140,7 @@ export function dataUrlSizeKb(dataUrl: string): number {
   const comma = dataUrl.indexOf(",");
   const b64 = comma === -1 ? dataUrl : dataUrl.slice(comma + 1);
   const padding = b64.endsWith("==") ? 2 : b64.endsWith("=") ? 1 : 0;
-  return Math.round((b64.length * 3 / 4 - padding) / 1024);
+  return Math.round(((b64.length * 3) / 4 - padding) / 1024);
 }
 
 /** Uploads an already-compressed data URL to storage and returns its public URL. */
@@ -168,7 +178,7 @@ export async function uploadBlogImage(
   if (remainingKb !== undefined && sizeKb > remainingKb) {
     throw new Error(
       `This image is ${sizeKb} KB, but this post only has ${remainingKb} KB left of its ` +
-      `${MAX_POST_IMAGES_KB / 1024} MB image budget. Remove an image or pick a smaller one.`
+        `${MAX_POST_IMAGES_KB / 1024} MB image budget. Remove an image or pick a smaller one.`,
     );
   }
   onProgress?.(40);
@@ -179,12 +189,10 @@ export async function uploadBlogImage(
 
   // 3. Upload to Supabase Storage
   const supabase = createClient();
-  const { error } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, blob, {
-      contentType: "image/jpeg",
-      upsert: false,
-    });
+  const { error } = await supabase.storage.from(BUCKET).upload(path, blob, {
+    contentType: "image/jpeg",
+    upsert: false,
+  });
 
   if (error) throw new Error(error.message);
   onProgress?.(90);
@@ -198,9 +206,4 @@ export async function uploadBlogImage(
     path,
     sizeKb,
   };
-}
-
-export async function deleteBlogImage(path: string): Promise<void> {
-  const supabase = createClient();
-  await supabase.storage.from(BUCKET).remove([path]);
 }

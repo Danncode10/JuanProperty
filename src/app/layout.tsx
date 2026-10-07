@@ -17,7 +17,7 @@ import { QueryProvider } from "@/components/query-provider";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — Philippine Real Estate & Land Management`,
+  title: `${siteConfig.name} — Property Management`,
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   alternates: {
@@ -27,14 +27,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: `${siteConfig.name} — Philippine Real Estate & Land Management`,
+    title: `${siteConfig.name} — Property Management`,
     description: siteConfig.description,
     siteName: siteConfig.name,
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — Philippine Real Estate & Land Management`,
+    title: `${siteConfig.name} — Property Management`,
     description: siteConfig.description,
     images: ["/opengraph-image"],
   },
@@ -48,6 +48,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen flex flex-col antialiased relative">
+        <a
+          href="#main-content"
+          className="sr-only fixed left-4 top-4 z-[100] min-h-12 items-center rounded-md bg-background px-4 py-3 text-foreground focus:not-sr-only focus:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          Skip to main content
+        </a>
         <QueryProvider>
           {children}
           <Toaster

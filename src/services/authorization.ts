@@ -9,10 +9,16 @@ export type AuthenticatedUser = { user: User; profile: Profile };
 
 export async function requireAdmin(): Promise<AuthenticatedUser> {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single();
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
   if (!profile?.is_active) redirect("/login");
   if (profile.role !== "admin") redirect("/dashboard");
 

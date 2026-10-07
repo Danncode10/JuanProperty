@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { siteConfig } from "@/lib/config";
 import { Typewriter } from "./typewriter";
 
 interface CtaBannerProps {
@@ -37,18 +36,15 @@ export function CtaBanner({ isAuthed }: CtaBannerProps) {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-[10px] font-medium text-foreground/70 uppercase tracking-[0.2em]">
-            Ready when you are
+            Current development phase
           </span>
 
           <h2 className="mt-6 text-4xl sm:text-5xl md:text-6xl font-semibold text-foreground tracking-[-0.03em] leading-[1]">
-            <Typewriter
-              text="Ready to organize your land portfolio?"
-              speed={45}
-            />
+            <Typewriter text="See what JuanProperty is building." speed={45} />
           </h2>
           <p className="mt-6 text-[15px] text-muted-foreground max-w-md mx-auto leading-relaxed">
-            Join developers, brokers, and landlords using {siteConfig.name} to
-            manage land parcels, title deeds, coordinates, and agents.
+            The Phase 1 workspace is in development for Philippine landlords and
+            property managers. Sign in to access the current workspace.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -56,7 +52,7 @@ export function CtaBanner({ isAuthed }: CtaBannerProps) {
               href={isAuthed ? "/dashboard" : "/login"}
               className="group flex items-center gap-2 pl-6 pr-2 py-2 text-sm font-medium rounded-full bg-foreground text-background active:scale-[0.97] transition-transform duration-200 shadow-[0_4px_20px_rgba(16,185,129,0.35),inset_0_1px_0_rgba(255,255,255,0.2)]"
             >
-              Start building
+              Open the current workspace
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-background/10 group-hover:bg-background/20 group-hover:translate-x-0.5 group-hover:-translate-y-[1px] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]">
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
@@ -65,7 +61,7 @@ export function CtaBanner({ isAuthed }: CtaBannerProps) {
               href="#pricing"
               className="px-6 py-3 text-sm font-medium rounded-full border border-white/[0.08] bg-white/[0.02] text-foreground/90 hover:bg-white/[0.05] active:scale-[0.97] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] inner-highlight"
             >
-              See pricing
+              See the Phase 1 roadmap
             </a>
           </div>
         </motion.div>
