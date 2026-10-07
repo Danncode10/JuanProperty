@@ -1,9 +1,10 @@
 export const siteConfig = {
   name: process.env.NEXT_PUBLIC_SITE_NAME || "JuanProperty",
   githubUrl:
-    process.env.NEXT_PUBLIC_GITHUB_URL || "https://github.com/Danncode10",
+    process.env.NEXT_PUBLIC_GITHUB_URL ||
+    "https://github.com/Danncode10/JuanProperty",
   description:
-    "Real estate and land management platform for tracking land parcels, projects, title documents, owners, agents with contacts, and GPS coordinates.",
+    "A property management workspace for Philippine landlords and property managers, with a roadmap for owners, properties, units, leases, rent, payments, and maintenance.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
 } as const;
 

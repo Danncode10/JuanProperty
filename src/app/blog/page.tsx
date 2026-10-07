@@ -9,6 +9,7 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: `Blog | ${siteConfig.name}`,
   description: `Tips, guides, and news from ${siteConfig.name}.`,
+  alternates: { canonical: "/blog" },
   openGraph: {
     title: `Blog | ${siteConfig.name}`,
     description: `Tips, guides, and news from ${siteConfig.name}.`,
@@ -18,12 +19,17 @@ export const metadata: Metadata = {
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
-    day: "numeric", month: "long", year: "numeric",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
 }
 
 function readingTime(content: string) {
-  const words = content.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length;
+  const words = content
+    .replace(/<[^>]+>/g, "")
+    .split(/\s+/)
+    .filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 200));
 }
 
@@ -39,7 +45,6 @@ export default async function BlogPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
-
       {/* Header */}
       <div className="mb-12 text-center">
         <h1 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight mb-4">
@@ -52,11 +57,13 @@ export default async function BlogPage() {
 
       {posts.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-[15px] text-muted-foreground">No posts published yet. Check back soon.</p>
+          <p className="text-[15px] text-muted-foreground">
+            No posts published yet. Check back soon.
+          </p>
         </div>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map(post => (
+          {posts.map((post) => (
             <Link
               key={post.id}
               href={`/blog/${post.slug}`}

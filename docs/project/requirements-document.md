@@ -14,6 +14,8 @@ JuanProperty enables Property Managers and administrative teams to operate a ren
 
 Property Owner is a separate ownership entity. It does not replace Property Manager as the JuanStack provider.
 
+These Phase 1 capabilities are planned/in development and must not be represented as already available product features until their implementation tasks are complete. Land titles, parcel/GPS mapping, and BIR workflows are deferred; pricing and trial terms have not been set.
+
 ---
 
 ## 2. Phase 1 Users

@@ -49,7 +49,7 @@ export const TAB_CONFIG: TabConfig[] = [
     requiredRole: ["admin", "super_admin"],
   },
   { id: "team", label: "Team", requiredRole: ["admin", "super_admin"] },
-  { id: "blog", label: "Blog Management", requiredRole: "super_admin" },
+  { id: "blog", label: "Blog Management", requiredRole: "admin" },
   { id: "settings", label: "Settings" },
 
   // Legacy Starter Modules (Hidden by default in JuanStack to prevent clutter)

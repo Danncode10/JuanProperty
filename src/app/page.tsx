@@ -1,4 +1,4 @@
-import { getUserProfile, getVibeCheckData } from "@/services/dashboard";
+import { getUserProfile } from "@/services/dashboard";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { FeaturesTabs } from "@/components/features-tabs";
@@ -8,14 +8,11 @@ import { Pricing } from "@/components/landing/pricing";
 import { CtaBanner } from "@/components/landing/cta-banner";
 import { Typewriter } from "@/components/landing/typewriter";
 import { BlogPreview } from "@/components/landing/blog-preview";
-import { creatorRepos, siteConfig } from "@/lib/config";
+import { siteConfig } from "@/lib/config";
 
 export default async function Home() {
   const session = await getUserProfile();
   const user = session?.user || null;
-  const profile = session?.profile;
-  const profiles = (await getVibeCheckData()) || [];
-  const repos = creatorRepos;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -32,57 +29,53 @@ export default async function Home() {
       />
       <Navbar user={user} />
 
-      <Hero isAuthed={!!user} />
+      <main id="main-content">
+        <Hero isAuthed={!!user} />
 
-      {/* =============================
-          FEATURES SECTION (BENTO + TABS)
-          ============================= */}
-      <section
-        id="features"
-        className="relative bg-background isolate overflow-hidden"
-      >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 bg-grid-sm opacity-50"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 grid-fade-overlay-v"
-        />
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
-          <div className="text-center mb-16">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-[10px] font-medium text-foreground/70 uppercase tracking-[0.2em]">
-              Features
-            </span>
-            <h2 className="mt-6 text-4xl sm:text-5xl font-semibold text-foreground tracking-[-0.02em]">
-              <Typewriter
-                text="Everything to manage your land & estates"
-                speed={40}
-              />
-            </h2>
-
-            <p className="mt-5 text-[15px] text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              One platform. Every parcel, title deed, coordinate, and agent in
-              sync.
-            </p>
-          </div>
-
-          <FeaturesTabs
-            profiles={profiles}
-            repos={repos}
-            currentRole={profile?.role}
+        {/* Phase 1 roadmap overview */}
+        <section
+          id="features"
+          className="relative bg-background isolate overflow-hidden"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-grid-sm opacity-50"
           />
-        </div>
-      </section>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 grid-fade-overlay-v"
+          />
 
-      <HowItWorks />
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
+            <div className="text-center mb-16">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] px-3 py-1 text-[10px] font-medium text-foreground/70 uppercase tracking-[0.2em]">
+                Features
+              </span>
+              <h2 className="mt-6 text-4xl sm:text-5xl font-semibold text-foreground tracking-[-0.02em]">
+                <Typewriter
+                  text="A practical property management roadmap"
+                  speed={40}
+                />
+              </h2>
 
-      <Pricing isAuthed={!!user} />
+              <p className="mt-5 text-[15px] text-muted-foreground max-w-xl mx-auto leading-relaxed">
+                Phase 1 is focused on everyday property operations. The modules
+                below are planned, not yet available.
+              </p>
+            </div>
 
-      <BlogPreview />
+            <FeaturesTabs />
+          </div>
+        </section>
 
-      <CtaBanner isAuthed={!!user} />
+        <HowItWorks />
+
+        <Pricing isAuthed={!!user} />
+
+        <BlogPreview />
+
+        <CtaBanner isAuthed={!!user} />
+      </main>
 
       <Footer />
     </>

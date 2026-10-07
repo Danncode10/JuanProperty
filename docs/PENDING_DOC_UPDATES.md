@@ -1,1 +1,1 @@
-<!-- Ledger cleared after verified task P0.5. Log new pending documentation updates here when implementation begins. -->
+<!-- P0.6 documentation updates finalized in docs(project): update docs and verification for public-quality-access. -->

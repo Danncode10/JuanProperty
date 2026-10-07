@@ -18,7 +18,7 @@ export async function generateStaticParams() {
   // revalidate above) once the DB is available.
   try {
     const slugs = await getAllPublishedSlugs();
-    return slugs.map(slug => ({ slug }));
+    return slugs.map((slug) => ({ slug }));
   } catch {
     return [];
   }
@@ -30,11 +30,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Post Not Found" };
 
   const title = post.seo_title || post.title;
-  const description = post.seo_description || post.excerpt || `Read "${post.title}" on the ${siteConfig.name} blog.`;
+  const description =
+    post.seo_description ||
+    post.excerpt ||
+    `Read "${post.title}" on the ${siteConfig.name} blog.`;
 
   return {
     title: `${title} | ${siteConfig.name}`,
     description,
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title,
       description,
@@ -47,12 +51,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", {
-    day: "numeric", month: "long", year: "numeric",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
 }
 
 function readingTime(content: string) {
-  const words = content.replace(/<[^>]+>/g, "").split(/\s+/).filter(Boolean).length;
+  const words = content
+    .replace(/<[^>]+>/g, "")
+    .split(/\s+/)
+    .filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 200));
 }
 
@@ -69,8 +78,16 @@ export default async function BlogPostPage({ params }: Props) {
     image: post.cover_image_url || undefined,
     datePublished: post.published_at || post.created_at,
     dateModified: post.updated_at,
-    author: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
-    publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+    author: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
     url: `${siteConfig.url}/blog/${post.slug}`,
   };
 
@@ -82,7 +99,6 @@ export default async function BlogPostPage({ params }: Props) {
       />
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
-
         {/* Back link */}
         <Link
           href="/blog"
