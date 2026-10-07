@@ -1,1 +1,1 @@
-<!-- Ledger cleared after the approved Phase 1 planning realignment. Log new pending documentation updates here when implementation begins. -->
+<!-- Ledger cleared after verified task P0.3. Log new pending documentation updates here when implementation begins. -->

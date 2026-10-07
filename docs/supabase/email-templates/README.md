@@ -4,16 +4,20 @@ These are copy-paste-ready HTML templates for the hosted Supabase Dashboard.
 They use `{{ .ConfirmationURL }}`, so Supabase creates and validates the secure,
 single-use link and honors the redirect URL sent by the application.
 
+The templates use JuanProperty's approved emerald and forest palette. Inline
+colors are intentional because email clients do not support the application's
+Tailwind semantic-token runtime.
+
 ## Install
 
 `/setup-auth` uses this guide during Phase 0 to configure the existing template's email flow. It does not copy HTML into Supabase automatically.
 
 1. In Supabase, open **Authentication > Emails > Templates**.
 2. Select **Confirm sign up**.
-3. Keep the subject as `Confirm your DannFlow email`.
+3. Set the subject to `Confirm your JuanProperty email`.
 4. Replace the email body with the contents of `confirm-signup.html` and save.
 5. Select **Reset password**.
-6. Keep the subject as `Reset your DannFlow password`.
+6. Set the subject to `Reset your JuanProperty password`.
 7. Replace the email body with the contents of `reset-password.html` and save.
 
 ## Important

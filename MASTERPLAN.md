@@ -22,7 +22,7 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** Hero and marketing sections reflect JuanProperty's real estate/land management value proposition with clean semantic tokens.
   - **Run:** `/design-project`
 
-- [ ] **`[P0.3]` Template email authentication and redirect configuration**
+- [x] **`[P0.3]` Template email authentication and redirect configuration**
   - **Goal:** Configure Gmail SMTP for Supabase auth emails, email confirmation and recovery settings, app redirect URLs, and branded email templates.
   - **Dependencies:** `[P0.1]`, `[P0.2]`
   - **Acceptance Criteria:** SMTP credentials configured, redirect URLs registered in Supabase Auth, branded email templates installed.

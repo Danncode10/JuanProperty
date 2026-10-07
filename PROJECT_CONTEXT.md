@@ -140,6 +140,14 @@ The revised product model uses the conceptual label `real_estate`. This discrepa
 - Prioritize access to properties, units, tenants, leases, payments, maintenance, operational alerts, and compliance information.
 - Preserve the existing approved JuanProperty visual system unless a separately tracked design task changes it.
 
+## Authentication decisions
+
+- Email/password authentication remains enabled through hosted Supabase Auth.
+- New email/password accounts must confirm their email address before sign-in.
+- Password recovery returns to `/reset-password`; OAuth returns through `/auth/callback`.
+- Local auth testing uses `http://localhost:3000`. Production auth URLs remain deferred until `[P0.7]` establishes the canonical HTTPS origin.
+- Gmail SMTP and OAuth secrets are stored only in their provider dashboards. They must never be added to `.env.local`, source control, or project documentation.
+
 ---
 
 ## Deferred product direction
