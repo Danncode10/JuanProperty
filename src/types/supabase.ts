@@ -12,31 +12,6 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5";
   };
-  graphql_public: {
-    Tables: {
-      [_ in never]: never;
-    };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json;
-          operationName?: string;
-          query?: string;
-          variables?: Json;
-        };
-        Returns: Json;
-      };
-    };
-    Enums: {
-      [_ in never]: never;
-    };
-    CompositeTypes: {
-      [_ in never]: never;
-    };
-  };
   public: {
     Tables: {
       ai_chats: {
@@ -449,6 +424,62 @@ export type Database = {
         };
         Relationships: [];
       };
+      property_owners: {
+        Row: {
+          address: string | null;
+          archived_at: string | null;
+          contact_person: string | null;
+          created_at: string;
+          description: string | null;
+          email: string | null;
+          id: string;
+          name: string;
+          notes: string | null;
+          organization_id: string;
+          owner_type: string;
+          phone: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          address?: string | null;
+          archived_at?: string | null;
+          contact_person?: string | null;
+          created_at?: string;
+          description?: string | null;
+          email?: string | null;
+          id?: string;
+          name: string;
+          notes?: string | null;
+          organization_id: string;
+          owner_type: string;
+          phone?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          address?: string | null;
+          archived_at?: string | null;
+          contact_person?: string | null;
+          created_at?: string;
+          description?: string | null;
+          email?: string | null;
+          id?: string;
+          name?: string;
+          notes?: string | null;
+          organization_id?: string;
+          owner_type?: string;
+          phone?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "property_owners_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       secretary_tasks: {
         Row: {
           created_at: string;
@@ -720,9 +751,6 @@ export type CompositeTypes<
     : never;
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {
       user_role: ["admin", "user"],
