@@ -28,13 +28,13 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** SMTP credentials configured, redirect URLs registered in Supabase Auth, branded email templates installed.
   - **Run:** `/setup-auth`
 
-- [ ] **`[P0.4]` Google OAuth sign-in configuration and verification**
+- [x] **`[P0.4]` Google OAuth sign-in configuration and verification**
   - **Goal:** Set up Google Cloud consent screen and Web client, Google-to-Supabase callback URI, Supabase Google provider credentials, app redirect URLs, and verify end-to-end sign-in.
   - **Dependencies:** `[P0.1]`, `[P0.2]`, `[P0.3]`
   - **Acceptance Criteria:** Google OAuth client credentials added to Supabase, callback URLs properly mapped, test sign-in succeeds.
   - **Run:** `/setup-auth`
 
-- [ ] **`[P0.5]` Hero media brief and asset handoff**
+- [x] **`[P0.5]` Hero media brief and asset handoff**
   - **Goal:** Produce hero visual assets, imagery, or media backgrounds highlighting Philippine real estate / land management aesthetics.
   - **Dependencies:** `[P0.2]`
   - **Acceptance Criteria:** High-resolution media asset integrated into the hero section with proper aspect ratio and performance optimization.

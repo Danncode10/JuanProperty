@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import type { Provider } from '@supabase/supabase-js';
-import { createClient, createRecoveryClient } from '@/utils/supabase/client';
+import type { Provider } from "@supabase/supabase-js";
+import { getSafeRedirectPath } from "@/services/auth-redirect";
+import { createClient, createRecoveryClient } from "@/utils/supabase/client";
 
 /**
  * Auth Service (Client-side)
@@ -11,7 +12,7 @@ import { createClient, createRecoveryClient } from '@/utils/supabase/client';
 
 export async function signInWithEmail(email: string, password: string) {
   const client = createClient();
-  
+
   const { error: signInError } = await client.auth.signInWithPassword({
     email,
     password,
@@ -20,11 +21,15 @@ export async function signInWithEmail(email: string, password: string) {
   if (signInError) throw signInError;
 
   // Check if MFA is required
-  const { data: mfaData, error: mfaError } = await client.auth.mfa.getAuthenticatorAssuranceLevel();
+  const { data: mfaData, error: mfaError } =
+    await client.auth.mfa.getAuthenticatorAssuranceLevel();
 
   if (mfaError) throw mfaError;
 
-  if (mfaData.nextLevel === 'aal2' && mfaData.nextLevel !== mfaData.currentLevel) {
+  if (
+    mfaData.nextLevel === "aal2" &&
+    mfaData.nextLevel !== mfaData.currentLevel
+  ) {
     return { success: true, requiresMFA: true };
   }
 
@@ -48,18 +53,18 @@ export async function signOut() {
   return { success: true };
 }
 
-export async function signInWithOAuthProvider(provider: Provider, next = '/dashboard') {
-  const client = createClient();
-  const safeNext = next.startsWith('/') ? next : '/dashboard';
-
-  const { error } = await client.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(safeNext)}`,
-    },
-  });
-
-  if (error) throw error;
+export async function signInWithOAuthProvider(
+  provider: Provider,
+  next = "/dashboard",
+) {
+  if (provider !== "google") throw new Error("Unsupported OAuth provider");
+  const safeNext = getSafeRedirectPath(next, "/dashboard");
+  const authorizationUrl = new URL(
+    "/auth/oauth/google",
+    window.location.origin,
+  );
+  authorizationUrl.searchParams.set("next", safeNext);
+  window.location.href = authorizationUrl.toString();
   return { success: true };
 }
 
@@ -81,13 +86,19 @@ export async function resetPassword(password: string) {
   return { success: true };
 }
 
-export async function updatePassword(password: string, currentPassword?: string) {
+export async function updatePassword(
+  password: string,
+  currentPassword?: string,
+) {
   const client = createClient();
 
   if (currentPassword) {
     // 1. Get current user email
-    const { data: { user }, error: userError } = await client.auth.getUser();
-    if (userError || !user?.email) throw new Error('Authentication required');
+    const {
+      data: { user },
+      error: userError,
+    } = await client.auth.getUser();
+    if (userError || !user?.email) throw new Error("Authentication required");
 
     // 2. Silent re-auth
     const { error: reAuthError } = await client.auth.signInWithPassword({
@@ -96,7 +107,7 @@ export async function updatePassword(password: string, currentPassword?: string)
     });
 
     if (reAuthError) {
-      throw new Error('Incorrect current password');
+      throw new Error("Incorrect current password");
     }
   }
 
@@ -104,7 +115,7 @@ export async function updatePassword(password: string, currentPassword?: string)
   const { error } = await client.auth.updateUser({
     password: password,
   });
-  
+
   if (error) throw error;
   return { success: true };
 }

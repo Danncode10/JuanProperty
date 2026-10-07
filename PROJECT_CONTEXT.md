@@ -147,6 +147,9 @@ The revised product model uses the conceptual label `real_estate`. This discrepa
 - Password recovery returns to `/reset-password`; OAuth returns through `/auth/callback`.
 - Local auth testing uses `http://localhost:3000`. Production auth URLs remain deferred until `[P0.7]` establishes the canonical HTTPS origin.
 - Gmail SMTP and OAuth secrets are stored only in their provider dashboards. They must never be added to `.env.local`, source control, or project documentation.
+- Google OAuth uses a Web application client. Local development registers `http://localhost:3000` as an authorized JavaScript origin and `https://bnhylarpwbdwdrpctibn.supabase.co/auth/v1/callback` as the Google-to-Supabase redirect URI.
+- Supabase redirects Google sign-in back to `http://localhost:3000/auth/callback`, where the app exchanges the PKCE authorization code before continuing to `/dashboard`.
+- Google access is limited to `openid`, `email`, and `profile`; additional Google API scopes require a separately approved feature.
 
 ---
 
