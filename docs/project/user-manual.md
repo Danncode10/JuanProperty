@@ -1,7 +1,7 @@
 # User Manual
 
-**Project Name:** [Your Project Name] (Built on DannFlow)
-**Date:** [YYYY-MM-DD]
+**Project Name:** JuanProperty (Built on DannFlow)
+**Date:** 2026-10-07
 
 > **⚠️ REPOSITORY MODE RULE:**
 >
@@ -29,16 +29,15 @@ Out of the box, DannFlow provides the following user workflows. _(Update these a
 
 ## 2. Project-Specific Operational Guide
 
-_(Document the primary ways an end-user or admin interacts with your specific application here. Provide clear operational guides for the system.)__
+JuanProperty currently provides the Property Owner Registry from the authenticated dashboard. Phase 1 functionality is being delivered incrementally; this guide only describes the implemented registry, not planned property, lease, tenant, or payment workflows.
 
-### [Specific Workflow 1: e.g., Creating a Dashboard]
+### Manage Property Owners
 
-- **Navigate to:** `/dashboard`
-- **Action:** Click "New Item" and fill out the form.
-- **Result:** A new item is generated and displayed in the table.
+- **Navigate to:** `/dashboard` → **Property Owners**.
+- **Create:** Choose the add-owner action, select Individual or Company, enter a name, and provide any applicable contact or descriptive fields. Company records can include a contact person. Save to add the record to the active directory.
+- **Edit:** Open an owner record, change its details, and save. The updated values appear in the directory.
+- **Archive:** Use the record's archive action to remove it from the active directory without deleting its history.
+- **Restore:** Turn on **Include archived**, find the archived record, and restore it to the active directory.
+- **Validation:** A name is required and a provided email must be valid. Correct the inline validation message before saving.
 
-### [Specific Workflow 2: e.g., Admin Analytics]
-
-- **Navigate to:** `/admin`
-- **Action:** Select date range.
-- **Result:** Admin sees aggregate usage data.
+Access is currently limited to the authenticated owner of the associated organization. Organization staff membership is not yet supported. The application does not provide permanent deletion for owner records.
