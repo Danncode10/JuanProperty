@@ -4,7 +4,7 @@
 **Configured Vertical:** `property`
 **Active Product Direction:** Core Real Estate Property Management
 **Date:** 2026-09-14
-**Status:** Phase 1 Planning Baseline
+**Status:** Phase 1 in progress — `[P1.1]` implemented
 
 ---
 
@@ -19,7 +19,17 @@ JuanProperty follows DannFlow's existing architecture:
 - Every Phase 1 record is isolated by the existing organization/multi-tenant model.
 - Server Components are the default; client components are limited to actual interactive requirements.
 
-This document defines planned boundaries only. Phase 1 tables, services, and routes are created by their individual approved Masterplan tasks.
+The Phase 1 domain is implemented incrementally by approved Masterplan tasks. The current implementation status is recorded below; later entities remain planned until their task is complete.
+
+### Implemented: `[P1.1]` Property Owner Registry
+
+- `public.property_owners` stores an organization-scoped owner with `owner_type` (`individual` or `company`), required `name`, and optional contact person, email, phone, address, description, and notes. It also stores `archived_at`, `created_at`, and `updated_at`.
+- `organization_id` references `organizations.id` and is indexed. The `updated_at` trigger uses the existing `public.handle_updated_at()` function.
+- RLS is enabled. Authenticated SELECT, INSERT, and UPDATE policies authorize rows only when the signed-in user owns the referenced organization (`organizations.owner_id = auth.uid()`). There is intentionally no DELETE policy; archive/restore updates `archived_at` so records remain recoverable.
+- The `anon` role has no table privileges. Authenticated GraphQL schema discovery remains enabled; discovery is not row authorization, which is enforced by RLS.
+- `src/services/property-owners.ts` derives the organization from the authenticated session and scopes all owner queries to that organization. Callers cannot supply an organization ID. The service is the only database access layer for this feature.
+- Current access limitation: organization membership/staff authorization is not implemented by `[P1.1]`; the supported access path is the existing organization-owner model. Do not imply all staff or admins can access these rows until a membership/RBAC task adds and verifies that policy.
+- `[P1.2]` is expected to link properties to a primary owner; no property relationship is introduced by `[P1.1]`.
 
 ---
 

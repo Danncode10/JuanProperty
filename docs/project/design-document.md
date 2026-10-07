@@ -5,7 +5,7 @@
 **Active Product Direction:** Core Real Estate Property Management
 **Design System:** Preserve the existing approved JuanProperty visual system
 **Date:** 2026-09-14
-**Status:** Phase 1 Planning Baseline
+**Status:** Phase 1 in progress — `[P1.1]` implemented
 
 ---
 
@@ -46,7 +46,11 @@ erDiagram
     PROPERTY_UNIT ||--o{ MAINTENANCE_REQUEST : may_have
 ```
 
-This is a planning model. Exact table definitions and constraints belong to their approved implementation tasks.
+This is the Phase 1 target model. The `[P1.1]` slice currently implemented is `ORGANIZATION → PROPERTY_OWNER`; remaining entities and relationships are planned and must not be presented as available functionality yet. Property-to-owner linkage is part of `[P1.2]`.
+
+### Implemented owner-directory interaction
+
+The Dashboard's **Property Owners** tab supports creating and editing individuals and companies, viewing active records, and archiving/restoring records. Optional contact and descriptive fields can be left blank. The archived filter makes retained records discoverable. Access currently follows the organization-owner authorization model; staff membership access is not yet supported. The interface must continue to distinguish archive/restore from permanent deletion (which is not offered).
 
 ---
 
