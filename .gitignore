@@ -70,3 +70,6 @@ supabase/.temp/
 
 # Inspiration & Reference Projects
 inspirations/
+
+# Local Netlify folder
+.netlify
