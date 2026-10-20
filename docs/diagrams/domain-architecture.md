@@ -13,6 +13,7 @@ erDiagram
     ORGANIZATIONS ||--o{ PROPERTY_OWNERS : scopes
     ORGANIZATIONS ||--o{ PROPERTIES : scopes
     PROPERTY_OWNERS ||--o{ PROPERTIES : primary_owner
+    PROPERTIES ||--o{ PROPERTY_UNITS : contains
     ORGANIZATIONS {
         uuid id PK
         uuid owner_id FK
@@ -44,9 +45,23 @@ erDiagram
         timestamptz created_at
         timestamptz updated_at
     }
+    PROPERTY_UNITS {
+        uuid id PK
+        uuid organization_id FK
+        uuid property_id FK
+        text unit_number
+        integer floor "optional"
+        integer bedrooms "optional"
+        numeric bathrooms "optional"
+        numeric default_rent_php
+        text operational_status "active, maintenance, inactive"
+        timestamptz archived_at "nullable; archive/restore"
+        timestamptz created_at
+        timestamptz updated_at
+    }
 ```
 
-`properties` carries `organization_id` and `primary_owner_id`; a composite foreign key requires the selected Property Owner to belong to the same organization. One owner may be linked to multiple properties. Both tables use organization-owner RLS and authenticated SELECT/INSERT/UPDATE privileges only; `anon` has no table access, and authenticated users have no DELETE or TRUNCATE privilege. Services derive the organization from the authenticated session rather than accepting an organization identifier from the UI.
+`properties` carries `organization_id` and `primary_owner_id`; a composite foreign key requires the selected Property Owner to belong to the same organization. `property_units` carries its organization and property IDs with a composite foreign key to ensure the same boundary, and a case-insensitive unique index protects unit identity within a property. All three tables use organization-owner RLS and authenticated SELECT/INSERT/UPDATE privileges only; `anon` has no table access, and authenticated users have no DELETE or TRUNCATE privilege. Services derive the organization from the authenticated session rather than accepting an organization identifier from the UI. Units have operational state and default rent only; future Lease records determine occupancy and preserve agreed rental amounts.
 
 ```mermaid
 classDiagram

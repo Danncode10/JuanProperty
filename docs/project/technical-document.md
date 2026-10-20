@@ -3,8 +3,8 @@
 **Project Name:** JuanProperty (Built on DannFlow)
 **Configured Vertical:** `property`
 **Active Product Direction:** Core Real Estate Property Management
-**Date:** 2026-09-14
-**Status:** Phase 1 in progress — `[P1.1]` and `[P1.2]` implemented; P1.2 automated verification passed, hands-on checks deferred by user
+**Date:** 2026-10-20
+**Status:** Phase 1 in progress — `[P1.1]`, `[P1.2]`, and `[P1.3]` implemented; P1.2/P1.3 automated verification passed, hands-on checks deferred by user
 
 ---
 
@@ -38,6 +38,15 @@ The Phase 1 domain is implemented incrementally by approved Masterplan tasks. Th
 - `src/services/properties.ts` derives the organization from the authenticated session, filters property reads and writes by that organization, and checks that the primary owner belongs to it. New properties require an active owner. An edit may retain its existing archived owner, but cannot switch to a different archived owner.
 - The dashboard supports create, edit, search, archive, and restore. Team Members do not see Property Owners or Properties because the supported database access model is organization-owner-only. Organization staff membership is not implemented.
 - Units, land titles, advanced documents, parcel geometry, and GPS are outside `[P1.2]`.
+
+### Implemented: `[P1.3]` Property Unit Management
+
+- `public.property_units` stores `organization_id`, `property_id`, unique-per-property `unit_number`, optional `floor`, `bedrooms`, `bathrooms`, optional `description`, `default_rent_php`, `operational_status`, archive timestamp, and audit timestamps. A composite foreign key ties the unit to a property in the same organization; property deletion is restricted while units exist.
+- The unique index on `(property_id, lower(btrim(unit_number)))` prevents duplicate unit identity within a property, regardless of case, whitespace, or archive state.
+- RLS SELECT/INSERT/UPDATE policies require ownership of the unit's organization. `anon` has no table access; authenticated users cannot DELETE or TRUNCATE units. There is no DELETE policy.
+- `src/services/property-units.ts` derives organization context from the signed-in owner, limits reads/writes to that organization, requires active properties for new units, and keeps a unit attached to its original property during edits.
+- Operational states are `active`, `maintenance`, and `inactive`. There is deliberately no `tenant_id` or occupied state; occupancy belongs to the Lease domain. `default_rent_php` is a current default only; future lease creation must copy its agreed rent into the lease so subsequent unit-default edits do not rewrite history.
+- The dashboard supports create/edit, search, archive/restore, and filtering archived units. Unit identity cannot be moved to another property after creation.
 
 ---
 

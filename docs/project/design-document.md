@@ -4,8 +4,8 @@
 **Configured Vertical:** `property`
 **Active Product Direction:** Core Real Estate Property Management
 **Design System:** Preserve the existing approved JuanProperty visual system
-**Date:** 2026-09-14
-**Status:** Phase 1 in progress — `[P1.1]` and `[P1.2]` implemented; P1.2 automated verification passed, hands-on checks deferred by user
+**Date:** 2026-10-20
+**Status:** Phase 1 in progress — `[P1.1]`, `[P1.2]`, and `[P1.3]` implemented; P1.2/P1.3 automated verification passed, hands-on checks deferred by user
 
 ---
 
@@ -55,6 +55,10 @@ The Dashboard's **Property Owners** tab supports creating and editing individual
 ### Implemented property-management interaction
 
 The Dashboard's **Properties** tab supports creating and editing a property name, type, address, optional description, and one primary owner; searching by name, type, address, or owner; and archiving/restoring properties. New properties can select active owners in the same organization. An existing archived owner remains selectable only when editing a property already linked to that owner. Team Members do not see either real-estate tab under the current organization-owner-only access policy. Units, titles/documents, parcel geometry, and GPS are not part of this release.
+
+### Implemented property-unit interaction
+
+The Dashboard's **Units** tab manages units within active properties. A unit has a unit number or name, optional floor/bedroom/bathroom details, default monthly rent in PHP, description, and an operational state of Active, Maintenance, or Inactive. Unit numbers are unique within a property, and unit records can be archived and restored without permanent deletion. Occupancy is intentionally not a unit state; future Lease records determine it.
 
 ---
 

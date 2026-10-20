@@ -53,3 +53,15 @@ Access is currently limited to the authenticated owner of the associated organiz
 - **Validation:** Name, type, address, and primary owner are required. Correct any inline validation message before saving.
 
 Each property is linked to one primary owner in the same organization. One owner can be linked to multiple properties. Access is currently limited to the authenticated organization owner; Team Members do not see these dashboard tabs. Permanent deletion is not available.
+
+### Manage Property Units
+
+- **Navigate to:** `/dashboard` → **Units**.
+- **Create:** Choose **Add unit**, select an active property, enter a unit number or name, and set the default monthly rent in PHP. Floor, bedroom/bathroom counts, and description are optional. Choose the operational state.
+- **Edit:** Update a unit's details or operational state. A unit remains attached to its original property so the property's history stays consistent.
+- **Search:** Search by unit number/name, property, operational state, or description.
+- **Archive:** Choose **Archive** to retain the unit while hiding it from the active list. Enable **Include archived** to restore it later.
+- **Operational state:** Active, Maintenance, and Inactive describe the unit's operational condition. Occupancy is determined by future Lease records and is not stored on the unit.
+- **Default rent:** The PHP monthly amount is a starting default. A future lease records its own agreed amount, so later changes to the unit default do not change existing lease history.
+
+Units are scoped to the property and organization. Their number/name must be unique within that property. Permanent deletion is not available.
