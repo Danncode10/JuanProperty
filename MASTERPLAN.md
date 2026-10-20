@@ -73,7 +73,7 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** Property Owners are isolated by organization; individual/company ownership is represented; records can be created, viewed, updated, and archived; archived records and their history remain available to authorized users; no AI, Scheduling, or BIR behavior is introduced.
   - **Affected Areas:** Future Real Estate migration, generated Supabase types, validation, `src/services/`, authenticated dashboard routes/components, tests, and documentation ledger.
 
-- [ ] **`[P1.2]` Property Management**
+- [x] **`[P1.2]` Property Management**
   - **Goal:** Implement organization-scoped Property management linked to one primary Property Owner.
   - **Scope:** Property name, property type, address, description, primary owner, and active/archive state.
   - **Dependencies:** `[P1.1]`.
