@@ -6,11 +6,13 @@ This diagram maps the structural relationships between Next.js UI Components, th
 
 ## Mermaid Domain Architecture Diagram
 
-> The legacy class diagram below includes template-era sample entities. For the current JuanProperty Phase 1 implementation, the authoritative domain slice is shown here: only Property Owners are implemented so far; the Property relationship is planned for `[P1.2]`.
+> The legacy class diagram below includes template-era sample entities. For the current JuanProperty Phase 1 implementation, the authoritative domain slice is Organization → Property Owner → Property; later entities remain planned.
 
 ```mermaid
 erDiagram
     ORGANIZATIONS ||--o{ PROPERTY_OWNERS : scopes
+    ORGANIZATIONS ||--o{ PROPERTIES : scopes
+    PROPERTY_OWNERS ||--o{ PROPERTIES : primary_owner
     ORGANIZATIONS {
         uuid id PK
         uuid owner_id FK
@@ -30,9 +32,21 @@ erDiagram
         timestamptz created_at
         timestamptz updated_at
     }
+    PROPERTIES {
+        uuid id PK
+        uuid organization_id FK
+        uuid primary_owner_id FK
+        text name
+        text property_type
+        text address
+        text description "optional"
+        timestamptz archived_at "nullable; archive/restore"
+        timestamptz created_at
+        timestamptz updated_at
+    }
 ```
 
-`property_owners.organization_id` is indexed. RLS SELECT/INSERT/UPDATE policies require ownership of the referenced organization; there is no DELETE policy, and `anon` has no table privileges. The service derives the organization from the authenticated session rather than accepting an organization identifier from the UI.
+`properties` carries `organization_id` and `primary_owner_id`; a composite foreign key requires the selected Property Owner to belong to the same organization. One owner may be linked to multiple properties. Both tables use organization-owner RLS and authenticated SELECT/INSERT/UPDATE privileges only; `anon` has no table access, and authenticated users have no DELETE or TRUNCATE privilege. Services derive the organization from the authenticated session rather than accepting an organization identifier from the UI.
 
 ```mermaid
 classDiagram

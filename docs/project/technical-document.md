@@ -4,7 +4,7 @@
 **Configured Vertical:** `property`
 **Active Product Direction:** Core Real Estate Property Management
 **Date:** 2026-09-14
-**Status:** Phase 1 in progress — `[P1.1]` implemented
+**Status:** Phase 1 in progress — `[P1.1]` and `[P1.2]` implemented; P1.2 automated verification passed, hands-on checks deferred by user
 
 ---
 
@@ -29,7 +29,15 @@ The Phase 1 domain is implemented incrementally by approved Masterplan tasks. Th
 - The `anon` role has no table privileges. Authenticated GraphQL schema discovery remains enabled; discovery is not row authorization, which is enforced by RLS.
 - `src/services/property-owners.ts` derives the organization from the authenticated session and scopes all owner queries to that organization. Callers cannot supply an organization ID. The service is the only database access layer for this feature.
 - Current access limitation: organization membership/staff authorization is not implemented by `[P1.1]`; the supported access path is the existing organization-owner model. Do not imply all staff or admins can access these rows until a membership/RBAC task adds and verifies that policy.
-- `[P1.2]` is expected to link properties to a primary owner; no property relationship is introduced by `[P1.1]`.
+
+### Implemented: `[P1.2]` Property Management
+
+- `public.properties` stores `organization_id`, `primary_owner_id`, required `name`, `property_type`, and `address`, optional `description`, `archived_at`, `created_at`, and `updated_at`.
+- `properties_primary_owner_org_fkey` references the composite key `(property_owners.id, property_owners.organization_id)`, so the database rejects a property linked to an owner from another organization. One owner may be linked to multiple properties. Organization/archive/name and owner/organization indexes support the dashboard queries.
+- RLS SELECT/INSERT/UPDATE policies authorize only the authenticated owner of the referenced organization. No DELETE policy exists. Migration `20261019142000_restrict_property_table_privileges.sql` also restricts both `properties` and `property_owners` to authenticated SELECT/INSERT/UPDATE privileges; `anon` has no table privileges, and authenticated users cannot DELETE or TRUNCATE these tables.
+- `src/services/properties.ts` derives the organization from the authenticated session, filters property reads and writes by that organization, and checks that the primary owner belongs to it. New properties require an active owner. An edit may retain its existing archived owner, but cannot switch to a different archived owner.
+- The dashboard supports create, edit, search, archive, and restore. Team Members do not see Property Owners or Properties because the supported database access model is organization-owner-only. Organization staff membership is not implemented.
+- Units, land titles, advanced documents, parcel geometry, and GPS are outside `[P1.2]`.
 
 ---
 

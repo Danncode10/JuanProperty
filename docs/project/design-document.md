@@ -5,7 +5,7 @@
 **Active Product Direction:** Core Real Estate Property Management
 **Design System:** Preserve the existing approved JuanProperty visual system
 **Date:** 2026-09-14
-**Status:** Phase 1 in progress — `[P1.1]` implemented
+**Status:** Phase 1 in progress — `[P1.1]` and `[P1.2]` implemented; P1.2 automated verification passed, hands-on checks deferred by user
 
 ---
 
@@ -46,11 +46,15 @@ erDiagram
     PROPERTY_UNIT ||--o{ MAINTENANCE_REQUEST : may_have
 ```
 
-This is the Phase 1 target model. The `[P1.1]` slice currently implemented is `ORGANIZATION → PROPERTY_OWNER`; remaining entities and relationships are planned and must not be presented as available functionality yet. Property-to-owner linkage is part of `[P1.2]`.
+This is the Phase 1 target model. The implemented domain slice is `ORGANIZATION → PROPERTY_OWNER → PROPERTY`; remaining entities and relationships are planned and must not be presented as available functionality yet.
 
 ### Implemented owner-directory interaction
 
 The Dashboard's **Property Owners** tab supports creating and editing individuals and companies, viewing active records, and archiving/restoring records. Optional contact and descriptive fields can be left blank. The archived filter makes retained records discoverable. Access currently follows the organization-owner authorization model; staff membership access is not yet supported. The interface must continue to distinguish archive/restore from permanent deletion (which is not offered).
+
+### Implemented property-management interaction
+
+The Dashboard's **Properties** tab supports creating and editing a property name, type, address, optional description, and one primary owner; searching by name, type, address, or owner; and archiving/restoring properties. New properties can select active owners in the same organization. An existing archived owner remains selectable only when editing a property already linked to that owner. Team Members do not see either real-estate tab under the current organization-owner-only access policy. Units, titles/documents, parcel geometry, and GPS are not part of this release.
 
 ---
 

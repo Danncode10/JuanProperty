@@ -1,7 +1,7 @@
 # User Manual
 
 **Project Name:** JuanProperty (Built on DannFlow)
-**Date:** 2026-10-07
+**Date:** 2026-10-20
 
 > **⚠️ REPOSITORY MODE RULE:**
 >
@@ -29,7 +29,7 @@ Out of the box, DannFlow provides the following user workflows. _(Update these a
 
 ## 2. Project-Specific Operational Guide
 
-JuanProperty currently provides the Property Owner Registry from the authenticated dashboard. Phase 1 functionality is being delivered incrementally; this guide only describes the implemented registry, not planned property, lease, tenant, or payment workflows.
+JuanProperty currently provides the Property Owner Registry and Property Management from the authenticated dashboard. Phase 1 functionality is being delivered incrementally; this guide only describes these implemented workflows, not planned unit, lease, tenant, or payment features.
 
 ### Manage Property Owners
 
@@ -41,3 +41,15 @@ JuanProperty currently provides the Property Owner Registry from the authenticat
 - **Validation:** A name is required and a provided email must be valid. Correct the inline validation message before saving.
 
 Access is currently limited to the authenticated owner of the associated organization. Organization staff membership is not yet supported. The application does not provide permanent deletion for owner records.
+
+### Manage Properties
+
+- **Navigate to:** `/dashboard` → **Properties**.
+- **Create:** Choose **Add property**, enter a property name, type, and address, optionally add a description, and choose an active Property Owner from your organization. Save to add it to the portfolio.
+- **Edit:** Open a property, update its details or primary owner, and save. A currently linked archived owner can remain selected while editing; new links must use an active owner.
+- **Search:** Search by property name, type, address, or primary owner. The result count updates with the filtered list.
+- **Archive:** Choose **Archive** to remove a property from the active list while retaining its history.
+- **Restore:** Enable **Include archived**, find the property, and choose **Restore**.
+- **Validation:** Name, type, address, and primary owner are required. Correct any inline validation message before saving.
+
+Each property is linked to one primary owner in the same organization. One owner can be linked to multiple properties. Access is currently limited to the authenticated organization owner; Team Members do not see these dashboard tabs. Permanent deletion is not available.
