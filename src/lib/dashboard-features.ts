@@ -3,6 +3,7 @@ import rolesConfig from "@/config/roles.json";
 export type DashboardTabId =
   | "overview"
   | "owners"
+  | "properties"
   | "ai-secretary"
   | "schedule"
   | "bir"
@@ -38,6 +39,7 @@ export interface TabConfig {
 export const TAB_CONFIG: TabConfig[] = [
   { id: "overview", label: "Overview" },
   { id: "owners", label: "Property Owners" },
+  { id: "properties", label: "Properties" },
   { id: "ai-secretary", label: "AI Secretary" },
   { id: "schedule", label: "Schedule" },
   {

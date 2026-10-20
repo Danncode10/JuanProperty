@@ -6,6 +6,7 @@
       "allowed_tabs": [
         "overview",
         "owners",
+        "properties",
         "ai-secretary",
         "schedule",
         "bir",
@@ -21,6 +22,7 @@
       "allowed_tabs": [
         "overview",
         "owners",
+        "properties",
         "ai-secretary",
         "schedule",
         "bir",
@@ -33,13 +35,7 @@
     "member": {
       "name": "Team Member",
       "description": "Staff member handling daily consultations, client records, and AI Secretary workflows",
-      "allowed_tabs": [
-        "overview",
-        "owners",
-        "ai-secretary",
-        "schedule",
-        "settings"
-      ]
+      "allowed_tabs": ["overview", "ai-secretary", "schedule", "settings"]
     }
   },
   "default_role": "member"

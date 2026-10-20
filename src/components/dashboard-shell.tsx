@@ -43,10 +43,12 @@ import { AiSecretaryTab } from "@/components/dashboard/tabs/ai-secretary-tab";
 import { UnderConstructionTab } from "@/components/dashboard/tabs/under-construction-tab";
 import { NotificationsBell } from "@/components/dashboard/notifications-bell";
 import { PropertyOwnersTab } from "@/components/dashboard/tabs/property-owners-tab";
+import { PropertiesTab } from "@/components/dashboard/tabs/properties-tab";
 
 const ICONS: Record<DashboardTabId, LucideIcon> = {
   overview: LayoutDashboard,
   owners: Building2,
+  properties: Home,
   "ai-secretary": Bot,
   schedule: Calendar,
   bir: FileSpreadsheet,
@@ -334,6 +336,9 @@ export function DashboardShell({
                 <OverviewTab displayName={displayName} setTab={setTab} />
               )}
               {activeTab === "owners" && <PropertyOwnersTab />}
+              {activeTab === "properties" && (
+                <PropertiesTab onNavigateOwners={() => setTab("owners")} />
+              )}
               {activeTab === "services" && <ServicesTab />}
               {activeTab === "leads" && <LeadsTab />}
               {activeTab === "bookings" && <BookingsTab />}

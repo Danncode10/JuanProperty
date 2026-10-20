@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.5";
+    PostgrestVersion: "14.17";
   };
   public: {
     Tables: {
@@ -423,6 +423,60 @@ export type Database = {
           role?: Database["public"]["Enums"]["user_role"] | null;
         };
         Relationships: [];
+      };
+      properties: {
+        Row: {
+          address: string;
+          archived_at: string | null;
+          created_at: string;
+          description: string | null;
+          id: string;
+          name: string;
+          organization_id: string;
+          primary_owner_id: string;
+          property_type: string;
+          updated_at: string;
+        };
+        Insert: {
+          address: string;
+          archived_at?: string | null;
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          name: string;
+          organization_id: string;
+          primary_owner_id: string;
+          property_type: string;
+          updated_at?: string;
+        };
+        Update: {
+          address?: string;
+          archived_at?: string | null;
+          created_at?: string;
+          description?: string | null;
+          id?: string;
+          name?: string;
+          organization_id?: string;
+          primary_owner_id?: string;
+          property_type?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "properties_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "properties_primary_owner_org_fkey";
+            columns: ["primary_owner_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "property_owners";
+            referencedColumns: ["id", "organization_id"];
+          },
+        ];
       };
       property_owners: {
         Row: {
