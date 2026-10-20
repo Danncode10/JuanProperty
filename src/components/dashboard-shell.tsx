@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Bot,
   FileSpreadsheet,
+  Building2,
   type LucideIcon,
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -41,9 +42,11 @@ import { SettingsTab } from "@/components/dashboard/tabs/settings-tab";
 import { AiSecretaryTab } from "@/components/dashboard/tabs/ai-secretary-tab";
 import { UnderConstructionTab } from "@/components/dashboard/tabs/under-construction-tab";
 import { NotificationsBell } from "@/components/dashboard/notifications-bell";
+import { PropertyOwnersTab } from "@/components/dashboard/tabs/property-owners-tab";
 
 const ICONS: Record<DashboardTabId, LucideIcon> = {
   overview: LayoutDashboard,
+  owners: Building2,
   "ai-secretary": Bot,
   schedule: Calendar,
   bir: FileSpreadsheet,
@@ -211,7 +214,7 @@ export function DashboardShell({
                   id === "team" && router.prefetch("/dashboard/team")
                 }
                 title={collapsed ? label : undefined}
-                className={`w-full flex items-center gap-3 rounded-lg text-[13px] transition-colors
+                className={`min-h-12 w-full flex items-center gap-3 rounded-lg text-[13px] transition-colors
                   ${collapsed ? "md:justify-center px-0 py-2.5" : "px-3 py-2"}
                   ${
                     isActive
@@ -330,6 +333,7 @@ export function DashboardShell({
               {activeTab === "overview" && (
                 <OverviewTab displayName={displayName} setTab={setTab} />
               )}
+              {activeTab === "owners" && <PropertyOwnersTab />}
               {activeTab === "services" && <ServicesTab />}
               {activeTab === "leads" && <LeadsTab />}
               {activeTab === "bookings" && <BookingsTab />}

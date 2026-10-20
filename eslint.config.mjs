@@ -27,6 +27,13 @@ const eslintConfig = defineConfig([
     }
   },
   {
+    // Repository automation scripts intentionally use CommonJS require().
+    files: ["scripts/**/*.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off"
+    }
+  },
+  {
     // Ignore strict rules for imported Vercel AI Chatbot reference components
     files: [
       "src/components/ai-elements/**/*",
