@@ -4,6 +4,7 @@ export type DashboardTabId =
   | "overview"
   | "owners"
   | "properties"
+  | "units"
   | "ai-secretary"
   | "schedule"
   | "bir"
@@ -40,6 +41,7 @@ export const TAB_CONFIG: TabConfig[] = [
   { id: "overview", label: "Overview" },
   { id: "owners", label: "Property Owners" },
   { id: "properties", label: "Properties" },
+  { id: "units", label: "Units" },
   { id: "ai-secretary", label: "AI Secretary" },
   { id: "schedule", label: "Schedule" },
   {

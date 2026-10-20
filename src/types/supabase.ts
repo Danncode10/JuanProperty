@@ -534,6 +534,62 @@ export type Database = {
           },
         ];
       };
+      property_units: {
+        Row: {
+          archived_at: string | null;
+          bathrooms: number | null;
+          bedrooms: number | null;
+          created_at: string;
+          default_rent_php: number;
+          description: string | null;
+          floor: number | null;
+          id: string;
+          operational_status: string;
+          organization_id: string;
+          property_id: string;
+          unit_number: string;
+          updated_at: string;
+        };
+        Insert: {
+          archived_at?: string | null;
+          bathrooms?: number | null;
+          bedrooms?: number | null;
+          created_at?: string;
+          default_rent_php?: number;
+          description?: string | null;
+          floor?: number | null;
+          id?: string;
+          operational_status?: string;
+          organization_id: string;
+          property_id: string;
+          unit_number: string;
+          updated_at?: string;
+        };
+        Update: {
+          archived_at?: string | null;
+          bathrooms?: number | null;
+          bedrooms?: number | null;
+          created_at?: string;
+          default_rent_php?: number;
+          description?: string | null;
+          floor?: number | null;
+          id?: string;
+          operational_status?: string;
+          organization_id?: string;
+          property_id?: string;
+          unit_number?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "property_units_property_org_fkey";
+            columns: ["property_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "properties";
+            referencedColumns: ["id", "organization_id"];
+          },
+        ];
+      };
       secretary_tasks: {
         Row: {
           created_at: string;

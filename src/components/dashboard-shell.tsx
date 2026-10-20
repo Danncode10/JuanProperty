@@ -19,6 +19,7 @@ import {
   Bot,
   FileSpreadsheet,
   Building2,
+  DoorOpen,
   type LucideIcon,
 } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -44,11 +45,13 @@ import { UnderConstructionTab } from "@/components/dashboard/tabs/under-construc
 import { NotificationsBell } from "@/components/dashboard/notifications-bell";
 import { PropertyOwnersTab } from "@/components/dashboard/tabs/property-owners-tab";
 import { PropertiesTab } from "@/components/dashboard/tabs/properties-tab";
+import { PropertyUnitsTab } from "@/components/dashboard/tabs/property-units-tab";
 
 const ICONS: Record<DashboardTabId, LucideIcon> = {
   overview: LayoutDashboard,
   owners: Building2,
   properties: Home,
+  units: DoorOpen,
   "ai-secretary": Bot,
   schedule: Calendar,
   bir: FileSpreadsheet,
@@ -338,6 +341,11 @@ export function DashboardShell({
               {activeTab === "owners" && <PropertyOwnersTab />}
               {activeTab === "properties" && (
                 <PropertiesTab onNavigateOwners={() => setTab("owners")} />
+              )}
+              {activeTab === "units" && (
+                <PropertyUnitsTab
+                  onNavigateProperties={() => setTab("properties")}
+                />
               )}
               {activeTab === "services" && <ServicesTab />}
               {activeTab === "leads" && <LeadsTab />}
