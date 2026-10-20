@@ -80,7 +80,7 @@ Phase 0 is **template readiness**, establishing verified cloud infrastructure, a
   - **Acceptance Criteria:** Authorized users can manage and archive properties within their organization; one owner may be linked to multiple properties; property history is preserved; land titles, parcel geometry, GPS coordinates, and advanced documents are excluded.
   - **Affected Areas:** Future Real Estate migration, generated types, validation, property service, routes/components, tests, and documentation ledger.
 
-- [ ] **`[P1.3]` Property Unit Management**
+- [x] **`[P1.3]` Property Unit Management**
   - **Goal:** Implement operational units belonging to Properties.
   - **Scope:** Unit number/name, floor, bedrooms, bathrooms, default PHP rental rate, description, and operational state.
   - **Dependencies:** `[P1.2]`.
